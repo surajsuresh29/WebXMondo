@@ -66,7 +66,7 @@ const organizationSchema = {
           <div class="hero-visual-glow"></div>
           <svg
             class="hero-visual-svg"
-            viewBox="0 0 400 240"
+            viewBox="0 24 400 180"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
@@ -629,6 +629,7 @@ const organizationSchema = {
       justify-content: space-between;
       gap: 2.5rem;
       width: 100%;
+      margin-top: -0.5rem;
     }
 
     .hero-text-col {
@@ -645,7 +646,7 @@ const organizationSchema = {
       flex: 0 0 38%;
       width: 38%;
       max-width: 440px;
-      max-height: 216px;
+      max-height: 162px;
       position: relative;
       overflow: hidden;
       border-radius: var(--radius-card);
@@ -667,16 +668,16 @@ const organizationSchema = {
     .hero-visual-svg {
       width: 100%;
       height: auto;
-      max-height: 216px;
+      max-height: 162px;
       max-width: 360px;
-      aspect-ratio: 5 / 3;
+      aspect-ratio: 400 / 180;
       display: block;
       position: relative;
       z-index: 1;
     }
 
     .hero-visual-line {
-      stroke-dasharray: 100;
+      stroke-dasharray: 100 200;
       stroke-dashoffset: 100;
       animation: hero-line-draw 1100ms ease-out 450ms both;
     }
@@ -696,12 +697,12 @@ const organizationSchema = {
     .hero-visual {
       flex-basis: 44%;
       max-width: none;
-      max-height: 280px;
+      max-height: 210px;
     }
 
     .hero-visual-svg {
       max-width: none;
-      max-height: 280px;
+      max-height: 210px;
     }
   }
 
