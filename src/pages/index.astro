@@ -40,23 +40,62 @@ const organizationSchema = {
   <!-- ===== 1. HERO CARD ===== -->
   <section class="sticky-card hero" id="card-hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
-      <div class="hero-eyebrow hero-animate">
+      <div class="hero-eyebrow">
         <Dot size={7} />
-        <span class="mono">Digital Solutions</span>
+        <span class="mono">WEB DESIGN · SEO</span>
       </div>
 
-      <h1 id="hero-heading" class="hero-headline hero-animate hero-animate-delay-1">
-        Simplifying tech,<br />amplifying brand.
+      <h1 id="hero-heading" class="hero-headline">
+        <span class="headline-mask"><span class="headline-line headline-line--1">Simplifying tech,</span></span>
+        <span class="headline-mask"><span class="headline-line headline-line--2">amplifying brand.</span></span>
       </h1>
 
-      <p class="hero-body hero-animate hero-animate-delay-2">
-        We specialize in creating innovative solutions that streamline your digital presence
-        and elevate your brand to new heights. Websites, mobile apps, marketing, and custom software.
-      </p>
+      <div class="hero-row">
+        <div class="hero-text-col">
+          <p class="hero-body">
+            We design and build websites that load fast, read clearly and get found on search.
+          </p>
 
-      <div class="hero-actions hero-animate hero-animate-delay-3">
-        <Button href="/contact" id="hero-cta-primary">Start a project</Button>
-        <Button href="/services" variant="secondary" id="hero-cta-secondary">Our services</Button>
+          <div class="hero-actions">
+            <Button href="/contact" id="hero-cta-primary">Start a project</Button>
+            <Button href="/work" variant="secondary" id="hero-cta-secondary">See our work</Button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true" focusable="false">
+          <div class="hero-visual-glow"></div>
+          <svg
+            class="hero-visual-svg"
+            viewBox="0 0 400 240"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <!-- Faint 4-line grid -->
+            <line class="hero-grid-line" x1="10" y1="48" x2="390" y2="48" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+            <line class="hero-grid-line" x1="10" y1="96" x2="390" y2="96" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+            <line class="hero-grid-line" x1="10" y1="144" x2="390" y2="144" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+            <line class="hero-grid-line" x1="10" y1="192" x2="390" y2="192" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+
+            <!-- Climbing stepped rise line -->
+            <path
+              class="hero-visual-line"
+              d="M 24 192 C 54 192, 64 192, 88 192 C 114 192, 122 144, 152 144 C 182 144, 194 144, 218 144 C 244 144, 252 96, 278 96 C 304 96, 314 96, 332 96 C 350 96, 356 48, 372 48"
+              stroke="var(--color-ink)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              pathLength="100"
+            />
+
+            <!-- Dot and ring at end of line -->
+            <g class="hero-visual-marker">
+              <circle class="hero-visual-ring" cx="372" cy="48" r="12" fill="var(--color-accent)" opacity="0.2" />
+              <circle class="hero-visual-dot" cx="372" cy="48" r="6" fill="var(--color-accent)" />
+            </g>
+          </svg>
+        </div>
       </div>
     </div>
   </section>
@@ -506,11 +545,54 @@ const organizationSchema = {
     margin-top: var(--space-sm);
   }
 
+  /* Headline reveal animation (two lines) */
+  .headline-mask {
+    display: block;
+    overflow: hidden;
+  }
+
+  .headline-line {
+    display: block;
+    transform: translateY(105%);
+    animation: headline-line-in 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .headline-line--1 {
+    animation-delay: 0ms;
+  }
+
+  .headline-line--2 {
+    animation-delay: 90ms;
+  }
+
+  @keyframes headline-line-in {
+    from {
+      transform: translateY(105%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* Default row layout (<1100px wide or <680px high: visual hidden, layout unchanged) */
+  .hero-row {
+    display: contents;
+  }
+
+  .hero-text-col {
+    display: contents;
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
   .hero-body {
     font-size: 18px;
     line-height: 1.5;
     color: var(--color-muted);
     max-width: 34ch;
+    animation: hero-fade-up 420ms cubic-bezier(0.2, 0.7, 0.2, 1) 280ms both;
   }
 
   .hero-actions {
@@ -518,6 +600,129 @@ const organizationSchema = {
     gap: var(--space-sm);
     flex-wrap: wrap;
     margin-top: var(--space-sm);
+    animation: hero-fade-up 420ms cubic-bezier(0.2, 0.7, 0.2, 1) 350ms both;
+  }
+
+  @keyframes hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Two-column layout only at >= 1100px wide AND >= 680px high */
+  @media (min-width: 1100px) and (min-height: 680px) {
+    .hero-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2.5rem;
+      width: 100%;
+    }
+
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      max-width: 58%;
+    }
+
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 38%;
+      width: 38%;
+      max-width: 440px;
+      max-height: 216px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+    }
+
+    .hero-visual-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(255, 85, 0, 0.09) 0%, rgba(255, 85, 0, 0.02) 45%, transparent 70%);
+      animation: hero-glow-in 700ms ease-out both;
+    }
+
+    :root[data-theme="dark"] .hero-visual-glow,
+    [data-theme="dark"] .hero-visual-glow {
+      background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(255, 94, 36, 0.13) 0%, rgba(255, 94, 36, 0.03) 45%, transparent 70%);
+    }
+
+    .hero-visual-svg {
+      width: 100%;
+      height: auto;
+      max-height: 216px;
+      max-width: 360px;
+      aspect-ratio: 5 / 3;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-visual-line {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: hero-line-draw 1100ms ease-out 450ms both;
+    }
+
+    .hero-visual-marker {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hero-marker-in 240ms cubic-bezier(0.2, 0.7, 0.2, 1) 1550ms both;
+    }
+  }
+
+  @keyframes hero-glow-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-line-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes hero-marker-in {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Prefers-reduced-motion: reduce — no animation, everything in final state */
+  @media (prefers-reduced-motion: reduce) {
+    .headline-line,
+    .hero-body,
+    .hero-actions,
+    .hero-visual-line,
+    .hero-visual-marker,
+    .hero-visual-glow {
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      stroke-dashoffset: 0 !important;
+    }
   }
 
   /* ===== 2. SERVICES ===== */
