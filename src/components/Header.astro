@@ -120,25 +120,18 @@ function isActive(href: string) {
     position: sticky;
     top: 0;
     z-index: 100;
+    height: var(--nav-h);
+    box-sizing: border-box;
     background-color: var(--color-bg);
     border-bottom: 1px solid var(--color-line);
-    transition: padding var(--transition-ui);
-  }
-
-  .site-header.is-condensed {
-    padding-block: 0;
   }
 
   .header-inner {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    padding-block: 1.25rem;
-    transition: padding-block var(--transition-ui);
-  }
-
-  .site-header.is-condensed .header-inner {
-    padding-block: 0.6rem;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   /* Logo */
@@ -263,11 +256,20 @@ function isActive(href: string) {
     transform: translateY(-6.5px) rotate(-45deg);
   }
 
-  /* Mobile menu */
+  /* Mobile menu — absolute overlay to prevent layout shift */
   .mobile-menu {
     display: none;
-    border-top: 1px solid var(--color-line);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100dvh - var(--nav-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+    box-shadow: 0 16px 32px rgba(14, 14, 13, 0.08);
     padding: var(--space-sm) 0 var(--space-md);
   }
 
@@ -299,13 +301,13 @@ function isActive(href: string) {
   }
 
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 899px) {
     .nav-desktop,
     .header-cta { display: none; }
     .hamburger { display: flex; }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 899px) {
     .mobile-menu.is-open { display: block; }
   }
 
@@ -319,14 +321,6 @@ function isActive(href: string) {
 </style>
 
 <script>
-  // Scroll condensing
-  const header = document.getElementById('site-header');
-  if (header) {
-    window.addEventListener('scroll', function () {
-      header.classList.toggle('is-condensed', window.scrollY > 80);
-    }, { passive: true });
-  }
-
   // Mobile menu toggle
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');

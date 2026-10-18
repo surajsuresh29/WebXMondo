@@ -5,4 +5,7 @@ export default defineConfig({
   site: 'https://webmondo.com',
   output: 'static',
   integrations: [sitemap()],
+  devToolbar: {
+    enabled: false,
+  },
 });
