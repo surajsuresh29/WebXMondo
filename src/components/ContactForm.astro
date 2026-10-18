@@ -1,0 +1,472 @@
+---
+/**
+ * ContactForm.astro — Full contact form.
+ * Fields: name, email, company (optional), service interest, budget range, message.
+ * Honeypot: _gotcha (hidden, Formspree reads it natively).
+ * Submit: fetch to Formspree, no redirect, in-page confirmation.
+ * Validation: specific inline errors.
+ * Endpoint from PUBLIC_FORMSPREE_ID env var.
+ */
+---
+
+<section class="contact-form-section">
+  <form
+    id="contact-form"
+    class="contact-form"
+    novalidate
+    aria-label="Project inquiry form"
+  >
+    <!-- Honeypot -->
+    <input
+      type="text"
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+      class="honeypot"
+    />
+
+    <!-- Name -->
+    <div class="field-group">
+      <label for="field-name" class="field-label">Name <span aria-hidden="true">*</span></label>
+      <input
+        type="text"
+        id="field-name"
+        name="name"
+        autocomplete="name"
+        required
+        aria-required="true"
+        aria-describedby="field-name-error"
+        placeholder="Alex Johnson"
+      />
+      <p class="field-error" id="field-name-error" aria-live="polite" role="alert"></p>
+    </div>
+
+    <!-- Email -->
+    <div class="field-group">
+      <label for="field-email" class="field-label">Email <span aria-hidden="true">*</span></label>
+      <input
+        type="email"
+        id="field-email"
+        name="email"
+        autocomplete="email"
+        required
+        aria-required="true"
+        aria-describedby="field-email-error"
+        placeholder="alex@company.com"
+      />
+      <p class="field-error" id="field-email-error" aria-live="polite" role="alert"></p>
+    </div>
+
+    <!-- Company (optional) -->
+    <div class="field-group">
+      <label for="field-company" class="field-label">
+        Company <span class="field-optional mono">optional</span>
+      </label>
+      <input
+        type="text"
+        id="field-company"
+        name="company"
+        autocomplete="organization"
+        placeholder="Acme Inc."
+      />
+    </div>
+
+    <!-- Service interest -->
+    <div class="field-group">
+      <label for="field-service" class="field-label">
+        Service interest <span aria-hidden="true">*</span>
+      </label>
+      <div class="select-wrapper">
+        <select
+          id="field-service"
+          name="service"
+          required
+          aria-required="true"
+          aria-describedby="field-service-error"
+        >
+          <option value="">Select a service</option>
+          <option value="branding-designing">Branding & Designing</option>
+          <option value="website-development">Website Development</option>
+          <option value="mobile-app-development">Mobile App Development</option>
+          <option value="digital-marketing">Digital Marketing</option>
+          <option value="software-solutions">Software Solutions</option>
+          <option value="multiple-services">Multiple Services / Not sure yet</option>
+        </select>
+        <span class="select-arrow" aria-hidden="true">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+      <p class="field-error" id="field-service-error" aria-live="polite" role="alert"></p>
+    </div>
+
+    <!-- Budget range -->
+    <div class="field-group">
+      <label for="field-budget" class="field-label">
+        Budget range <span aria-hidden="true">*</span>
+      </label>
+      <div class="select-wrapper">
+        <select
+          id="field-budget"
+          name="budget"
+          required
+          aria-required="true"
+          aria-describedby="field-budget-error"
+        >
+          <option value="">Select a range</option>
+          <option value="under-5k">Under $5,000</option>
+          <option value="5k-15k">$5,000 – $15,000</option>
+          <option value="15k-30k">$15,000 – $30,000</option>
+          <option value="30k-50k">$30,000 – $50,000</option>
+          <option value="50k-plus">$50,000+</option>
+        </select>
+        <span class="select-arrow" aria-hidden="true">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+      <p class="field-error" id="field-budget-error" aria-live="polite" role="alert"></p>
+    </div>
+
+    <!-- Message -->
+    <div class="field-group field-group--full">
+      <label for="field-message" class="field-label">
+        Tell us about your project <span aria-hidden="true">*</span>
+      </label>
+      <textarea
+        id="field-message"
+        name="message"
+        rows="5"
+        required
+        aria-required="true"
+        aria-describedby="field-message-error"
+        placeholder="What are you trying to achieve? Any timeline or constraints we should know?"
+      ></textarea>
+      <p class="field-error" id="field-message-error" aria-live="polite" role="alert"></p>
+    </div>
+
+    <!-- Submit -->
+    <div class="form-footer">
+      <button type="submit" id="form-submit-btn" class="btn btn--primary">
+        <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
+        <span id="submit-label">Send inquiry</span>
+      </button>
+      <p class="form-note mono">We reply within 1–2 business days.</p>
+    </div>
+  </form>
+
+  <!-- Success state -->
+  <div id="form-success" class="form-success" aria-live="polite" hidden>
+    <div class="success-inner">
+      <span class="success-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 16L13.5 20.5L23 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <h2 class="success-heading">Inquiry received.</h2>
+      <p>Thank you — we'll review your project brief and get back to you within <strong>1–2 business days</strong>. Check your inbox for a confirmation.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-form-section { width: 100%; }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 600px) {
+    .contact-form { grid-template-columns: 1fr; }
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .field-group--full {
+    grid-column: 1 / -1;
+  }
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .field-optional {
+    margin-left: 0.4rem;
+    color: var(--color-muted);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    border: 1px solid var(--color-line);
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: var(--radius-input, 10px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: border-color var(--transition-ui), box-shadow var(--transition-ui);
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-color: var(--color-accent);
+  }
+
+  input.field-invalid,
+  textarea.field-invalid,
+  select.field-invalid {
+    border-color: #c0392b;
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+
+  .select-wrapper select {
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .field-error {
+    font-size: 13px;
+    color: #c0392b;
+    min-height: 1.2em;
+    max-width: none;
+  }
+
+  /* Form footer */
+  .form-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .form-note {
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  /* Inline btn styles (since scoped Button component not used here) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color var(--transition-hover), transform var(--transition-hover);
+  }
+
+  .btn--primary {
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+    border-color: var(--color-ink);
+  }
+
+  .btn--primary:hover { transform: translateY(-1px); }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .dot {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  /* Success state */
+  .form-success { padding-block: var(--space-xl); }
+  .success-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 38ch;
+  }
+
+  .success-icon { color: var(--color-ink); }
+
+  .success-heading {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+
+  .success-inner p {
+    color: var(--color-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+    .btn:hover { transform: none; }
+    input, textarea, select { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var form = document.getElementById('contact-form');
+    var successEl = document.getElementById('form-success');
+    var submitBtn = document.getElementById('form-submit-btn');
+    var submitLabel = document.getElementById('submit-label');
+
+    if (!form || !successEl || !submitBtn) return;
+
+    var formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
+
+    // Field validation rules
+    var rules = {
+      'field-name': function (val) {
+        if (!val.trim()) return 'Please enter your name so we know who we\'re speaking with.';
+        return '';
+      },
+      'field-email': function (val) {
+        if (!val.trim()) return 'Please enter your email address.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+          return 'Enter a valid email address — e.g. name@company.com.';
+        }
+        return '';
+      },
+      'field-service': function (val) {
+        if (!val) return 'Please choose the service that best fits your need.';
+        return '';
+      },
+      'field-budget': function (val) {
+        if (!val) return 'Please select a budget range so we can tailor our response.';
+        return '';
+      },
+      'field-message': function (val) {
+        if (!val.trim()) return 'Please tell us a bit about your project — even a sentence helps.';
+        return '';
+      },
+    };
+
+    function showError(id, message) {
+      var el = document.getElementById(id + '-error');
+      var input = document.getElementById(id);
+      if (el) el.textContent = message;
+      if (input) {
+        if (message) input.classList.add('field-invalid');
+        else input.classList.remove('field-invalid');
+      }
+    }
+
+    function validateAll() {
+      var valid = true;
+      Object.keys(rules).forEach(function (id) {
+        var input = document.getElementById(id);
+        var val = input ? (input).value : '';
+        var error = rules[id](val);
+        showError(id, error);
+        if (error) valid = false;
+      });
+      return valid;
+    }
+
+    // Live validation on blur
+    Object.keys(rules).forEach(function (id) {
+      var input = document.getElementById(id);
+      if (input) {
+        input.addEventListener('blur', function () {
+          var error = rules[id]((input).value);
+          showError(id, error);
+        });
+      }
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validateAll()) return;
+
+      // Honeypot check
+      var honeypot = form.querySelector('input[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+
+      if (!formspreeId || formspreeId === 'your_formspree_endpoint_id') {
+        // Dev fallback — show success without real submission
+        form.hidden = true;
+        successEl.hidden = false;
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Sending…';
+
+      var data = new FormData(form);
+
+      fetch('https://formspree.io/f/' + formspreeId, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      })
+        .then(function (res) {
+          if (res.ok) {
+            form.hidden = true;
+            successEl.hidden = false;
+            successEl.focus();
+          } else {
+            submitBtn.disabled = false;
+            submitLabel.textContent = 'Send inquiry';
+            alert('Something went wrong. Please try again or email us directly at hello@webmondo.com.');
+          }
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitLabel.textContent = 'Send inquiry';
+          alert('Network error. Please check your connection and try again.');
+        });
+    });
+  })();
+</script>

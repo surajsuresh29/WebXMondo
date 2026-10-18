@@ -1,0 +1,386 @@
+---
+/**
+ * Header.astro — Sticky navigation header.
+ * - Logotype + Dot brand device
+ * - Main nav links
+ * - "Start a project" primary button
+ * - Mobile hamburger menu (aria-expanded, keyboard accessible)
+ * - Condenses slightly after 80px scroll (via JS + CSS)
+ */
+import Dot from './Dot.astro';
+import Button from './Button.astro';
+
+const navLinks = [
+  { label: 'Services', href: '/services' },
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const currentPath = Astro.url.pathname;
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <!-- Logotype -->
+    <a href="/" class="logo" aria-label="Web Mondo — Home">
+      <Dot size={8} />
+      <span class="logo-text">Web Mondo</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['nav-link', { 'nav-link--active': isActive(link.href) }]}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {isActive(link.href) && <Dot size={6} />}
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- CTA & Theme Toggle -->
+    <div class="header-actions">
+      <button
+        type="button"
+        id="theme-toggle-btn"
+        class="theme-toggle"
+        aria-label="Toggle dark mode"
+        title="Toggle color theme"
+      >
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
+          <path d="M10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18V2Z" fill="currentColor" />
+        </svg>
+      </button>
+      <div class="header-cta">
+        <Button href="/contact" id="header-cta-btn">Start a project</Button>
+      </div>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      class="hamburger"
+      id="mobile-menu-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open navigation menu"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      <ul role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['mobile-nav-link', { 'mobile-nav-link--active': isActive(link.href) }]}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href="/contact" class="mobile-nav-link mobile-nav-link--cta">Start a project</a>
+        </li>
+        <li>
+          <button type="button" class="mobile-nav-link mobile-theme-btn" id="mobile-theme-toggle-btn">
+            <span>Toggle theme</span>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
+              <path d="M10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18V2Z" fill="currentColor" />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+    transition: padding var(--transition-ui);
+  }
+
+  .site-header.is-condensed {
+    padding-block: 0;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: 1.25rem;
+    transition: padding-block var(--transition-ui);
+  }
+
+  .site-header.is-condensed .header-inner {
+    padding-block: 0.6rem;
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+
+  /* Desktop nav */
+  .nav-desktop {
+    margin-left: auto;
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--transition-ui);
+    padding-block: 0.25rem;
+  }
+
+  .nav-link:hover,
+  .nav-link--active {
+    color: var(--color-ink);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: var(--space-sm);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--color-line);
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition:
+      border-color var(--transition-ui),
+      transform var(--transition-ui),
+      background-color var(--transition-ui),
+      color var(--transition-ui);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: scale(1.05);
+  }
+
+  .mobile-theme-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--color-line);
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 4px;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--color-ink);
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  /* Hamburger open state */
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    display: none;
+    border-top: 1px solid var(--color-line);
+    background-color: var(--color-bg);
+    padding: var(--space-sm) 0 var(--space-md);
+  }
+
+  .mobile-menu nav ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 0.9rem var(--space-md);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-line);
+    transition: color var(--transition-ui);
+  }
+
+  .mobile-nav-link:last-child { border-bottom: none; }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link--active { color: var(--color-ink); }
+
+  .mobile-nav-link--cta {
+    color: var(--color-ink);
+    font-weight: 700;
+    margin-top: var(--space-xs);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-desktop,
+    .header-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  @media (max-width: 768px) {
+    .mobile-menu.is-open { display: block; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .header-inner,
+    .hamburger-line,
+    .nav-link,
+    .mobile-nav-link { transition: none; }
+  }
+</style>
+
+<script>
+  // Scroll condensing
+  const header = document.getElementById('site-header');
+  if (header) {
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('is-condensed', window.scrollY > 80);
+    }, { passive: true });
+  }
+
+  // Mobile menu toggle
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', function () {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      menu.setAttribute('aria-hidden', String(isOpen));
+      menu.classList.toggle('is-open', !isOpen);
+      toggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        menu.classList.remove('is-open');
+        toggle.setAttribute('aria-label', 'Open navigation menu');
+        toggle.focus();
+      }
+    });
+
+    // Close when a mobile link is clicked
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        menu.classList.remove('is-open');
+        toggle.setAttribute('aria-label', 'Open navigation menu');
+      });
+    });
+  }
+
+  // Theme toggle
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  const themeToggle = document.getElementById('theme-toggle-btn');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  const mobileThemeToggle = document.getElementById('mobile-theme-toggle-btn');
+  if (mobileThemeToggle) {
+    mobileThemeToggle.addEventListener('click', toggleTheme);
+  }
+</script>

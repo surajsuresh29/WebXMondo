@@ -1,0 +1,173 @@
+---
+/**
+ * CaseStudy.astro — Layout for /work/[slug] case study pages.
+ * Extends Base layout.
+ * Adds case study chrome: meta bar, section labels, prev/next navigation.
+ *
+ * Props:
+ *   title: string
+ *   client: string
+ *   services: string[]
+ *   prevSlug?: string
+ *   prevTitle?: string
+ *   nextSlug?: string
+ *   nextTitle?: string
+ *   description: string   (for SEO)
+ */
+import Base from './Base.astro';
+import Dot from '../components/Dot.astro';
+
+interface Props {
+  title: string;
+  client: string;
+  services: string[];
+  prevSlug?: string;
+  prevTitle?: string;
+  nextSlug?: string;
+  nextTitle?: string;
+  description: string;
+}
+
+const { title, client, services, prevSlug, prevTitle, nextSlug, nextTitle, description } = Astro.props;
+---
+
+<Base title={`${title} — Web Mondo`} description={description}>
+  <article class="case-study">
+    <!-- Header / meta bar -->
+    <header class="cs-header container">
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <p class="mono meta-label">Client</p>
+          <p class="meta-value">{client}</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="mono meta-label">Services</p>
+          <ul class="meta-services mono" role="list">
+            {services.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      </div>
+      <h1 class="cs-title">{title}</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="cs-content container">
+      <slot />
+    </div>
+
+    <!-- Prev / Next nav -->
+    {(prevSlug || nextSlug) && (
+      <nav class="cs-pagination container" aria-label="Case study navigation">
+        <hr class="cs-rule" />
+        <div class="cs-nav-links">
+          {prevSlug ? (
+            <a href={`/work/${prevSlug}`} class="cs-nav-link cs-nav-link--prev">
+              <span class="mono nav-dir">Previous</span>
+              <span class="nav-title">{prevTitle}</span>
+            </a>
+          ) : <span />}
+          {nextSlug ? (
+            <a href={`/work/${nextSlug}`} class="cs-nav-link cs-nav-link--next">
+              <span class="mono nav-dir">Next</span>
+              <span class="nav-title">{nextTitle}</span>
+            </a>
+          ) : <span />}
+        </div>
+      </nav>
+    )}
+  </article>
+</Base>
+
+<style>
+  .case-study {
+    padding-bottom: var(--space-2xl);
+  }
+
+  /* Header */
+  .cs-header {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+    margin-bottom: var(--space-xl);
+  }
+
+  .cs-meta {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .meta-label {
+    color: var(--color-muted);
+    margin-bottom: 0.3rem;
+    max-width: none;
+  }
+
+  .meta-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-ink);
+    max-width: none;
+  }
+
+  .meta-services {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .meta-services li {
+    color: var(--color-muted);
+  }
+
+  .cs-title {
+    max-width: 16ch;
+  }
+
+  /* Content sections */
+  .cs-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  /* Prev / next */
+  .cs-pagination { margin-top: var(--space-xl); }
+
+  .cs-rule {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cs-nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .cs-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    transition: color var(--transition-hover);
+  }
+
+  .cs-nav-link--next { text-align: right; }
+
+  .cs-nav-link:hover { color: var(--color-muted); }
+
+  .nav-dir { color: var(--color-muted); }
+
+  .nav-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-nav-link { transition: none; }
+  }
+</style>

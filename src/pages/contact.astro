@@ -1,0 +1,136 @@
+---
+/**
+ * contact.astro — /contact
+ * Contact form + contact details sidebar.
+ */
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Dot from '../components/Dot.astro';
+---
+
+<Base
+  title="Contact Us — Web Mondo | Simplifying Tech, Amplifying Brand"
+  description="Get in touch with Web Mondo. Whether you're looking to build a website, launch a mobile app, or enhance your brand through digital marketing, we're here to help."
+>
+  <!-- Page header -->
+  <section class="page-header">
+    <div class="container page-header-inner">
+      <div class="eyebrow" data-reveal>
+        <Dot size={6} />
+        <span>Get in touch</span>
+      </div>
+      <h1 class="page-heading" data-reveal>Let's discuss your project.</h1>
+      <p class="page-intro" data-reveal>
+        Whether you’re looking to build a powerful website, launch a mobile app, or enhance your
+        brand through strategic digital marketing, we’re here to help you achieve your goals.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact grid -->
+  <section class="contact-section" aria-label="Contact information and form">
+    <div class="container contact-grid">
+      <!-- Details sidebar -->
+      <aside class="contact-details" aria-label="Contact details">
+        <div class="detail-group" data-reveal>
+          <p class="mono detail-label">Email</p>
+          <a href="mailto:hello@webmondo.com" class="detail-value text-link">
+            hello@webmondo.com
+          </a>
+        </div>
+
+        <div class="detail-group" data-reveal>
+          <p class="mono detail-label">Mission</p>
+          <p class="detail-value">Simplifying tech, amplifying brand.</p>
+        </div>
+
+        <div class="detail-group" data-reveal>
+          <p class="mono detail-label">Response time</p>
+          <p class="detail-value">We reply within 1 business day.</p>
+        </div>
+      </aside>
+
+      <!-- Form -->
+      <div class="contact-form-wrap" data-reveal>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header {
+    padding-block: var(--space-xl) var(--space-lg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .page-header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .page-heading { margin-top: var(--space-xs); }
+  .page-intro {
+    font-size: 18px;
+    color: var(--color-muted);
+    max-width: 34ch;
+  }
+
+  /* Contact layout */
+  .contact-section {
+    padding-block: var(--space-xl);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+
+  /* Details */
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: sticky;
+    top: calc(60px + var(--space-lg));
+  }
+
+  @media (max-width: 900px) {
+    .contact-details { position: static; }
+  }
+
+  .detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-sm);
+  }
+
+  .detail-label {
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  .detail-value {
+    font-size: 15px;
+    color: var(--color-ink);
+    max-width: none;
+    line-height: 1.5;
+  }
+
+  .text-link {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 3px;
+  }
+</style>

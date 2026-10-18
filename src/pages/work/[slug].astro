@@ -1,0 +1,178 @@
+---
+/**
+ * work/[slug].astro — Dynamic case study page.
+ * Generates one page per entry in src/content/work/.
+ * Sections: problem, approach, outcome (each from frontmatter).
+ * Prev/next links sorted by order field.
+ */
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import Dot from '../../components/Dot.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+  return works.map((entry, i) => {
+    const prev = works[i - 1];
+    const next = works[i + 1];
+    return {
+      params: { slug: entry.id },
+      props: {
+        entry,
+        prevSlug: prev?.id,
+        prevTitle: prev?.data.title,
+        nextSlug: next?.id,
+        nextTitle: next?.data.title,
+      },
+    };
+  });
+}
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+  prevSlug?: string;
+  prevTitle?: string;
+  nextSlug?: string;
+  nextTitle?: string;
+}
+
+const { entry, prevSlug, prevTitle, nextSlug, nextTitle } = Astro.props;
+const { title, client, services, problem, approach, outcome, coverSrc, coverAlt } = entry.data;
+---
+
+<CaseStudy
+  title={title}
+  client={client}
+  services={services}
+  prevSlug={prevSlug}
+  prevTitle={prevTitle}
+  nextSlug={nextSlug}
+  nextTitle={nextTitle}
+  description={`${title} for ${client} — ${entry.data.tagline}`}
+>
+  <!-- Cover image -->
+  {coverSrc && (
+    <div class="cs-cover" data-reveal>
+      <img
+        src={coverSrc}
+        alt={coverAlt}
+        width="1200"
+        height="800"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+
+  <!-- Problem -->
+  <div class="cs-block" data-reveal>
+    <div class="eyebrow cs-eyebrow">
+      <Dot size={6} />
+      <span>The problem</span>
+    </div>
+    <p class="cs-copy">{problem}</p>
+  </div>
+
+  <!-- Approach -->
+  <div class="cs-block" data-reveal>
+    <div class="eyebrow cs-eyebrow">
+      <Dot size={6} />
+      <span>Our approach</span>
+    </div>
+    <p class="cs-copy">{approach}</p>
+  </div>
+
+  <!-- Outcome -->
+  <div class="cs-block cs-block--outcome" data-reveal>
+    <div class="eyebrow cs-eyebrow">
+      <Dot size={6} />
+      <span>The outcome</span>
+    </div>
+    <p class="cs-copy">{outcome}</p>
+  </div>
+
+  <!-- Inline CTA -->
+  <div class="cs-cta" data-reveal>
+    <p class="mono cta-label">Start a project</p>
+    <a href="/contact" class="cs-cta-link" id="case-study-cta-link">
+      Ready to see what this looks like for your company?
+    </a>
+  </div>
+</CaseStudy>
+
+<style>
+  .cs-cover {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: var(--radius-card, 16px);
+    border: 1px solid var(--color-line);
+    background-color: var(--color-surface-subtle);
+  }
+
+  .cs-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cs-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .cs-eyebrow {
+    margin-bottom: 0;
+  }
+
+  .cs-copy {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: 56ch;
+  }
+
+  .cs-block--outcome .cs-copy {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* CTA */
+  .cs-cta {
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cta-label {
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  .cs-cta-link {
+    font-family: var(--font-sans);
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 4px;
+    transition: color var(--transition-hover);
+    max-width: 28ch;
+    display: block;
+    line-height: 1.2;
+  }
+
+  .cs-cta-link:hover { color: var(--color-muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-cta-link { transition: none; }
+  }
+</style>

@@ -1,0 +1,295 @@
+---
+/**
+ * services.astro — /services
+ * Four service sections: Brand Identity, Web Development, Digital Marketing, Content Strategy.
+ * Each: ≤70 words, 3-5 item deliverables list.
+ * JSON-LD: Service schemas.
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Dot from '../components/Dot.astro';
+
+const services = [
+  {
+    id: 'branding-designing',
+    label: '01',
+    name: 'Branding & Designing',
+    who: 'For businesses looking to launch a bold new identity, modernize an existing brand, or establish a visual presence that demands attention.',
+    what: 'We craft cohesive brand identities with stunning logos, distinctive color palettes, and typography to make your business stand out.',
+    deliverables: [
+      'Logo system (primary mark, wordmark, app icons)',
+      'Color palette, type hierarchies & design tokens',
+      'Brand style guide & visual identity standards',
+      'Marketing collateral & social media design kits',
+      'Vector icon sets and asset packages',
+    ],
+  },
+  {
+    id: 'digital-marketing',
+    label: '02',
+    name: 'Digital Marketing',
+    who: 'For companies ready to scale their customer acquisition through disciplined, data-driven online channels that generate real ROI.',
+    what: 'Our data-driven strategies boost your online presence through SEO, PPC, social media, and email marketing.',
+    deliverables: [
+      'Search Engine Optimization (Technical & On-page SEO)',
+      'Paid media management (Google Ads & Meta Campaigns)',
+      'Social media growth and creative strategy',
+      'Automated email marketing sequences & retention funnels',
+      'Conversion tracking & transparent analytics dashboards',
+    ],
+  },
+  {
+    id: 'website-development',
+    label: '03',
+    name: 'Website Development',
+    who: 'For organizations that need a high-converting web presence built with clean code, lightning speed, and seamless responsiveness.',
+    what: 'We build fast, responsive, and user-friendly websites that enhance engagement and drive conversions.',
+    deliverables: [
+      'Bespoke UX/UI architecture & responsive design',
+      'Static-first and headless CMS implementations',
+      'Sub-second load times & 95+ Core Web Vitals scores',
+      'Accessibility standards (WCAG AA compliant)',
+      'Post-launch training, documentation & technical warranty',
+    ],
+  },
+  {
+    id: 'mobile-app-development',
+    label: '04',
+    name: 'Mobile App Development',
+    who: 'For startups and established businesses seeking to deliver a frictionless, native mobile experience directly to users on iOS and Android.',
+    what: 'We create intuitive, high-performance mobile apps for iOS and Android tailored to your business needs.',
+    deliverables: [
+      'Cross-platform iOS and Android mobile applications',
+      'Human interface design & interactive prototypes',
+      'API integration and secure backend synchronization',
+      'Offline-first capabilities and push notifications',
+      'App Store & Google Play Store release management',
+    ],
+  },
+  {
+    id: 'software-solutions',
+    label: '05',
+    name: 'Software Solutions',
+    who: 'For teams outgrowing off-the-shelf tools that need purpose-built systems to automate workflows and optimize business operations.',
+    what: 'We develop custom software solutions that streamline operations, improve efficiency, and drive innovation.',
+    deliverables: [
+      'Custom web portals, internal dashboards & ERP tools',
+      'Automated business workflow & pipeline integrations',
+      'Database architecture & cloud infrastructure setup',
+      'API engineering and third-party SaaS integrations',
+      'Enterprise security, monitoring & maintenance plans',
+    ],
+  },
+];
+
+const serviceSchemas = services.map((s) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: s.name,
+  provider: { '@type': 'Organization', name: 'Web Mondo', url: 'https://webmondo.com' },
+  description: s.what,
+}));
+---
+
+<Base
+  title="Services — Web Mondo | Digital Solutions to Grow Your Business"
+  description="At Web Mondo, we provide digital solutions—from branding and web design to marketing, software, and app development—to help businesses grow."
+  jsonLd={serviceSchemas}
+>
+  <!-- Page header -->
+  <section class="page-header">
+    <div class="container page-header-inner">
+      <div class="eyebrow" data-reveal>
+        <Dot size={6} />
+        <span>Our Services</span>
+      </div>
+      <h1 class="page-heading" data-reveal>
+        Simplifying tech.<br />Amplifying your brand.
+      </h1>
+      <p class="page-intro" data-reveal>
+        At Web Mondo, we provide digital solutions—from branding and web design to marketing,
+        software, and app development—to help businesses grow.
+      </p>
+    </div>
+  </section>
+
+  <!-- Service sections -->
+  {services.map((service, i) => (
+    <section
+      id={service.id}
+      class:list={['service-section', { 'service-section--alt': i % 2 !== 0 }]}
+      aria-labelledby={`service-heading-${service.id}`}
+    >
+      <div class="container service-inner">
+        <div class="service-meta" data-reveal>
+          <p class="mono service-label">{service.label}</p>
+          <h2 id={`service-heading-${service.id}`} class="service-name">{service.name}</h2>
+        </div>
+
+        <div class="service-body" data-reveal-group>
+          <div class="service-col" data-reveal>
+            <p class="mono col-label">What it covers</p>
+            <p class="service-desc">{service.what}</p>
+          </div>
+          <div class="service-col" data-reveal>
+            <p class="mono col-label">Who it's for</p>
+            <p class="service-desc">{service.who}</p>
+          </div>
+          <div class="service-col service-col--deliverables" data-reveal>
+            <p class="mono col-label">What you get</p>
+            <ul class="deliverables-list" role="list">
+              {service.deliverables.map((item) => (
+                <li class="deliverable-item">
+                  <Dot size={6} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Closing CTA -->
+  <section class="services-cta section-dark" aria-labelledby="services-cta-heading">
+    <div class="container cta-inner" data-reveal>
+      <div class="eyebrow" style="color: var(--color-bg);">
+        <Dot size={6} />
+        <span class="mono" style="color: var(--color-accent);">Get started</span>
+      </div>
+      <h2 id="services-cta-heading" class="cta-heading" style="color: var(--color-bg);">
+        Not sure which service fits?
+      </h2>
+      <p style="color: var(--color-muted);">
+        Tell us what you're trying to solve. We'll tell you which lever to pull first.
+      </p>
+      <Button href="/contact" id="services-cta-btn">Start a project</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Page header */
+  .page-header {
+    padding-block: var(--space-xl) var(--space-lg);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .page-header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .page-heading {
+    margin-top: var(--space-xs);
+  }
+
+  .page-intro {
+    font-size: 18px;
+    color: var(--color-muted);
+    max-width: 34ch;
+    margin-top: 0;
+  }
+
+  /* Service sections */
+  .service-section {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .service-section--alt {
+    background-color: var(--color-bg);
+  }
+
+  .service-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .service-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+  }
+
+  .service-label {
+    color: var(--color-muted);
+    max-width: none;
+    flex-shrink: 0;
+  }
+
+  .service-name {
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+
+  /* Body columns */
+  .service-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 900px) {
+    .service-body { grid-template-columns: 1fr; }
+  }
+
+  .service-col { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+  .col-label {
+    color: var(--color-muted);
+    max-width: none;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .service-desc {
+    font-size: 15px;
+    color: var(--color-muted);
+    max-width: none;
+    line-height: 1.7;
+  }
+
+  /* Deliverables */
+  .deliverables-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .deliverable-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .deliverable-item .dot {
+    margin-top: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  /* Closing CTA */
+  .services-cta {
+    padding-block: var(--space-xl);
+  }
+
+  .cta-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 44ch;
+  }
+
+  .cta-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -0.03em;
+  }
+</style>

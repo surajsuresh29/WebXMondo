@@ -1,0 +1,33 @@
+---
+/**
+ * Dot.astro — The core brand motif.
+ * A 7–8px solid orange circle. Appears:
+ *   - beside the logotype in the header
+ *   - inside every primary button (before the label)
+ *   - before every eyebrow / section label
+ *   - as the active-nav indicator
+ *
+ * Props:
+ *   size?: number (px) — defaults to 7
+ */
+interface Props {
+  size?: number;
+}
+const { size = 7 } = Astro.props;
+---
+
+<span
+  class="dot"
+  aria-hidden="true"
+  style={`width:${size}px;height:${size}px;`}
+></span>
+
+<style>
+  .dot {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+</style>

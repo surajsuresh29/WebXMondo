@@ -1,0 +1,324 @@
+---
+/**
+ * about.astro — /about
+ * Sections: Story (≤120 words), 4-step process (≤25 words each), 3 team members (≤30 words each).
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Dot from '../components/Dot.astro';
+import TeamMember from '../components/TeamMember.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Discovery',
+    description: 'We spend time understanding the actual business problem before touching anything creative. Most briefs change in this phase.',
+  },
+  {
+    number: '02',
+    title: 'Strategy',
+    description: 'We define what success looks like and how to measure it, in writing, before any design or development begins.',
+  },
+  {
+    number: '03',
+    title: 'Execution',
+    description: 'We work fast and transparently. You see work in progress, not just polished final decks.',
+  },
+  {
+    number: '04',
+    title: 'Handoff',
+    description: 'Everything we build, you own. Training, documentation, and a defined window for post-launch fixes included.',
+  },
+];
+
+const team = [
+  {
+    name: 'Design & Brand Team',
+    role: 'Branding & Visual Systems',
+    bio: 'Crafting cohesive brand identities with stunning logos, distinctive palettes, and typography that make businesses stand out.',
+  },
+  {
+    name: 'Engineering Team',
+    role: 'Web, App & Software Development',
+    bio: 'Building fast, responsive websites, native mobile applications for iOS & Android, and custom software solutions that streamline operations.',
+  },
+  {
+    name: 'Growth & Strategy Team',
+    role: 'Digital Marketing & SEO',
+    bio: 'Executing data-driven digital marketing campaigns across SEO, PPC, social media, and email marketing wired to real business outcomes.',
+  },
+];
+---
+
+<Base
+  title="About Us — Web Mondo | Simplifying tech, amplifying brand"
+  description="Web Mondo was founded in 2021 to simplify tech and amplify brands. Dedicated to providing cutting-edge digital solutions that drive growth and success."
+>
+  <!-- Page header -->
+  <section class="page-header">
+    <div class="container page-header-inner">
+      <div class="eyebrow" data-reveal>
+        <Dot size={6} />
+        <span>About Web Mondo</span>
+      </div>
+      <h1 class="page-heading" data-reveal>Simplifying tech,<br />amplifying brand.</h1>
+      <p class="about-lead" data-reveal>
+        At Web Mondo, we believe in the power of technology to transform businesses. Our mission is simple:
+        Simplifying tech, amplifying brand. We specialize in creating innovative solutions that not only
+        streamline your digital presence but also elevate your brand to new heights.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="story-section" aria-labelledby="story-heading">
+    <div class="container story-inner">
+      <div class="story-label" data-reveal>
+        <h2 id="story-heading" class="sr-only">Our Story</h2>
+        <div class="eyebrow"><Dot size={6} /><span>Our Story</span></div>
+        <p class="mono story-year">EST. 2021</p>
+      </div>
+      <div class="story-body" data-reveal>
+        <p class="story-copy">
+          Web Mondo was founded in 2021 with a clear vision: to simplify tech and amplify brands.
+          We help businesses harness technology without the overwhelm, crafting tailored solutions
+          that make digital tools approachable and impactful.
+        </p>
+        <p class="story-copy">
+          From branding and website development to mobile apps, we turn complex challenges into
+          seamless experiences. As we grow, we stay ahead of trends, ensuring our clients thrive
+          in the digital world. What began as a small team with big ideas has become a trusted partner
+          for businesses looking to make their mark online.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission Band -->
+  <section class="vision-mission-section" aria-labelledby="vm-heading">
+    <div class="container">
+      <h2 id="vm-heading" class="sr-only">Vision & Mission</h2>
+      <div class="vm-grid">
+        <article class="vm-card vm-card--vision" data-reveal>
+          <div class="eyebrow">
+            <Dot size={6} />
+            <span class="mono">VISION</span>
+          </div>
+          <h3 class="vm-title">Empower through simplicity.</h3>
+          <p class="vm-copy">
+            To empower businesses by simplifying technology, creating innovative solutions,
+            and amplifying their brand presence in a digital world.
+          </p>
+        </article>
+
+        <article class="vm-card vm-card--mission section-dark" data-reveal>
+          <div class="eyebrow">
+            <Dot size={6} />
+            <span class="mono" style="color: var(--color-accent);">MISSION</span>
+          </div>
+          <h3 class="vm-title" style="color: #FAF8F5;">Driving digital growth.</h3>
+          <p class="vm-copy" style="color: #C2BFB6;">
+            At Web Mondo, we are dedicated to providing businesses with cutting-edge digital
+            solutions that drive growth and success. By combining our expertise in branding,
+            design, digital marketing, web and mobile app development, and custom software
+            solutions, we help our clients navigate the complexities of technology while
+            elevating their brands.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process-section" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <div class="eyebrow"><Dot size={6} /><span>How we work</span></div>
+        <h2 id="process-heading" class="section-title">The same four steps, every time.</h2>
+      </div>
+      <div class="process-list" data-reveal-group>
+        {processSteps.map((step) => (
+          <ProcessStep
+            number={step.number}
+            title={step.title}
+            description={step.description}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="team-section" aria-labelledby="team-heading">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <div class="eyebrow"><Dot size={6} /><span>The team</span></div>
+        <h2 id="team-heading" class="section-title">Designers, developers, and marketers.</h2>
+      </div>
+      <div class="team-list" data-reveal-group>
+        {team.map((member) => (
+          <TeamMember
+            name={member.name}
+            role={member.role}
+            bio={member.bio}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta" aria-labelledby="about-cta-heading">
+    <div class="container about-cta-inner" data-reveal>
+      <div class="eyebrow"><Dot size={6} /><span>Start your journey</span></div>
+      <h2 id="about-cta-heading" class="cta-heading">Let's build something exceptional together.</h2>
+      <p>Whether you're looking to build a powerful website, launch a mobile app, or enhance your brand through strategic marketing, we're here to help.</p>
+      <Button href="/contact" id="about-cta-btn">Start a project</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Page header */
+  .page-header {
+    padding-block: var(--space-xl) var(--space-lg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .page-header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .page-heading { margin-top: var(--space-xs); }
+  .about-lead {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 48ch;
+  }
+
+  /* Story */
+  .story-section {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .story-inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .story-inner { grid-template-columns: 1fr; }
+  }
+  .story-year {
+    margin-top: var(--space-sm);
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+  }
+  .story-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .story-copy {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  /* Vision & Mission */
+  .vision-mission-section {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .vm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  @media (min-width: 768px) {
+    .vm-grid {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+  .vm-card {
+    padding: var(--space-lg) var(--space-md);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    background-color: var(--color-surface);
+  }
+  .vm-card--mission {
+    background-color: var(--color-deep);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+  .vm-title {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-top: var(--space-xs);
+  }
+  .vm-copy {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  /* Process */
+  .process-section {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .section-header { margin-bottom: var(--space-lg); }
+  .section-title { margin-top: var(--space-xs); }
+
+  /* Team */
+  .team-section {
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .team-list {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  /* CTA */
+  .about-cta {
+    padding-block: var(--space-xl);
+  }
+  .about-cta-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 44ch;
+  }
+  .cta-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -0.03em;
+  }
+  .about-cta-inner p {
+    font-size: 15px;
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

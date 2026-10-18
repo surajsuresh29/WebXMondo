@@ -1,16 +1,415 @@
 ---
+/**
+ * index.astro — Home page (/)
+ * Sections:
+ *   1. Hero — headline ≤6 words, paragraph ≤40 words
+ *   2. Services list — 4 hairline-ruled rows
+ *   3. Dark positioning band — full-bleed
+ *   4. Project teasers — 3 cards from content collection
+ *   5. Closing CTA
+ * JSON-LD: Organization
+ * Orchestrated hero entrance animation (homepage only).
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Dot from '../components/Dot.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Web Mondo',
+  url: 'https://webmondo.com',
+  description: 'Simplifying tech, amplifying brand. Digital solutions across branding, web design, mobile apps, software, and marketing.',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'hello@webmondo.com',
+    contactType: 'customer support',
+  },
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Web Mondo — Simplifying Tech, Amplifying Brand"
+  description="At Web Mondo, we believe in the power of technology to transform businesses. We craft tailored digital solutions across branding, websites, mobile apps, marketing, and software."
+  jsonLd={organizationSchema}
+>
+  <!-- ===== 1. HERO CARD ===== -->
+  <section class="sticky-card hero" id="card-hero" aria-labelledby="hero-heading">
+    <div class="container hero-inner">
+      <div class="hero-eyebrow hero-animate">
+        <Dot size={7} />
+        <span class="mono">Digital Solutions</span>
+      </div>
+
+      <h1 id="hero-heading" class="hero-headline hero-animate hero-animate-delay-1">
+        Simplifying tech,<br />amplifying brand.
+      </h1>
+
+      <p class="hero-body hero-animate hero-animate-delay-2">
+        We specialize in creating innovative solutions that streamline your digital presence
+        and elevate your brand to new heights. Websites, mobile apps, marketing, and custom software.
+      </p>
+
+      <div class="hero-actions hero-animate hero-animate-delay-3">
+        <Button href="/contact" id="hero-cta-primary">Start a project</Button>
+        <Button href="/services" variant="secondary" id="hero-cta-secondary">Our services</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. SERVICES CARD ===== -->
+  <section class="sticky-card services-card" id="card-services" aria-labelledby="services-heading">
+    <div class="container services-inner">
+      <div class="section-header">
+        <div class="eyebrow">
+          <Dot size={6} />
+          <span>Our Services</span>
+        </div>
+        <h2 id="services-heading" class="section-title">Five disciplines.<br />One trusted partner.</h2>
+      </div>
+
+      <div class="services-deck-grid">
+        <article class="service-deck-card">
+          <p class="mono service-deck-mono">01 — BRAND</p>
+          <h3 class="service-deck-title">Branding & Designing</h3>
+          <p class="service-deck-copy">We craft cohesive brand identities with stunning logos, colors, and typography to make your business stand out.</p>
+        </article>
+
+        <article class="service-deck-card">
+          <p class="mono service-deck-mono">02 — BUILD</p>
+          <h3 class="service-deck-title">Website Development</h3>
+          <p class="service-deck-copy">We build fast, responsive, and user-friendly websites that enhance engagement and drive conversions.</p>
+        </article>
+
+        <article class="service-deck-card">
+          <p class="mono service-deck-mono">03 — MOBILE</p>
+          <h3 class="service-deck-title">Mobile App Development</h3>
+          <p class="service-deck-copy">We create intuitive, high-performance mobile apps for iOS and Android tailored to your business needs.</p>
+        </article>
+
+        <article class="service-deck-card">
+          <p class="mono service-deck-mono">04 — GROW</p>
+          <h3 class="service-deck-title">Digital Marketing</h3>
+          <p class="service-deck-copy">Our data-driven strategies boost your online presence through SEO, PPC, social media, and email marketing.</p>
+        </article>
+
+        <article class="service-deck-card">
+          <p class="mono service-deck-mono">05 — CODE</p>
+          <h3 class="service-deck-title">Software Solutions</h3>
+          <p class="service-deck-copy">We develop custom software solutions that streamline operations, improve efficiency, and drive innovation.</p>
+        </article>
+      </div>
+
+      <div class="services-cta">
+        <Button href="/services" variant="secondary" id="home-services-btn">Explore all services</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. POSITIONING BAND (DARK CARD) ===== -->
+  <section class="sticky-card positioning-band section-dark" id="card-positioning" aria-labelledby="positioning-heading">
+    <div class="container positioning-inner">
+      <div class="eyebrow positioning-eyebrow">
+        <Dot size={6} />
+        <span class="mono" style="color: var(--color-accent);">Our Vision</span>
+      </div>
+      <p id="positioning-heading" class="positioning-statement">
+        To empower businesses by simplifying technology, creating innovative solutions, and amplifying their brand presence in a digital world.
+      </p>
+      <Button href="/about" id="home-about-btn">Our Story & Mission</Button>
+    </div>
+  </section>
+
+  <!-- ===== 4. PROJECT TEASERS CARD ===== -->
+  <section class="sticky-card work-section" id="card-work" aria-labelledby="work-heading">
+    <div class="container work-inner">
+      <div class="section-header">
+        <div class="eyebrow">
+          <Dot size={6} />
+          <span>Selected work</span>
+        </div>
+        <h2 id="work-heading" class="section-title">Real clients.<br />Real numbers.</h2>
+      </div>
+
+      <div class="work-grid">
+        {works.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            client={project.data.client}
+            tagline={project.data.tagline}
+            services={project.data.services}
+            slug={project.id}
+            coverSrc={project.data.coverSrc}
+            coverAlt={project.data.coverAlt}
+          />
+        ))}
+      </div>
+
+      <div class="work-cta">
+        <Button href="/work" variant="secondary" id="home-work-btn">All case studies</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. CLOSING CTA CARD ===== -->
+  <section class="sticky-card closing-cta" id="card-cta" aria-labelledby="cta-heading">
+    <div class="container closing-inner">
+      <div class="eyebrow">
+        <Dot size={6} />
+        <span>Ready to scale?</span>
+      </div>
+      <h2 id="cta-heading" class="closing-heading">Tell us what you're building.</h2>
+      <p class="closing-body">
+        Whether you're looking to build a powerful website, launch a mobile app, or enhance your brand through strategic marketing, we're here to help you achieve your goals.
+      </p>
+      <Button href="/contact" id="home-closing-cta-btn">Start a project</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ===== STICKY STACKING DECK (ALL HOMEPAGE SECTIONS) ===== */
+  @media (min-width: 768px) {
+    .sticky-card {
+      position: sticky;
+      top: 68px; /* Sticks right below the sticky header */
+      min-height: calc(100dvh - 68px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid var(--color-line);
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.05);
+      background-color: var(--color-bg);
+      padding-block: clamp(2rem, 4vh, 3.5rem);
+    }
+
+    /* Section 1: Hero — sits at base under header */
+    .hero {
+      position: sticky;
+      top: 0;
+      justify-content: flex-start;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top: none;
+      box-shadow: none;
+      z-index: 1;
+      padding-top: clamp(1.75rem, 4vh, 3rem);
+      padding-bottom: clamp(2rem, 5vh, 4rem);
+    }
+
+    /* Section 2: Services — crisp white surface sliding over Hero */
+    .services-card {
+      z-index: 2;
+      background-color: var(--color-surface);
+    }
+
+    /* Section 3: Positioning band — bold obsidian dark card */
+    .positioning-band {
+      z-index: 3;
+      background-color: var(--color-deep);
+      color: #FAF8F5;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Section 4: Work — warm paper card */
+    .work-section {
+      z-index: 4;
+      background-color: var(--color-bg);
+    }
+
+    /* Section 5: Closing CTA — clean white card */
+    .closing-cta {
+      z-index: 5;
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+
+  /* Fallback / Mobile (< 768px) */
+  @media (max-width: 767px) {
+    .sticky-card {
+      padding-block: var(--space-xl);
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+
+  /* ===== 1. HERO ===== */
+  .hero {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 25%, rgba(255, 85, 0, 0.07) 0%, rgba(255, 85, 0, 0.015) 50%, transparent 75%),
+      var(--color-bg);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-eyebrow .mono {
+    color: var(--color-muted);
+  }
+
+  .hero-headline {
+    margin-top: var(--space-sm);
+  }
+
+  .hero-body {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-muted);
+    max-width: 34ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-sm);
+  }
+
+  /* ===== 2. SERVICES ===== */
+  .services-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-md);
+  }
+
+  .section-title {
+    margin-top: var(--space-xs);
+  }
+
+  .services-deck-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    margin-block: var(--space-xs) var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .services-deck-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-deck-grid {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+    }
+  }
+
+  .service-deck-card {
+    padding: 1.25rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card, 16px);
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: transform var(--transition-hover), border-color var(--transition-hover), box-shadow var(--transition-hover);
+  }
+
+  .service-deck-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .service-deck-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .service-deck-copy {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--color-muted);
+    max-width: none;
+  }
+
+  .services-cta {
+    margin-top: var(--space-xs);
+  }
+
+  /* ===== 3. POSITIONING BAND ===== */
+  .positioning-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-width: 52ch;
+  }
+
+  .positioning-eyebrow {
+    margin-bottom: 0;
+  }
+
+  .positioning-statement {
+    font-family: var(--font-sans);
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: #FAF8F5;
+    max-width: 26ch;
+  }
+
+  /* ===== 4. WORK TEASERS ===== */
+  .work-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .work-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .work-cta {
+    margin-top: var(--space-md);
+  }
+
+  /* ===== 5. CLOSING CTA ===== */
+  .closing-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 44ch;
+  }
+
+  .closing-heading {
+    margin-top: 0;
+  }
+
+  .closing-body {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-muted);
+    max-width: 34ch;
+  }
+</style>

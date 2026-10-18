@@ -1,0 +1,75 @@
+---
+/**
+ * TeamMember.astro — About page team bio.
+ * Props:
+ *   name: string
+ *   role: string
+ *   bio: string    — ≤30 words
+ */
+interface Props {
+  name: string;
+  role: string;
+  bio: string;
+}
+const { name, role, bio } = Astro.props;
+---
+
+<article class="team-member" data-reveal>
+  <div class="member-avatar" aria-hidden="true">
+    <span class="member-initial">{name.charAt(0)}</span>
+  </div>
+  <div class="member-info">
+    <h3 class="member-name">{name}</h3>
+    <p class="mono member-role">{role}</p>
+    <p class="member-bio">{bio}</p>
+  </div>
+</article>
+
+<style>
+  .team-member {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--color-line);
+    align-items: start;
+  }
+
+  .member-avatar {
+    width: 56px;
+    height: 56px;
+    background-color: var(--color-ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .member-initial {
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-bg);
+    line-height: 1;
+  }
+
+  .member-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .member-role {
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .member-bio {
+    font-size: 14px;
+    color: var(--color-muted);
+    max-width: none;
+  }
+</style>
