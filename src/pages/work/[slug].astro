@@ -36,13 +36,30 @@ interface Props {
 }
 
 const { entry, prevSlug, prevTitle, nextSlug, nextTitle } = Astro.props;
-const { title, client, services, problem, approach, outcome, coverSrc, coverAlt } = entry.data;
+const {
+  title,
+  client,
+  services,
+  problem,
+  approach,
+  outcome,
+  coverSrc,
+  coverAlt,
+  year,
+  role,
+  metric,
+  metricLabel,
+} = entry.data;
 ---
 
 <CaseStudy
   title={title}
   client={client}
   services={services}
+  year={year}
+  role={role}
+  metric={metric}
+  metricLabel={metricLabel}
   slug={entry.id}
   prevSlug={prevSlug}
   prevTitle={prevTitle}

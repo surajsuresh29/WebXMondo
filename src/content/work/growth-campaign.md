@@ -9,4 +9,8 @@ outcome: "Within the first 60 days, cost-per-acquisition dropped from $340 to $1
 coverSrc: "/images/cover-growth.jpg"
 coverAlt: "Abstract editorial composition of bold geometric lines and curves representing the Meridian growth campaign"
 order: 2
+year: "2024"
+role: "Paid Media & Growth Analytics"
+metric: "-52% CPA ($340 → $163) · +217% Bookings"
+metricLabel: "Core Metric / ROI"
 ---

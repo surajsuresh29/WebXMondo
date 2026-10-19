@@ -14,6 +14,10 @@ const work = defineCollection({
     coverSrc: z.string().optional(),
     coverAlt: z.string(),
     order: z.number(),
+    year: z.string().optional(),
+    role: z.string().optional(),
+    metric: z.string().optional(),
+    metricLabel: z.string().optional(),
   }),
 });
 

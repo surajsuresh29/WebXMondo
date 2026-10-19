@@ -20,7 +20,11 @@ import Dot from '../components/Dot.astro';
 interface Props {
   title: string;
   client: string;
-  services: string[];
+  services?: string[];
+  year?: string;
+  role?: string;
+  metric?: string;
+  metricLabel?: string;
   prevSlug?: string;
   prevTitle?: string;
   nextSlug?: string;
@@ -33,7 +37,11 @@ interface Props {
 const {
   title,
   client,
-  services,
+  services = [],
+  year = '2024',
+  role = services[0] ?? 'Design & Development',
+  metric = 'Validated Business Impact',
+  metricLabel = 'CORE METRIC / ROI',
   prevSlug,
   prevTitle,
   nextSlug,
@@ -48,19 +56,54 @@ const {
   <article class="case-study">
     <!-- Header / meta bar -->
     <header class="cs-header container">
-      <div class="cs-meta">
-        <div class="cs-meta-item">
-          <p class="mono meta-label">Client</p>
-          <p class="meta-value">{client}</p>
-        </div>
-        <div class="cs-meta-item">
-          <p class="mono meta-label">Services</p>
-          <ul class="meta-services mono" role="list">
-            {services.map((s) => <li>{s}</li>)}
-          </ul>
-        </div>
+      <div class="cs-header-intro" data-reveal>
+        <a href="/work" class="mono cs-back-link" aria-label="Back to all case studies">
+          <span aria-hidden="true">&larr;</span> All Case Studies
+        </a>
+        <h1 class="cs-title">{title}</h1>
       </div>
-      <h1 class="cs-title">{title}</h1>
+
+      <!-- Bento Metadata Grid -->
+      <div class="cs-bento-grid" data-reveal aria-label="Project metadata">
+        <!-- 1. Client -->
+        <div class="cs-bento-card cs-bento-card--client">
+          <span class="mono cs-bento-eyebrow">Client</span>
+          <p class="cs-bento-value">{client}</p>
+        </div>
+
+        <!-- 2. Year -->
+        <div class="cs-bento-card cs-bento-card--year">
+          <span class="mono cs-bento-eyebrow">Year</span>
+          <p class="cs-bento-value">{year}</p>
+        </div>
+
+        <!-- 3. Role -->
+        <div class="cs-bento-card cs-bento-card--role">
+          <span class="mono cs-bento-eyebrow">Role</span>
+          <p class="cs-bento-value">{role}</p>
+        </div>
+
+        <!-- 4. Core Metric / ROI (spans 2 columns on desktop) -->
+        <div class="cs-bento-card cs-bento-card--metric">
+          <div class="cs-bento-eyebrow-row">
+            <Dot size={5} />
+            <span class="mono cs-bento-eyebrow">{metricLabel}</span>
+          </div>
+          <p class="cs-bento-metric-value">{metric}</p>
+        </div>
+
+        <!-- 5. Scope / Services -->
+        {services && services.length > 0 && (
+          <div class="cs-bento-card cs-bento-card--services">
+            <span class="mono cs-bento-eyebrow">Services</span>
+            <ul class="cs-bento-taglist" role="list">
+              {services.map((s) => (
+                <li class="cs-bento-tag mono">{s}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </header>
 
     <!-- Content -->
@@ -98,43 +141,136 @@ const {
 
   /* Header */
   .cs-header {
-    padding-block: var(--space-xl);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
     border-bottom: 1px solid var(--color-line);
     margin-bottom: var(--space-xl);
   }
 
-  .cs-meta {
-    display: flex;
-    gap: var(--space-xl);
-    margin-bottom: var(--space-lg);
-    flex-wrap: wrap;
+  .cs-header-intro {
+    margin-bottom: var(--space-xl);
   }
 
-  .meta-label {
+  .cs-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-muted);
-    margin-bottom: 0.3rem;
-    max-width: none;
+    text-decoration: none;
+    margin-bottom: var(--space-md);
+    transition: color var(--transition-ui);
   }
 
-  .meta-value {
-    font-size: 15px;
-    font-weight: 500;
+  .cs-back-link:hover {
     color: var(--color-ink);
-    max-width: none;
-  }
-
-  .meta-services {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .meta-services li {
-    color: var(--color-muted);
   }
 
   .cs-title {
-    max-width: 16ch;
+    max-width: 18ch;
+    margin: 0;
+  }
+
+  /* Bento Metadata Grid */
+  .cs-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm, 1rem);
+  }
+
+  .cs-bento-card {
+    background-color: var(--color-surface, #F4F1EA);
+    border: 1px solid var(--color-line, #E2DED4);
+    border-radius: var(--radius-card, 16px);
+    padding: clamp(1.25rem, 2vw, 1.6rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.65rem;
+    box-shadow: none; /* strictly structural: relies on 1px borders & surface contrast */
+    transition: border-color var(--transition-ui, 150ms ease);
+  }
+
+  .cs-bento-card:hover {
+    border-color: var(--color-ink, #0E0E0D);
+  }
+
+  /* Asymmetric feature tile: Core Metric / ROI spans 2 columns on desktop */
+  .cs-bento-card--metric {
+    grid-column: span 2;
+  }
+
+  .cs-bento-eyebrow {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .cs-bento-eyebrow-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .cs-bento-value {
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: clamp(16px, 1.5vw, 19px);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink, #0E0E0D);
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .cs-bento-metric-value {
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--color-ink, #0E0E0D);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .cs-bento-taglist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .cs-bento-tag {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 11px;
+    color: var(--color-ink, #0E0E0D);
+    background-color: var(--color-surface-subtle, rgba(0, 0, 0, 0.03));
+    border: 1px solid var(--color-line, #E2DED4);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  /* Responsive breakdown to 1-column stack on viewports < 800px */
+  @media (max-width: 799px) {
+    .cs-bento-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .cs-bento-card--metric {
+      grid-column: span 1;
+    }
   }
 
   /* Content sections */

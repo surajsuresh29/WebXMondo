@@ -9,4 +9,8 @@ outcome: "Northfield rolled out the new identity across all channels in eleven w
 coverSrc: "/images/cover-brandmark.jpg"
 coverAlt: "Abstract geometric composition on dark background representing the Northfield Goods brand overhaul"
 order: 1
+year: "2024"
+role: "Brand Strategy & Visual Identity"
+metric: "+34% YoY Trade Inquiries"
+metricLabel: "Core Metric / ROI"
 ---
