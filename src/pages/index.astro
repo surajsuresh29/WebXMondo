@@ -103,31 +103,34 @@ const organizationSchema = {
   <!-- ===== 2. SERVICES CARD ===== -->
   <section class="sticky-card services-card" id="card-services" aria-labelledby="services-heading">
     <div class="container services-inner">
-      <div class="services-header-left">
-        <div class="eyebrow">
-          <Dot size={6} />
-          <span>Our Services</span>
+      <div class="services-header" data-reveal-group>
+        <div class="services-header-left" data-reveal>
+          <div class="eyebrow">
+            <Dot size={6} />
+            <span>Our Services</span>
+          </div>
+          <h2 id="services-heading" class="section-title">Five disciplines.<br />One trusted partner.</h2>
         </div>
-        <h2 id="services-heading" class="section-title">Five disciplines.<br />One trusted partner.</h2>
+
+        <div class="services-header-right" data-reveal>
+          <p class="services-supporting">
+            We lead with websites and search, and add brand, app and software work when your product needs it.
+          </p>
+          <Button href="/services" variant="primary" id="home-services-btn" class="services-explore-btn">
+            <span>Explore all services</span>
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+              <path d="M2.5 7H11.5M11.5 7L7.5 3M11.5 7L7.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </Button>
+        </div>
       </div>
 
-      <div class="services-header-right">
-        <p class="services-supporting">
-          We lead with websites and search, and add brand, app and software work when your product needs it.
-        </p>
-        <Button href="/services" variant="primary" id="home-services-btn" class="services-explore-btn">
-          <span>Explore all services</span>
-          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
-            <path d="M2.5 7H11.5M11.5 7L7.5 3M11.5 7L7.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </Button>
-      </div>
-
-      <div class="services-bento-grid">
+      <div class="services-bento-grid" data-reveal-group>
         <!-- 1. Website Development (Feature tile: span 3) -->
         <a
           href="/services#website-development"
           class="bento-tile bento-tile--feature"
+          data-reveal
           aria-labelledby="service-title-website"
           aria-describedby="service-desc-website"
         >
@@ -137,17 +140,17 @@ const organizationSchema = {
             <p id="service-desc-website" class="bento-tile-copy">Fast, responsive websites built to turn visitors into enquiries, and to be found on search from day one.</p>
           </div>
           <div class="bento-tile-media" aria-hidden="true">
-            <svg class="bento-illustration bento-illustration--website" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-              <rect x="0.5" y="0.5" width="159" height="99" rx="8" fill="var(--color-surface)" stroke="var(--color-line)"/>
-              <path d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5H152C156.142 0.5 159.5 3.85786 159.5 8V20.5H0.5V8Z" fill="var(--color-surface-subtle)" stroke="var(--color-line)"/>
-              <circle cx="10" cy="10.5" r="2.5" fill="var(--color-line)"/>
-              <circle cx="18" cy="10.5" r="2.5" fill="var(--color-line)"/>
-              <circle cx="26" cy="10.5" r="2.5" fill="var(--color-line)"/>
-              <rect x="36" y="5.5" width="70" height="10" rx="4" fill="var(--color-bg)"/>
-              <rect x="14" y="32" width="68" height="9" rx="3" fill="var(--color-ink)"/>
-              <rect x="14" y="48" width="95" height="5" rx="2" fill="var(--color-muted)" opacity="0.45"/>
-              <rect x="14" y="58" width="72" height="5" rx="2" fill="var(--color-muted)" opacity="0.35"/>
-              <rect x="14" y="72" width="38" height="15" rx="4" fill="var(--color-accent)"/>
+            <svg class="bento-illustration bento-illustration--website" viewBox="0 0 140 85" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <rect class="draw-path draw-frame" pathLength="100" x="2" y="2" width="136" height="81" rx="7" stroke="var(--color-line)" stroke-width="1.5" />
+              <line class="draw-path draw-bar" pathLength="100" x1="2" y1="19" x2="138" y2="19" stroke="var(--color-line)" stroke-width="1" />
+              <circle class="draw-fill" cx="10" cy="10.5" r="2" fill="var(--color-line)" />
+              <circle class="draw-fill" cx="17" cy="10.5" r="2" fill="var(--color-line)" />
+              <circle class="draw-fill" cx="24" cy="10.5" r="2" fill="var(--color-line)" />
+              <rect class="draw-path draw-url" pathLength="100" x="34" y="6" width="66" height="9" rx="3" stroke="var(--color-line)" stroke-width="1" />
+              <line class="draw-path draw-wire-1" pathLength="100" x1="14" y1="33" x2="68" y2="33" stroke="var(--color-ink)" stroke-width="2" stroke-linecap="round" />
+              <line class="draw-path draw-wire-2" pathLength="100" x1="14" y1="44" x2="112" y2="44" stroke="var(--color-muted)" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+              <line class="draw-path draw-wire-3" pathLength="100" x1="14" y1="53" x2="88" y2="53" stroke="var(--color-muted)" stroke-width="1.5" stroke-linecap="round" opacity="0.45" />
+              <rect class="draw-path draw-btn-rect" pathLength="100" x="14" y="63" width="36" height="13" rx="3.5" stroke="var(--color-accent)" stroke-width="1.5" />
             </svg>
           </div>
           <svg class="tile-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
@@ -159,6 +162,7 @@ const organizationSchema = {
         <a
           href="/services#digital-marketing"
           class="bento-tile bento-tile--feature"
+          data-reveal
           aria-labelledby="service-title-marketing"
           aria-describedby="service-desc-marketing"
         >
@@ -168,24 +172,13 @@ const organizationSchema = {
             <p id="service-desc-marketing" class="bento-tile-copy">Search-led growth: SEO first, with PPC, social and email alongside, measured by the enquiries they bring in.</p>
           </div>
           <div class="bento-tile-media" aria-hidden="true">
-            <svg class="bento-illustration bento-illustration--marketing" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-              <rect x="1" y="2" width="158" height="28" rx="6" fill="var(--color-surface)" stroke="var(--color-accent)" stroke-width="1.5"/>
-              <rect x="7" y="8" width="16" height="16" rx="4" fill="var(--color-accent)"/>
-              <text x="15" y="20" fill="var(--color-surface)" font-family="var(--font-sans)" font-size="10" font-weight="700" text-anchor="middle">1</text>
-              <rect x="29" y="8" width="68" height="6" rx="2" fill="var(--color-accent)"/>
-              <rect x="29" y="18" width="100" height="4" rx="2" fill="var(--color-muted)" opacity="0.5"/>
-
-              <rect x="1" y="36" width="158" height="28" rx="6" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="1"/>
-              <rect x="7" y="42" width="16" height="16" rx="4" fill="var(--color-surface-subtle)"/>
-              <text x="15" y="54" fill="var(--color-muted)" font-family="var(--font-sans)" font-size="10" font-weight="500" text-anchor="middle">2</text>
-              <rect x="29" y="42" width="60" height="6" rx="2" fill="var(--color-ink)"/>
-              <rect x="29" y="52" width="90" height="4" rx="2" fill="var(--color-muted)" opacity="0.4"/>
-
-              <rect x="1" y="70" width="158" height="28" rx="6" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="1"/>
-              <rect x="7" y="76" width="16" height="16" rx="4" fill="var(--color-surface-subtle)"/>
-              <text x="15" y="88" fill="var(--color-muted)" font-family="var(--font-sans)" font-size="10" font-weight="500" text-anchor="middle">3</text>
-              <rect x="29" y="76" width="52" height="6" rx="2" fill="var(--color-ink)"/>
-              <rect x="29" y="86" width="78" height="4" rx="2" fill="var(--color-muted)" opacity="0.3"/>
+            <svg class="bento-illustration bento-illustration--marketing" viewBox="0 0 140 85" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <line class="draw-grid-line" x1="10" y1="72" x2="130" y2="72" stroke="var(--color-line)" stroke-width="1" opacity="0.5" />
+              <line class="draw-grid-line" x1="10" y1="46" x2="130" y2="46" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="2 3" opacity="0.5" />
+              <line class="draw-grid-line" x1="10" y1="20" x2="130" y2="20" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="2 3" opacity="0.5" />
+              <path class="draw-path draw-seo-line" pathLength="100" d="M 12 65 C 38 63, 52 68, 72 50 C 92 32, 108 38, 128 14" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              <circle class="draw-fill" cx="128" cy="14" r="3.5" fill="var(--color-accent)" />
+              <circle class="draw-path draw-pulse" pathLength="100" cx="128" cy="14" r="6.5" stroke="var(--color-accent)" stroke-width="1" />
             </svg>
           </div>
           <svg class="tile-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
@@ -197,6 +190,7 @@ const organizationSchema = {
         <a
           href="/services#branding-designing"
           class="bento-tile bento-tile--standard"
+          data-reveal
           aria-labelledby="service-title-branding"
           aria-describedby="service-desc-branding"
         >
@@ -204,6 +198,15 @@ const organizationSchema = {
             <p class="mono bento-tile-label">LOGO · COLOR · TYPOGRAPHY</p>
             <h3 id="service-title-branding" class="bento-tile-title">Branding & Designing</h3>
             <p id="service-desc-branding" class="bento-tile-copy">Logos, color and typography that work together, so your brand looks the same on every page, app and ad.</p>
+          </div>
+          <div class="bento-tile-media bento-tile-media--standard" aria-hidden="true">
+            <svg class="bento-illustration bento-illustration--branding" viewBox="0 0 100 65" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <rect class="draw-path draw-swatch-1" pathLength="100" x="10" y="16" width="28" height="42" rx="4" transform="rotate(-15 24 37)" stroke="var(--color-line)" stroke-width="1.5" />
+              <rect class="draw-path draw-swatch-2" pathLength="100" x="35" y="10" width="28" height="44" rx="4" transform="rotate(-3 49 32)" stroke="var(--color-muted)" stroke-width="1.5" opacity="0.6" />
+              <rect class="draw-path draw-swatch-3" pathLength="100" x="56" y="12" width="30" height="44" rx="4" transform="rotate(11 71 34)" stroke="var(--color-accent)" stroke-width="1.75" />
+              <circle class="draw-fill" cx="71" cy="26" r="4" fill="var(--color-accent)" />
+              <line class="draw-path draw-swatch-line" pathLength="100" x1="64" y1="42" x2="80" y2="45" stroke="var(--color-ink)" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
           </div>
           <svg class="tile-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
             <path d="M3.5 10.5L10.5 3.5M10.5 3.5H4.5M10.5 3.5V9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -214,6 +217,7 @@ const organizationSchema = {
         <a
           href="/services#mobile-app-development"
           class="bento-tile bento-tile--standard"
+          data-reveal
           aria-labelledby="service-title-mobile"
           aria-describedby="service-desc-mobile"
         >
@@ -221,6 +225,16 @@ const organizationSchema = {
             <p class="mono bento-tile-label">IOS · ANDROID</p>
             <h3 id="service-title-mobile" class="bento-tile-title">Mobile App Development</h3>
             <p id="service-desc-mobile" class="bento-tile-copy">iOS and Android apps built around how your customers use them, from first screen to store release.</p>
+          </div>
+          <div class="bento-tile-media bento-tile-media--standard" aria-hidden="true">
+            <svg class="bento-illustration bento-illustration--mobile" viewBox="0 0 100 65" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <rect class="draw-path draw-phone-body" pathLength="100" x="31" y="4" width="38" height="57" rx="8" stroke="var(--color-ink)" stroke-width="1.5" />
+              <line class="draw-path draw-phone-speaker" pathLength="100" x1="44" y1="9" x2="56" y2="9" stroke="var(--color-muted)" stroke-width="1.5" stroke-linecap="round" />
+              <rect class="draw-path draw-phone-card" pathLength="100" x="37" y="17" width="26" height="22" rx="4" stroke="var(--color-accent)" stroke-width="1.25" />
+              <line class="draw-path draw-phone-metric" pathLength="100" x1="42" y1="26" x2="55" y2="26" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" />
+              <line class="draw-path draw-phone-sub" pathLength="100" x1="42" y1="32" x2="52" y2="32" stroke="var(--color-muted)" stroke-width="1" stroke-linecap="round" opacity="0.6" />
+              <line class="draw-path draw-phone-home" pathLength="100" x1="43" y1="55" x2="57" y2="55" stroke="var(--color-ink)" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
           </div>
           <svg class="tile-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
             <path d="M3.5 10.5L10.5 3.5M10.5 3.5H4.5M10.5 3.5V9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -231,6 +245,7 @@ const organizationSchema = {
         <a
           href="/services#software-solutions"
           class="bento-tile bento-tile--standard"
+          data-reveal
           aria-labelledby="service-title-software"
           aria-describedby="service-desc-software"
         >
@@ -238,6 +253,16 @@ const organizationSchema = {
             <p class="mono bento-tile-label">CUSTOM BUILDS</p>
             <h3 id="service-title-software" class="bento-tile-title">Software Solutions</h3>
             <p id="service-desc-software" class="bento-tile-copy">Custom software that streamlines day-to-day operations, so your team spends less time on manual work.</p>
+          </div>
+          <div class="bento-tile-media bento-tile-media--standard" aria-hidden="true">
+            <svg class="bento-illustration bento-illustration--software" viewBox="0 0 100 65" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path class="draw-path draw-bracket-l" pathLength="100" d="M 28 18 L 16 32.5 L 28 47" stroke="var(--color-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <line class="draw-path draw-bracket-slash" pathLength="100" x1="56" y1="14" x2="44" y2="51" stroke="var(--color-accent)" stroke-width="2.25" stroke-linecap="round" />
+              <path class="draw-path draw-bracket-r" pathLength="100" d="M 72 18 L 84 32.5 L 72 47" stroke="var(--color-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <circle class="draw-fill" cx="44" cy="58" r="2" fill="var(--color-muted)" />
+              <circle class="draw-fill" cx="52" cy="58" r="2" fill="var(--color-accent)" />
+              <circle class="draw-fill" cx="60" cy="58" r="2" fill="var(--color-muted)" />
+            </svg>
           </div>
           <svg class="tile-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
             <path d="M3.5 10.5L10.5 3.5M10.5 3.5H4.5M10.5 3.5V9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -249,7 +274,7 @@ const organizationSchema = {
 
   <!-- ===== 3. POSITIONING BAND (DARK CARD) ===== -->
   <section class="sticky-card positioning-band section-dark" id="card-positioning" aria-labelledby="positioning-heading">
-    <div class="container positioning-inner">
+    <div class="container positioning-inner" data-reveal>
       <div class="eyebrow positioning-eyebrow">
         <Dot size={6} />
         <span class="mono" style="color: var(--color-accent);">Our Vision</span>
@@ -264,7 +289,7 @@ const organizationSchema = {
   <!-- ===== 4. PROJECT TEASERS CARD ===== -->
   <section class="sticky-card work-section" id="card-work" aria-labelledby="work-heading">
     <div class="container work-inner">
-      <div class="section-header">
+      <div class="section-header" data-reveal>
         <div class="eyebrow">
           <Dot size={6} />
           <span>Selected work</span>
@@ -272,7 +297,7 @@ const organizationSchema = {
         <h2 id="work-heading" class="section-title">Real clients.<br />Real numbers.</h2>
       </div>
 
-      <div class="work-grid">
+      <div class="work-grid" data-reveal-group>
         {works.map((project) => (
           <ProjectCard
             title={project.data.title}
@@ -286,7 +311,7 @@ const organizationSchema = {
         ))}
       </div>
 
-      <div class="work-cta">
+      <div class="work-cta" data-reveal>
         <Button href="/work" variant="secondary" id="home-work-btn">All case studies</Button>
       </div>
     </div>
@@ -294,7 +319,7 @@ const organizationSchema = {
 
   <!-- ===== 5. CLOSING CTA CARD ===== -->
   <section class="sticky-card closing-cta" id="card-cta" aria-labelledby="cta-heading">
-    <div class="container closing-inner">
+    <div class="container closing-inner" data-reveal>
       <div class="eyebrow">
         <Dot size={6} />
         <span>Ready to scale?</span>
@@ -905,7 +930,7 @@ const organizationSchema = {
 
   .bento-tile:hover {
     transform: translateY(-2px);
-    border-color: var(--color-accent);
+    border-color: var(--color-line);
   }
 
   .bento-tile:focus-visible {
@@ -921,6 +946,7 @@ const organizationSchema = {
     right: 1rem;
     color: var(--color-muted);
     transition: transform 180ms ease, color 180ms ease;
+    z-index: 3;
   }
 
   .bento-tile:hover .tile-arrow,
@@ -932,6 +958,8 @@ const organizationSchema = {
   .bento-tile-main {
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 2;
   }
 
   .bento-tile-label {
@@ -960,6 +988,133 @@ const organizationSchema = {
     max-width: none;
   }
 
+  /* Cursor-following border spotlight (only on hover-capable devices with motion allowed) */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .bento-tile::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        220px circle at var(--x, -999px) var(--y, -999px),
+        var(--color-accent) 0%,
+        rgba(255, 107, 0, 0.35) 45%,
+        transparent 75%
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 240ms ease;
+      z-index: 2;
+    }
+
+    .bento-tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        280px circle at var(--x, -999px) var(--y, -999px),
+        rgba(255, 107, 0, 0.04) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 240ms ease;
+      z-index: 1;
+    }
+
+    .bento-tile:hover::before,
+    .bento-tile:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Bento Illustration Media */
+  .bento-tile-media {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .bento-illustration {
+    display: block;
+    overflow: visible;
+  }
+
+  .bento-tile-media--standard {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    height: 46px;
+  }
+
+  .bento-tile-media--standard .bento-illustration {
+    height: 100%;
+    width: auto;
+    max-height: 46px;
+  }
+
+  /* Self-drawing SVG animation via stroke-dashoffset on reveal */
+  @media (prefers-reduced-motion: no-preference) {
+    .draw-path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      transition: stroke-dashoffset 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: stroke-dashoffset;
+    }
+
+    .draw-fill {
+      opacity: 0;
+      transform: scale(0.5);
+      transform-origin: center;
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .bento-tile.is-visible .draw-path {
+      stroke-dashoffset: 0;
+      transition-delay: calc(var(--stagger-delay, 0ms) + 100ms);
+    }
+
+    .bento-tile.is-visible .draw-fill {
+      opacity: 1;
+      transform: scale(1);
+      transition-delay: calc(var(--stagger-delay, 0ms) + 360ms);
+    }
+
+    .bento-tile.is-visible .draw-pulse {
+      animation: pulse-ring 2.4s ease-out infinite;
+      animation-delay: calc(var(--stagger-delay, 0ms) + 1.2s);
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.25;
+      }
+      100% {
+        transform: scale(0.85);
+        opacity: 0.9;
+      }
+    }
+  }
+
   /* Feature tile layout (Row 1): ~60% text, ~40% illustration on right */
   @media (min-width: 1100px) and (min-height: 680px) {
     .bento-tile--feature {
@@ -983,15 +1138,30 @@ const organizationSchema = {
       margin-right: 0.75rem;
     }
 
-    .bento-illustration {
+    .bento-illustration--website,
+    .bento-illustration--marketing {
       width: 100%;
       height: auto;
       max-height: 88px;
     }
   }
 
-  /* Hide illustrations below 1100px width, and below 680px height */
-  @media (max-width: 1099px), (max-height: 679px) {
+  /* On mobile (< 900px), feature tile illustrations align bottom-right */
+  @media (max-width: 899px) {
+    .bento-tile--feature .bento-tile-media {
+      align-self: flex-end;
+      height: 52px;
+      margin-top: 0.5rem;
+    }
+    .bento-tile--feature .bento-illustration {
+      height: 100%;
+      width: auto;
+      max-height: 52px;
+    }
+  }
+
+  /* Hide illustrations only on tablet viewport during sticky deck (900-1099px) or short viewport (< 680px) to prevent card overflow */
+  @media (min-width: 900px) and (max-width: 1099px) and (min-height: 680px), (min-width: 900px) and (max-height: 679px) {
     .bento-tile-media {
       display: none !important;
     }
@@ -1025,6 +1195,23 @@ const organizationSchema = {
     .bento-tile:hover .tile-arrow,
     .bento-tile:focus-visible .tile-arrow {
       transform: none !important;
+    }
+    .bento-tile::before,
+    .bento-tile::after {
+      display: none !important;
+    }
+    .draw-path {
+      stroke-dasharray: none !important;
+      stroke-dashoffset: 0 !important;
+      transition: none !important;
+    }
+    .draw-fill {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .draw-pulse {
+      animation: none !important;
     }
     :global(#home-services-btn:hover) .btn-arrow,
     :global(#home-services-btn:focus-visible) .btn-arrow,
@@ -1103,3 +1290,48 @@ const organizationSchema = {
     max-width: 34ch;
   }
 </style>
+
+<script is:inline>
+  (function () {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+
+    var tiles = document.querySelectorAll('.bento-tile');
+    if (!tiles.length) return;
+
+    tiles.forEach(function (tile) {
+      var rafId = null;
+      var lastX = 0;
+      var lastY = 0;
+
+      function updatePosition() {
+        tile.style.setProperty('--x', lastX + 'px');
+        tile.style.setProperty('--y', lastY + 'px');
+        rafId = null;
+      }
+
+      tile.addEventListener(
+        'pointermove',
+        function (e) {
+          var rect = tile.getBoundingClientRect();
+          lastX = e.clientX - rect.left;
+          lastY = e.clientY - rect.top;
+
+          if (rafId === null) {
+            rafId = requestAnimationFrame(updatePosition);
+          }
+        },
+        { passive: true }
+      );
+
+      tile.addEventListener('pointerleave', function () {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        tile.style.removeProperty('--x');
+        tile.style.removeProperty('--y');
+      });
+    });
+  })();
+</script>
+
