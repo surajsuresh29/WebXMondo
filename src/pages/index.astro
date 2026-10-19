@@ -394,7 +394,7 @@ const organizationSchema = {
     .closing-cta {
       z-index: 5;
       background-color: var(--color-surface);
-      border-bottom: 1px solid var(--color-line);
+      border-bottom: none;
     }
 
     /* Dark mode shadow refinement inside usable deck */
@@ -522,6 +522,10 @@ const organizationSchema = {
       box-shadow: none;
       padding-block: clamp(3rem, 12vw, 4.5rem);
       border-bottom: 1px solid var(--color-line);
+    }
+
+    .closing-cta {
+      border-bottom: none;
     }
   }
 
