@@ -175,12 +175,26 @@ p {
   margin-bottom: var(--space-md);
 }
 
-/* Links on light backgrounds: ink colour, orange underline */
-.text-link {
+/* --- 5b. CONTRAST AUDIT RULE (WCAG AA/AAA COMPLIANCE) ------- */
+/*
+  Text-only links on light backgrounds (--color-bg / --color-surface) must
+  use --color-ink (#0E0E0D) for high-contrast legibility (>= 4.5:1 contrast).
+  The accent color is reserved exclusively for text-decoration or border-bottom.
+*/
+a.text-link,
+.text-link,
+a[data-link-accent] {
   color: var(--color-ink);
   text-decoration: underline;
   text-decoration-color: var(--color-accent);
   text-underline-offset: 3px;
+}
+
+a.text-link:hover,
+.text-link:hover,
+a[data-link-accent]:hover {
+  color: var(--color-ink);
+  text-decoration-color: var(--color-accent);
 }
 
 /* --- 6. LAYOUT UTILITIES ------------------------------------ */
@@ -224,10 +238,19 @@ p {
   color: var(--color-bg);
 }
 
-/* --- 7. FOCUS RING ------------------------------------------ */
+/* --- 7. FOCUS RING & STICKY DECK KEYBOARD ACCESSIBILITY ----- */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
+}
+
+/* Ensure focusable elements in sticky cards scroll clear of the nav and overlapping card header */
+.sticky-card a,
+.sticky-card button,
+.sticky-card input,
+.sticky-card select,
+.sticky-card textarea {
+  scroll-margin-top: calc(var(--nav-h) + 2rem);
 }
 
 /* --- 8. SCROLL REVEAL --------------------------------------- */

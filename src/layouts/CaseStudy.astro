@@ -26,12 +26,25 @@ interface Props {
   nextSlug?: string;
   nextTitle?: string;
   description: string;
+  slug?: string;
+  ogImage?: string;
 }
 
-const { title, client, services, prevSlug, prevTitle, nextSlug, nextTitle, description } = Astro.props;
+const {
+  title,
+  client,
+  services,
+  prevSlug,
+  prevTitle,
+  nextSlug,
+  nextTitle,
+  description,
+  slug,
+  ogImage = slug ? `/og/${slug}.png` : undefined,
+} = Astro.props;
 ---
 
-<Base title={`${title} — Web Mondo`} description={description}>
+<Base title={`${title} — Web Mondo`} description={description} ogImage={ogImage}>
   <article class="case-study">
     <!-- Header / meta bar -->
     <header class="cs-header container">
