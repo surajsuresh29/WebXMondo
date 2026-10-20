@@ -14,6 +14,7 @@ import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import Dot from '../components/Dot.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { SITE_EMAIL } from '../data/site';
 import { getCollection } from 'astro:content';
 
 const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -26,7 +27,7 @@ const organizationSchema = {
   description: 'Simplifying tech, amplifying brand. Digital solutions across branding, web design, mobile apps, software, and marketing.',
   contactPoint: {
     '@type': 'ContactPoint',
-    email: 'hello@webmondo.com',
+    email: SITE_EMAIL,
     contactType: 'customer support',
   },
 };
@@ -319,16 +320,19 @@ const organizationSchema = {
 
   <!-- ===== 5. CLOSING CTA CARD ===== -->
   <section class="sticky-card closing-cta" id="card-cta" aria-labelledby="cta-heading">
-    <div class="container closing-inner" data-reveal>
+    <div class="container closing-inner">
       <div class="eyebrow">
         <Dot size={6} />
         <span>Ready to scale?</span>
       </div>
       <h2 id="cta-heading" class="closing-heading">Tell us what you're building.</h2>
       <p class="closing-body">
-        Whether you're looking to build a powerful website, launch a mobile app, or enhance your brand through strategic marketing, we're here to help you achieve your goals.
+        Tell us what you need: a new website, better search visibility, an app or a brand refresh. We'll come back with the next steps.
       </p>
-      <Button href="/contact" id="home-closing-cta-btn">Let’s build</Button>
+      <div class="closing-actions">
+        <Button href="/contact" id="home-closing-cta-btn">Let’s build</Button>
+        <a href={`mailto:${SITE_EMAIL}`} class="closing-email-link mono">{SITE_EMAIL}</a>
+      </div>
     </div>
   </section>
 </Base>
@@ -1287,23 +1291,114 @@ const organizationSchema = {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-md);
-    max-width: 44ch;
+    width: 100%;
   }
 
-  .closing-inner :global(#home-closing-cta-btn) {
-    align-self: flex-start;
-    width: fit-content;
+  .closing-inner .eyebrow {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 900px) and (min-height: 680px) {
+    .closing-inner {
+      margin-top: -54px;
+    }
   }
 
   .closing-heading {
     margin-top: 0;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1.05;
+    text-wrap: balance;
+    max-width: 18ch;
   }
 
   .closing-body {
     font-size: 18px;
     line-height: 1.5;
     color: var(--color-muted);
-    max-width: 34ch;
+    max-width: 44ch;
+  }
+
+  .closing-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .closing-actions :global(#home-closing-cta-btn) {
+    align-self: flex-start;
+    width: fit-content;
+  }
+
+  .closing-email-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    padding-inline: 0.25rem;
+    transition: color var(--transition-ui), text-decoration var(--transition-ui);
+  }
+
+  .closing-email-link:hover,
+  .closing-email-link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .closing-email-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* Motion: scroll-driven entrance reveal completing when panel docks */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .closing-heading {
+        animation: cta-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 50%;
+      }
+
+      .closing-body {
+        animation: cta-fade 520ms cubic-bezier(0.2, 0.7, 0.2, 1) 60ms both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 50%;
+      }
+
+      .closing-actions {
+        animation: cta-fade 520ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms both;
+        animation-timeline: view();
+        animation-range: entry 15% cover 50%;
+      }
+    }
+  }
+
+  @keyframes cta-rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes cta-fade {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
 

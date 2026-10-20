@@ -3,6 +3,7 @@
  * Footer.astro — Site footer with nav, contact details, mono domain.
  */
 import Dot from './Dot.astro';
+import { SITE_EMAIL } from '../data/site';
 
 const footerLinks = [
   { label: 'Services', href: '/services' },
@@ -42,7 +43,7 @@ const footerLinks = [
     <div class="footer-bottom">
       <div class="footer-contact">
         <p class="mono">Simplifying tech, amplifying brand.</p>
-        <p class="mono">hello@webmondo.com</p>
+        <p class="mono">{SITE_EMAIL}</p>
       </div>
       <p class="footer-domain mono">webmondo.com</p>
     </div>
