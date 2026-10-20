@@ -1,130 +1,289 @@
 ---
 /**
  * contact.astro — /contact
- * Contact form + contact details sidebar.
+ * Interactive contact form featuring:
+ * 1. Floating Labels (CSS only using + sibling combinator & :not(:placeholder-shown))
+ * 2. Form Structure & Tokens (transparent background, 1px bottom border, focus-visible outline)
+ * 3. Non-Intrusive Validation (blur-first validation, subtle accent border, aria-live="polite",
+ *    and state-toggle input listener that clears immediately upon correction).
  */
 import Base from '../layouts/Base.astro';
-import ContactForm from '../components/ContactForm.astro';
 import Dot from '../components/Dot.astro';
 ---
 
 <Base
-  title="Contact Us — Web Mondo | Simplifying Tech, Amplifying Brand"
-  description="Get in touch with Web Mondo. Whether you're looking to build a website, launch a mobile app, or enhance your brand through digital marketing, we're here to help."
+  title="Contact Us — Web X Mondo | Simplifying Tech, Amplifying Brand"
+  description="Get in touch with Web X Mondo. Whether you're looking to build a website, launch a mobile app, or enhance your brand through digital marketing, we're here to help."
 >
-  <!-- Page header -->
-  <section class="page-header">
-    <div class="container page-header-inner">
-      <div class="eyebrow" data-reveal>
-        <Dot size={6} />
-        <span>Get in touch</span>
-      </div>
-      <h1 class="page-heading" data-reveal>Let's discuss your project.</h1>
-      <p class="page-intro" data-reveal>
-        Whether you’re looking to build a powerful website, launch a mobile app, or enhance your
-        brand through strategic digital marketing, we’re here to help you achieve your goals.
-      </p>
-    </div>
-  </section>
-
-  <!-- Contact grid -->
-  <section class="contact-section" aria-label="Contact information and form">
+  <!-- Contact section: 2-column layout (5fr context : 7fr form card) -->
+  <section class="contact-section" aria-label="Contact information and inquiry form">
     <div class="container contact-grid">
-      <!-- Details sidebar -->
-      <aside class="contact-details" aria-label="Contact details">
-        <div class="detail-group" data-reveal>
-          <p class="mono detail-label">Email</p>
-          <a href="mailto:hello@webmondo.com" class="detail-value text-link">
-            hello@webmondo.com
-          </a>
+      <!-- Left Column: Sticky Context -->
+      <div class="contact-context">
+        <div class="context-hero" data-reveal>
+          <div class="eyebrow">
+            <Dot size={6} />
+            <span>Get in touch</span>
+          </div>
+          <h1 class="page-heading">Let's discuss your project.</h1>
+          <p class="page-intro">
+            Whether you’re looking to build a powerful website, launch a mobile app, or enhance your
+            brand through strategic digital marketing, we’re here to help you achieve your goals.
+          </p>
         </div>
 
-        <div class="detail-group" data-reveal>
-          <p class="mono detail-label">Mission</p>
-          <p class="detail-value">Simplifying tech, amplifying brand.</p>
-        </div>
+        <!-- Contact details -->
+        <aside class="contact-details" aria-label="Contact details" data-reveal>
+          <div class="detail-group">
+            <p class="mono detail-label">Email</p>
+            <a href="mailto:hello@webmondo.com" class="detail-value text-link">
+              hello@webmondo.com
+            </a>
+          </div>
 
-        <div class="detail-group" data-reveal>
-          <p class="mono detail-label">Response time</p>
-          <p class="detail-value">We reply within 1 business day.</p>
-        </div>
-      </aside>
+          <div class="detail-group">
+            <p class="mono detail-label">Mission</p>
+            <p class="detail-value">Simplifying tech, amplifying brand.</p>
+          </div>
 
-      <!-- Form -->
-      <div class="contact-form-wrap" data-reveal>
-        <ContactForm />
+          <div class="detail-group">
+            <p class="mono detail-label">Response time</p>
+            <p class="detail-value">We reply within 1 business day.</p>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Right Column: Surface Card Wrapper -->
+      <div class="contact-form-card" data-reveal>
+        <form
+          id="contact-form"
+          class="contact-form"
+          novalidate
+          aria-label="Project inquiry form"
+        >
+          <!-- Honeypot -->
+          <input
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            class="honeypot"
+          />
+
+          <!-- Name -->
+          <div class="field-group">
+            <input
+              type="text"
+              id="field-name"
+              name="name"
+              autocomplete="name"
+              required
+              aria-required="true"
+              aria-describedby="field-name-error"
+              placeholder=" "
+              class="form-input"
+            />
+            <label for="field-name" class="field-label">
+              Name <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="field-error-wrap" aria-live="polite">
+              <p class="field-error-msg" id="field-name-error"></p>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="field-group">
+            <input
+              type="email"
+              id="field-email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-required="true"
+              aria-describedby="field-email-error"
+              placeholder=" "
+              class="form-input"
+            />
+            <label for="field-email" class="field-label">
+              Email <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="field-error-wrap" aria-live="polite">
+              <p class="field-error-msg" id="field-email-error"></p>
+            </div>
+          </div>
+
+          <!-- Company (optional) -->
+          <div class="field-group">
+            <input
+              type="text"
+              id="field-company"
+              name="company"
+              autocomplete="organization"
+              placeholder=" "
+              class="form-input"
+            />
+            <label for="field-company" class="field-label">
+              Company <span class="field-optional mono">optional</span>
+            </label>
+            <div class="field-error-wrap" aria-live="polite">
+              <p class="field-error-msg" id="field-company-error"></p>
+            </div>
+          </div>
+
+          <!-- Service interest -->
+          <div class="field-group">
+            <select
+              id="field-service"
+              name="service"
+              required
+              aria-required="true"
+              aria-describedby="field-service-error"
+              class="form-input form-select"
+            >
+              <option value="" disabled selected hidden></option>
+              <option value="branding-designing">Branding & Designing</option>
+              <option value="website-development">Website Development</option>
+              <option value="mobile-app-development">Mobile App Development</option>
+              <option value="digital-marketing">Digital Marketing</option>
+              <option value="software-solutions">Software Solutions</option>
+              <option value="multiple-services">Multiple Services / Not sure yet</option>
+            </select>
+            <label for="field-service" class="field-label field-label--select">
+              Service interest <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <span class="select-chevron" aria-hidden="true">
+              <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="field-error-wrap" aria-live="polite">
+              <p class="field-error-msg" id="field-service-error"></p>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="field-group field-group--full">
+            <textarea
+              id="field-message"
+              name="message"
+              rows="4"
+              required
+              aria-required="true"
+              aria-describedby="field-message-error"
+              placeholder=" "
+              class="form-input form-textarea"
+            ></textarea>
+            <label for="field-message" class="field-label">
+              Tell us about your project <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="field-error-wrap" aria-live="polite">
+              <p class="field-error-msg" id="field-message-error"></p>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-footer">
+            <button type="submit" id="form-submit-btn" class="btn btn--primary">
+              <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
+              <span id="submit-label">Send inquiry</span>
+            </button>
+            <p class="form-note mono">We reply within 1–2 business days.</p>
+          </div>
+        </form>
+
+        <!-- Success state -->
+        <div id="form-success" class="form-success" aria-live="polite" hidden tabindex="-1">
+          <div class="success-inner">
+            <span class="success-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M9 16L13.5 20.5L23 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h2 class="success-heading">Inquiry received.</h2>
+            <p>Thank you — we'll review your project brief and get back to you within <strong>1–2 business days</strong>. Check your inbox for a confirmation.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .page-header {
-    padding-block: var(--space-xl) var(--space-lg);
-    border-bottom: 1px solid var(--color-line);
-  }
-  .page-header-inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-  .page-heading { margin-top: var(--space-xs); }
-  .page-intro {
-    font-size: 18px;
-    color: var(--color-muted);
-    max-width: 34ch;
-  }
-
-  /* Contact layout */
+  /* Contact section & layout */
   .contact-section {
-    padding-block: var(--space-xl);
+    padding-block: var(--space-xl) var(--space-2xl);
   }
 
+  /* 2. 2-column CSS Grid container (.contact-grid) with a 5fr 7fr split on desktop */
   .contact-grid {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--space-2xl);
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
     align-items: start;
   }
 
-  @media (max-width: 900px) {
-    .contact-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-xl);
-    }
+  /* 3. Left Column (Context): Sticky anchored at top: calc(var(--nav-h) + 4rem) */
+  .contact-context {
+    position: sticky;
+    top: calc(var(--nav-h) + 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
   }
 
-  /* Details */
+  .context-hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .page-heading {
+    font-size: clamp(38px, 4.5vw, 56px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin-block: var(--space-xs) var(--space-sm);
+  }
+
+  .page-intro {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 38ch;
+    margin: 0;
+  }
+
+  /* Contact metadata */
   .contact-details {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
-    position: sticky;
-    top: calc(60px + var(--space-lg));
-  }
-
-  @media (max-width: 900px) {
-    .contact-details { position: static; }
+    gap: var(--space-md);
   }
 
   .detail-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.35rem;
     border-top: 1px solid var(--color-line);
     padding-top: var(--space-sm);
   }
 
   .detail-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-muted);
-    max-width: none;
+    margin: 0;
   }
 
   .detail-value {
     font-size: 15px;
     color: var(--color-ink);
-    max-width: none;
     line-height: 1.5;
+    margin: 0;
   }
 
   .text-link {
@@ -133,4 +292,542 @@ import Dot from '../components/Dot.astro';
     text-decoration-color: var(--color-accent);
     text-underline-offset: 3px;
   }
+
+  /* 4. Right Column (Form): Surface card wrapper (.contact-form-card) */
+  .contact-form-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 4px 30px rgba(14, 14, 13, 0.03);
+  }
+
+  :root[data-theme="dark"] .contact-form-card,
+  [data-theme="dark"] .contact-form-card {
+    background-color: var(--color-surface);
+  }
+
+  /* 5. Responsive collapse on viewports < 900px */
+  @media (max-width: 900px) {
+    .contact-section {
+      padding-block: var(--space-lg) var(--space-xl);
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .contact-context {
+      position: static;
+      top: auto;
+      gap: var(--space-lg);
+    }
+
+    .contact-form-card {
+      padding: clamp(1.5rem, 5vw, 2.5rem);
+      border-radius: 20px;
+    }
+  }
+
+  /* Form layout */
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1.25rem;
+  }
+
+  @media (max-width: 680px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  .field-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field-group--full {
+    grid-column: 1 / -1;
+  }
+
+  /* 1. Input Structure & 2. Sizing */
+  .form-input {
+    width: 100%;
+    min-height: 56px;
+    background-color: transparent;
+    border: 1px solid var(--color-line, #E2DED4);
+    border-radius: 8px;
+    padding: 0 1rem;
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: 16px;
+    color: var(--color-ink, #0E0E0D);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    transition:
+      border-color var(--transition-ui, 150ms ease),
+      box-shadow var(--transition-ui, 150ms ease);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 130px;
+    padding: 1rem;
+    line-height: 1.6;
+  }
+
+  .form-select {
+    cursor: pointer;
+    padding-right: 2.75rem;
+  }
+
+  /* 4. Focus State */
+  .form-input:focus,
+  .form-input.is-focused {
+    border-color: var(--color-ink, #0E0E0D);
+    box-shadow: 0 0 0 3px rgba(14, 14, 13, 0.1);
+  }
+
+  .form-input:focus-visible {
+    outline: none;
+    border-color: var(--color-ink, #0E0E0D);
+    box-shadow: 0 0 0 3px rgba(14, 14, 13, 0.15);
+  }
+
+  :root[data-theme="dark"] .form-input:focus,
+  :root[data-theme="dark"] .form-input.is-focused,
+  :root[data-theme="dark"] .form-input:focus-visible,
+  [data-theme="dark"] .form-input:focus,
+  [data-theme="dark"] .form-input.is-focused,
+  [data-theme="dark"] .form-input:focus-visible {
+    border-color: var(--color-ink, #FAF8F5);
+    box-shadow: 0 0 0 3px rgba(250, 248, 245, 0.12);
+  }
+
+  /* 3. Floating Labels */
+  .field-label {
+    position: absolute;
+    top: 28px;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-muted);
+    pointer-events: none;
+    transform-origin: left center;
+    transition:
+      top 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 150ms ease,
+      background-color 150ms ease;
+    line-height: 1;
+    padding: 0 0.35rem;
+    background-color: transparent;
+    z-index: 1;
+  }
+
+  /* Sibling combinator: floating state on focus or fill */
+  input.form-input:not(:placeholder-shown) + .field-label,
+  textarea.form-input:not(:placeholder-shown) + .field-label,
+  input.form-input:focus + .field-label,
+  input.form-input.is-focused + .field-label,
+  textarea.form-input:focus + .field-label,
+  textarea.form-input.is-focused + .field-label,
+  input.form-input:-webkit-autofill + .field-label,
+  input.form-input:autofill + .field-label,
+  select.form-select:focus + .field-label,
+  select.form-select.is-focused + .field-label,
+  select.form-select.has-value + .field-label,
+  select.form-select:has(option:not([value=""]):checked) + .field-label {
+    top: 0;
+    transform: translateY(-50%) scale(0.85);
+    background-color: #FFFFFF;
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  input.form-input:focus + .field-label,
+  input.form-input.is-focused + .field-label,
+  textarea.form-input:focus + .field-label,
+  textarea.form-input.is-focused + .field-label,
+  select.form-select:focus + .field-label,
+  select.form-select.is-focused + .field-label {
+    color: var(--color-ink, #0E0E0D);
+  }
+
+  :root[data-theme="dark"] input.form-input:not(:placeholder-shown) + .field-label,
+  :root[data-theme="dark"] textarea.form-input:not(:placeholder-shown) + .field-label,
+  :root[data-theme="dark"] input.form-input:-webkit-autofill + .field-label,
+  :root[data-theme="dark"] input.form-input:autofill + .field-label,
+  :root[data-theme="dark"] select.form-select.has-value + .field-label,
+  :root[data-theme="dark"] select.form-select:has(option:not([value=""]):checked) + .field-label,
+  [data-theme="dark"] input.form-input:not(:placeholder-shown) + .field-label,
+  [data-theme="dark"] textarea.form-input:not(:placeholder-shown) + .field-label,
+  [data-theme="dark"] input.form-input:-webkit-autofill + .field-label,
+  [data-theme="dark"] input.form-input:autofill + .field-label,
+  [data-theme="dark"] select.form-select.has-value + .field-label,
+  [data-theme="dark"] select.form-select:has(option:not([value=""]):checked) + .field-label {
+    background-color: var(--color-surface, #1C1B18);
+  }
+
+  :root[data-theme="dark"] input.form-input:focus + .field-label,
+  :root[data-theme="dark"] textarea.form-input:focus + .field-label,
+  :root[data-theme="dark"] select.form-select:focus + .field-label,
+  [data-theme="dark"] input.form-input:focus + .field-label,
+  [data-theme="dark"] textarea.form-input:focus + .field-label,
+  [data-theme="dark"] select.form-select:focus + .field-label {
+    background-color: var(--color-surface, #1C1B18);
+    color: var(--color-ink, #FAF8F5);
+  }
+
+  /* Select chevron: centered vertically */
+  .select-chevron {
+    position: absolute;
+    right: 1.15rem;
+    top: 28px;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+    transition: color var(--transition-ui, 150ms ease);
+  }
+
+  .form-select:focus ~ .select-chevron {
+    color: var(--color-ink, #0E0E0D);
+  }
+
+  :root[data-theme="dark"] .form-select:focus ~ .select-chevron,
+  [data-theme="dark"] .form-select:focus ~ .select-chevron {
+    color: var(--color-ink, #FAF8F5);
+  }
+
+  /* Error state */
+  .form-input.is-invalid,
+  .form-input[aria-invalid="true"] {
+    border-color: var(--color-accent) !important;
+  }
+
+  .form-input.is-invalid:focus,
+  .form-input[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.15) !important;
+  }
+
+  .form-input.is-invalid + .field-label,
+  .form-input[aria-invalid="true"] + .field-label {
+    color: var(--color-accent) !important;
+  }
+
+  /* Injected error message container */
+  .field-error-wrap {
+    min-height: 1.25rem;
+    padding-top: 0.35rem;
+  }
+
+  .field-error-msg {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 12px;
+    color: var(--color-accent);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .required-star {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  .field-optional {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-left: 0.35rem;
+  }
+
+  /* Honeypot */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Form footer */
+  .form-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .form-note {
+    color: var(--color-muted);
+    font-size: 13px;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Submit Button */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: var(--radius-btn, 9999px);
+    transition: background-color var(--transition-hover), transform var(--transition-hover);
+  }
+
+  .btn--primary {
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+    border-color: var(--color-ink);
+  }
+
+  .btn--primary:hover {
+    transform: translateY(-1px);
+    background-color: var(--color-ink-hover, #242320);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .dot {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  /* Success state */
+  .form-success {
+    padding-block: var(--space-xl);
+  }
+
+  .success-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 38ch;
+  }
+
+  .success-icon {
+    color: var(--color-accent);
+  }
+
+  .success-heading {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+
+  .success-inner p {
+    color: var(--color-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .form-input,
+    .field-label {
+      transition: none !important;
+    }
+  }
 </style>
+
+<script>
+  (function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const fields = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
+    const correctionListeners = new WeakMap();
+
+    function validateField(input) {
+      const val = input.value.trim();
+
+      // Required check
+      if (input.hasAttribute('required') && !val) {
+        if (input.tagName === 'SELECT') {
+          return 'Please select an option.';
+        }
+        if (input.type === 'email') {
+          return 'Please enter your email address.';
+        }
+        if (input.id === 'field-name') {
+          return 'Please enter your name.';
+        }
+        if (input.tagName === 'TEXTAREA') {
+          return 'Please tell us a bit about your project.';
+        }
+        return 'This field is required.';
+      }
+
+      // Email format check
+      if (input.type === 'email' && val) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(val)) {
+          return 'Enter a valid email address (e.g. name@company.com).';
+        }
+      }
+
+      return '';
+    }
+
+    function setFieldError(input, message) {
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = message;
+      }
+      input.classList.add('is-invalid');
+      input.setAttribute('aria-invalid', 'true');
+    }
+
+    function clearFieldError(input) {
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = '';
+      }
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+    }
+
+    function attachCorrectionListener(input) {
+      if (correctionListeners.has(input)) return;
+
+      const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
+
+      function onCorrection() {
+        const error = validateField(input);
+        if (!error) {
+          clearFieldError(input);
+          input.removeEventListener(eventType, onCorrection);
+          correctionListeners.delete(input);
+        }
+      }
+
+      input.addEventListener(eventType, onCorrection);
+      correctionListeners.set(input, onCorrection);
+    }
+
+    // 1. Validation must ONLY initially trigger on the blur event of an input
+    fields.forEach((input) => {
+      input.addEventListener('blur', () => {
+        const error = validateField(input);
+        if (error) {
+          setFieldError(input, error);
+          // State toggle: once marked invalid, attach input listener to clear immediately as user types
+          attachCorrectionListener(input);
+        } else {
+          clearFieldError(input);
+        }
+      });
+    });
+
+    // Track select filled state for floating label fallback
+    form.querySelectorAll('select').forEach((sel) => {
+      function updateSelectState() {
+        if (sel.value) {
+          sel.classList.add('has-value');
+        } else {
+          sel.classList.remove('has-value');
+        }
+      }
+      sel.addEventListener('change', updateSelectState);
+      updateSelectState();
+    });
+
+    // Form submission validation
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let firstInvalid = null;
+
+      fields.forEach((input) => {
+        const error = validateField(input);
+        if (error) {
+          setFieldError(input, error);
+          attachCorrectionListener(input);
+          if (!firstInvalid) firstInvalid = input;
+        } else {
+          clearFieldError(input);
+        }
+      });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      // Honeypot check
+      const honeypot = form.querySelector('input[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+
+      const successEl = document.getElementById('form-success');
+      const submitBtn = document.getElementById('form-submit-btn');
+      const submitLabel = document.getElementById('submit-label');
+      const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
+
+      if (!formspreeId || formspreeId === 'your_formspree_endpoint_id') {
+        form.hidden = true;
+        if (successEl) {
+          successEl.hidden = false;
+          successEl.focus();
+        }
+        return;
+      }
+
+      if (submitBtn && submitLabel) {
+        submitBtn.disabled = true;
+        submitLabel.textContent = 'Sending…';
+      }
+
+      const data = new FormData(form);
+      fetch('https://formspree.io/f/' + formspreeId, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      })
+        .then((res) => {
+          if (res.ok) {
+            form.hidden = true;
+            if (successEl) {
+              successEl.hidden = false;
+              successEl.focus();
+            }
+          } else {
+            if (submitBtn && submitLabel) {
+              submitBtn.disabled = false;
+              submitLabel.textContent = 'Send inquiry';
+            }
+            alert('Something went wrong. Please try again or email us directly at hello@webmondo.com.');
+          }
+        })
+        .catch(() => {
+          if (submitBtn && submitLabel) {
+            submitBtn.disabled = false;
+            submitLabel.textContent = 'Send inquiry';
+          }
+          alert('Network error. Please check your connection and try again.');
+        });
+    });
+  })();
+</script>

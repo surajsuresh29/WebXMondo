@@ -27,12 +27,16 @@ function isActive(href: string) {
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <!-- Logotype -->
-    <a href="/" class="logo" aria-label="Web Mondo — Home">
-      <svg class="logo-mark" width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M 4 13.5 A 7.5 7.5 0 1 1 16 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <circle cx="10" cy="10" r="3.5" fill="var(--color-accent)" />
+    <a href="/" class="logo" aria-label="Web X Mondo — Home">
+      <svg class="logo-mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8" />
+        <line x1="5.25" y1="5.25" x2="8.5" y2="8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <line x1="15.5" y1="15.5" x2="18.75" y2="18.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <line x1="18.75" y1="5.25" x2="15.5" y2="8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <line x1="8.5" y1="15.5" x2="5.25" y2="18.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <circle cx="12" cy="12" r="3.25" fill="var(--color-accent)" />
       </svg>
-      <span class="logo-text">Web Mondo</span>
+      <span class="logo-text">Web <span class="logo-x">X</span> Mondo</span>
     </a>
 
     <!-- Desktop nav -->
@@ -158,7 +162,7 @@ function isActive(href: string) {
   }
 
   .logo:hover .logo-mark {
-    transform: rotate(12deg);
+    transform: rotate(45deg);
   }
 
   .logo:focus-visible {
@@ -173,6 +177,12 @@ function isActive(href: string) {
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-ink);
+  }
+
+  .logo-x {
+    color: var(--color-accent);
+    font-weight: 600;
+    margin: 0 0.05em;
   }
 
   /* Desktop nav */

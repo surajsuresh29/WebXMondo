@@ -46,16 +46,20 @@ export function getOgTemplate({ title, client }: OgTemplateProps) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div
-              style={{
-                width: '14px',
-                height: '14px',
-                borderRadius: '7px',
-                backgroundColor: '#FF6B00',
-                marginRight: '12px',
-                display: 'flex',
-              }}
-            />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              style={{ marginRight: '12px', display: 'flex' }}
+            >
+              <circle cx="12" cy="12" r="9.5" stroke="#0E0E0D" strokeWidth="2" />
+              <line x1="5.25" y1="5.25" x2="8.5" y2="8.5" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
+              <line x1="15.5" y1="15.5" x2="18.75" y2="18.75" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
+              <line x1="18.75" y1="5.25" x2="15.5" y2="8.5" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
+              <line x1="8.5" y1="15.5" x2="5.25" y2="18.75" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="12" cy="12" r="3.25" fill="#FF6B00" />
+            </svg>
             <div
               style={{
                 fontSize: '24px',
@@ -66,7 +70,7 @@ export function getOgTemplate({ title, client }: OgTemplateProps) {
                 display: 'flex',
               }}
             >
-              Web Mondo
+              Web X Mondo
             </div>
           </div>
           <div

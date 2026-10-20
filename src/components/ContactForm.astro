@@ -1,11 +1,10 @@
 ---
 /**
  * ContactForm.astro — Full contact form.
- * Fields: name, email, company (optional), service interest, budget range, message.
- * Honeypot: _gotcha (hidden, Formspree reads it natively).
- * Submit: fetch to Formspree, no redirect, in-page confirmation.
- * Validation: specific inline errors.
- * Endpoint from PUBLIC_FORMSPREE_ID env var.
+ * 1. Floating Labels (CSS only using + sibling combinator & :not(:placeholder-shown))
+ * 2. Form Structure & Tokens (transparent background, 1px bottom border, focus-visible outline)
+ * 3. Non-Intrusive Validation (blur-first validation, subtle accent border, aria-live="polite",
+ *    and state-toggle input listener that clears immediately upon correction).
  */
 ---
 
@@ -28,7 +27,6 @@
 
     <!-- Name -->
     <div class="field-group">
-      <label for="field-name" class="field-label">Name <span aria-hidden="true">*</span></label>
       <input
         type="text"
         id="field-name"
@@ -37,14 +35,19 @@
         required
         aria-required="true"
         aria-describedby="field-name-error"
-        placeholder="Alex Johnson"
+        placeholder=" "
+        class="form-input"
       />
-      <p class="field-error" id="field-name-error" aria-live="polite" role="alert"></p>
+      <label for="field-name" class="field-label">
+        Name <span class="required-star" aria-hidden="true">*</span>
+      </label>
+      <div class="field-error-wrap" aria-live="polite">
+        <p class="field-error-msg" id="field-name-error"></p>
+      </div>
     </div>
 
     <!-- Email -->
     <div class="field-group">
-      <label for="field-email" class="field-label">Email <span aria-hidden="true">*</span></label>
       <input
         type="email"
         id="field-email"
@@ -53,99 +56,84 @@
         required
         aria-required="true"
         aria-describedby="field-email-error"
-        placeholder="alex@company.com"
+        placeholder=" "
+        class="form-input"
       />
-      <p class="field-error" id="field-email-error" aria-live="polite" role="alert"></p>
+      <label for="field-email" class="field-label">
+        Email <span class="required-star" aria-hidden="true">*</span>
+      </label>
+      <div class="field-error-wrap" aria-live="polite">
+        <p class="field-error-msg" id="field-email-error"></p>
+      </div>
     </div>
 
     <!-- Company (optional) -->
     <div class="field-group">
-      <label for="field-company" class="field-label">
-        Company <span class="field-optional mono">optional</span>
-      </label>
       <input
         type="text"
         id="field-company"
         name="company"
         autocomplete="organization"
-        placeholder="Acme Inc."
+        placeholder=" "
+        class="form-input"
       />
+      <label for="field-company" class="field-label">
+        Company <span class="field-optional mono">optional</span>
+      </label>
+      <div class="field-error-wrap" aria-live="polite">
+        <p class="field-error-msg" id="field-company-error"></p>
+      </div>
     </div>
 
     <!-- Service interest -->
     <div class="field-group">
-      <label for="field-service" class="field-label">
-        Service interest <span aria-hidden="true">*</span>
+      <select
+        id="field-service"
+        name="service"
+        required
+        aria-required="true"
+        aria-describedby="field-service-error"
+        class="form-input form-select"
+      >
+        <option value="" disabled selected hidden></option>
+        <option value="branding-designing">Branding & Designing</option>
+        <option value="website-development">Website Development</option>
+        <option value="mobile-app-development">Mobile App Development</option>
+        <option value="digital-marketing">Digital Marketing</option>
+        <option value="software-solutions">Software Solutions</option>
+        <option value="multiple-services">Multiple Services / Not sure yet</option>
+      </select>
+      <label for="field-service" class="field-label field-label--select">
+        Service interest <span class="required-star" aria-hidden="true">*</span>
       </label>
-      <div class="select-wrapper">
-        <select
-          id="field-service"
-          name="service"
-          required
-          aria-required="true"
-          aria-describedby="field-service-error"
-        >
-          <option value="">Select a service</option>
-          <option value="branding-designing">Branding & Designing</option>
-          <option value="website-development">Website Development</option>
-          <option value="mobile-app-development">Mobile App Development</option>
-          <option value="digital-marketing">Digital Marketing</option>
-          <option value="software-solutions">Software Solutions</option>
-          <option value="multiple-services">Multiple Services / Not sure yet</option>
-        </select>
-        <span class="select-arrow" aria-hidden="true">
-          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-            <path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+      <span class="select-chevron" aria-hidden="true">
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div class="field-error-wrap" aria-live="polite">
+        <p class="field-error-msg" id="field-service-error"></p>
       </div>
-      <p class="field-error" id="field-service-error" aria-live="polite" role="alert"></p>
-    </div>
-
-    <!-- Budget range -->
-    <div class="field-group">
-      <label for="field-budget" class="field-label">
-        Budget range <span aria-hidden="true">*</span>
-      </label>
-      <div class="select-wrapper">
-        <select
-          id="field-budget"
-          name="budget"
-          required
-          aria-required="true"
-          aria-describedby="field-budget-error"
-        >
-          <option value="">Select a range</option>
-          <option value="under-5k">Under $5,000</option>
-          <option value="5k-15k">$5,000 – $15,000</option>
-          <option value="15k-30k">$15,000 – $30,000</option>
-          <option value="30k-50k">$30,000 – $50,000</option>
-          <option value="50k-plus">$50,000+</option>
-        </select>
-        <span class="select-arrow" aria-hidden="true">
-          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-            <path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-      <p class="field-error" id="field-budget-error" aria-live="polite" role="alert"></p>
     </div>
 
     <!-- Message -->
     <div class="field-group field-group--full">
-      <label for="field-message" class="field-label">
-        Tell us about your project <span aria-hidden="true">*</span>
-      </label>
       <textarea
         id="field-message"
         name="message"
-        rows="5"
+        rows="4"
         required
         aria-required="true"
         aria-describedby="field-message-error"
-        placeholder="What are you trying to achieve? Any timeline or constraints we should know?"
+        placeholder=" "
+        class="form-input form-textarea"
       ></textarea>
-      <p class="field-error" id="field-message-error" aria-live="polite" role="alert"></p>
+      <label for="field-message" class="field-label">
+        Tell us about your project <span class="required-star" aria-hidden="true">*</span>
+      </label>
+      <div class="field-error-wrap" aria-live="polite">
+        <p class="field-error-msg" id="field-message-error"></p>
+      </div>
     </div>
 
     <!-- Submit -->
@@ -159,7 +147,7 @@
   </form>
 
   <!-- Success state -->
-  <div id="form-success" class="form-success" aria-live="polite" hidden>
+  <div id="form-success" class="form-success" aria-live="polite" hidden tabindex="-1">
     <div class="success-inner">
       <span class="success-icon" aria-hidden="true">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -174,13 +162,8 @@
 </section>
 
 <style>
-  .contact-form-section { width: 100%; }
-
-  .honeypot {
-    position: absolute;
-    left: -9999px;
-    opacity: 0;
-    pointer-events: none;
+  .contact-form-section {
+    width: 100%;
   }
 
   .contact-form {
@@ -189,92 +172,220 @@
     gap: var(--space-md);
   }
 
-  @media (max-width: 600px) {
-    .contact-form { grid-template-columns: 1fr; }
+  @media (max-width: 680px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
   }
 
   .field-group {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
   }
 
   .field-group--full {
     grid-column: 1 / -1;
   }
 
-  .field-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-ink);
-    letter-spacing: -0.01em;
+  /* 1. Input Structure & 2. Sizing */
+  .form-input {
+    width: 100%;
+    min-height: 56px;
+    background-color: transparent;
+    border: 1px solid var(--color-line, #E2DED4);
+    border-radius: 8px;
+    padding: 0 1rem;
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: 16px;
+    color: var(--color-ink, #0E0E0D);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    transition:
+      border-color var(--transition-ui, 150ms ease),
+      box-shadow var(--transition-ui, 150ms ease);
   }
 
-  .field-optional {
-    margin-left: 0.4rem;
+  .form-textarea {
+    resize: vertical;
+    min-height: 130px;
+    padding: 1rem;
+    line-height: 1.6;
+  }
+
+  .form-select {
+    cursor: pointer;
+    padding-right: 2.75rem;
+  }
+
+  /* 4. Focus State */
+  .form-input:focus {
+    border-color: var(--color-ink, #0E0E0D);
+    box-shadow: 0 0 0 3px rgba(14, 14, 13, 0.1);
+  }
+
+  .form-input:focus-visible {
+    outline: none;
+    border-color: var(--color-ink, #0E0E0D);
+    box-shadow: 0 0 0 3px rgba(14, 14, 13, 0.15);
+  }
+
+  :root[data-theme="dark"] .form-input:focus,
+  :root[data-theme="dark"] .form-input:focus-visible,
+  [data-theme="dark"] .form-input:focus,
+  [data-theme="dark"] .form-input:focus-visible {
+    border-color: var(--color-ink, #FAF8F5);
+    box-shadow: 0 0 0 3px rgba(250, 248, 245, 0.12);
+  }
+
+  /* 3. Floating Labels */
+  .field-label {
+    position: absolute;
+    top: 28px;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-muted);
+    pointer-events: none;
+    transform-origin: left center;
+    transition:
+      top 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 150ms ease,
+      background-color 150ms ease;
+    line-height: 1;
+    padding: 0 0.35rem;
+    background-color: transparent;
+    z-index: 1;
+  }
+
+  /* Sibling combinator: floating state on focus or fill */
+  input.form-input:not(:placeholder-shown) + .field-label,
+  textarea.form-input:not(:placeholder-shown) + .field-label,
+  input.form-input:focus + .field-label,
+  textarea.form-input:focus + .field-label,
+  input.form-input:-webkit-autofill + .field-label,
+  input.form-input:autofill + .field-label,
+  select.form-select:focus + .field-label,
+  select.form-select.has-value + .field-label,
+  select.form-select:has(option:not([value=""]):checked) + .field-label {
+    top: 0;
+    transform: translateY(-50%) scale(0.85);
+    background-color: #FFFFFF;
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-muted);
   }
 
-  input[type="text"],
-  input[type="email"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 0.8rem 1.1rem;
-    border: 1px solid var(--color-line);
-    background-color: var(--color-surface);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    font-size: 15px;
-    appearance: none;
-    -webkit-appearance: none;
-    border-radius: var(--radius-input, 10px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: border-color var(--transition-ui), box-shadow var(--transition-ui);
+  input.form-input:focus + .field-label,
+  textarea.form-input:focus + .field-label,
+  select.form-select:focus + .field-label {
+    color: var(--color-ink, #0E0E0D);
   }
 
-  input:focus,
-  textarea:focus,
-  select:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-color: var(--color-accent);
+  :root[data-theme="dark"] input.form-input:not(:placeholder-shown) + .field-label,
+  :root[data-theme="dark"] textarea.form-input:not(:placeholder-shown) + .field-label,
+  :root[data-theme="dark"] input.form-input:-webkit-autofill + .field-label,
+  :root[data-theme="dark"] input.form-input:autofill + .field-label,
+  :root[data-theme="dark"] select.form-select.has-value + .field-label,
+  :root[data-theme="dark"] select.form-select:has(option:not([value=""]):checked) + .field-label,
+  [data-theme="dark"] input.form-input:not(:placeholder-shown) + .field-label,
+  [data-theme="dark"] textarea.form-input:not(:placeholder-shown) + .field-label,
+  [data-theme="dark"] input.form-input:-webkit-autofill + .field-label,
+  [data-theme="dark"] input.form-input:autofill + .field-label,
+  [data-theme="dark"] select.form-select.has-value + .field-label,
+  [data-theme="dark"] select.form-select:has(option:not([value=""]):checked) + .field-label {
+    background-color: var(--color-surface, #1C1B18);
   }
 
-  input.field-invalid,
-  textarea.field-invalid,
-  select.field-invalid {
-    border-color: #c0392b;
+  :root[data-theme="dark"] input.form-input:focus + .field-label,
+  :root[data-theme="dark"] textarea.form-input:focus + .field-label,
+  :root[data-theme="dark"] select.form-select:focus + .field-label,
+  [data-theme="dark"] input.form-input:focus + .field-label,
+  [data-theme="dark"] textarea.form-input:focus + .field-label,
+  [data-theme="dark"] select.form-select:focus + .field-label {
+    background-color: var(--color-surface, #1C1B18);
+    color: var(--color-ink, #FAF8F5);
   }
 
-  .select-wrapper {
-    position: relative;
-  }
-
-  .select-wrapper select {
-    padding-right: 2.5rem;
-    cursor: pointer;
-  }
-
-  .select-arrow {
+  /* Select chevron: centered vertically */
+  .select-chevron {
     position: absolute;
-    right: 1rem;
-    top: 50%;
+    right: 1.15rem;
+    top: 28px;
     transform: translateY(-50%);
     color: var(--color-muted);
     pointer-events: none;
+    transition: color var(--transition-ui, 150ms ease);
   }
 
-  textarea {
-    resize: vertical;
-    min-height: 140px;
+  .form-select:focus ~ .select-chevron {
+    color: var(--color-ink, #0E0E0D);
   }
 
-  .field-error {
-    font-size: 13px;
-    color: #c0392b;
-    min-height: 1.2em;
-    max-width: none;
+  :root[data-theme="dark"] .form-select:focus ~ .select-chevron,
+  [data-theme="dark"] .form-select:focus ~ .select-chevron {
+    color: var(--color-ink, #FAF8F5);
+  }
+
+  /* Error state */
+  .form-input.is-invalid,
+  .form-input[aria-invalid="true"] {
+    border-color: var(--color-accent) !important;
+  }
+
+  .form-input.is-invalid:focus,
+  .form-input[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.15) !important;
+  }
+
+  .form-input.is-invalid + .field-label,
+  .form-input[aria-invalid="true"] + .field-label {
+    color: var(--color-accent) !important;
+  }
+
+  /* Injected error message container */
+  .field-error-wrap {
+    min-height: 1.25rem;
+    padding-top: 0.35rem;
+  }
+
+  .field-error-msg {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 12px;
+    color: var(--color-accent);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .required-star {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  .field-optional {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-left: 0.35rem;
+  }
+
+  /* Honeypot */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   /* Form footer */
@@ -284,14 +395,17 @@
     align-items: center;
     gap: var(--space-md);
     flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
 
   .form-note {
     color: var(--color-muted);
+    font-size: 13px;
     max-width: none;
+    margin: 0;
   }
 
-  /* Inline btn styles (since scoped Button component not used here) */
+  /* Submit Button */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -302,6 +416,7 @@
     font-weight: 500;
     cursor: pointer;
     border: 1px solid transparent;
+    border-radius: var(--radius-btn, 9999px);
     transition: background-color var(--transition-hover), transform var(--transition-hover);
   }
 
@@ -311,7 +426,10 @@
     border-color: var(--color-ink);
   }
 
-  .btn--primary:hover { transform: translateY(-1px); }
+  .btn--primary:hover {
+    transform: translateY(-1px);
+    background-color: var(--color-ink-hover, #242320);
+  }
 
   .btn:disabled {
     opacity: 0.6;
@@ -327,7 +445,10 @@
   }
 
   /* Success state */
-  .form-success { padding-block: var(--space-xl); }
+  .form-success {
+    padding-block: var(--space-xl);
+  }
+
   .success-inner {
     display: flex;
     flex-direction: column;
@@ -335,7 +456,9 @@
     max-width: 38ch;
   }
 
-  .success-icon { color: var(--color-ink); }
+  .success-icon {
+    color: var(--color-accent);
+  }
 
   .success-heading {
     font-size: clamp(28px, 4vw, 40px);
@@ -349,122 +472,186 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .btn { transition: none; }
-    .btn:hover { transform: none; }
-    input, textarea, select { transition: none; }
+    .btn,
+    .form-input,
+    .field-label {
+      transition: none !important;
+    }
   }
 </style>
 
 <script>
   (function () {
-    var form = document.getElementById('contact-form');
-    var successEl = document.getElementById('form-success');
-    var submitBtn = document.getElementById('form-submit-btn');
-    var submitLabel = document.getElementById('submit-label');
+    const form = document.getElementById('contact-form');
+    if (!form) return;
 
-    if (!form || !successEl || !submitBtn) return;
+    const fields = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
+    const correctionListeners = new WeakMap();
 
-    var formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
+    function validateField(input) {
+      const val = input.value.trim();
 
-    // Field validation rules
-    var rules = {
-      'field-name': function (val) {
-        if (!val.trim()) return 'Please enter your name so we know who we\'re speaking with.';
-        return '';
-      },
-      'field-email': function (val) {
-        if (!val.trim()) return 'Please enter your email address.';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-          return 'Enter a valid email address — e.g. name@company.com.';
+      // Required check
+      if (input.hasAttribute('required') && !val) {
+        if (input.tagName === 'SELECT') {
+          return 'Please select an option.';
         }
-        return '';
-      },
-      'field-service': function (val) {
-        if (!val) return 'Please choose the service that best fits your need.';
-        return '';
-      },
-      'field-budget': function (val) {
-        if (!val) return 'Please select a budget range so we can tailor our response.';
-        return '';
-      },
-      'field-message': function (val) {
-        if (!val.trim()) return 'Please tell us a bit about your project — even a sentence helps.';
-        return '';
-      },
-    };
-
-    function showError(id, message) {
-      var el = document.getElementById(id + '-error');
-      var input = document.getElementById(id);
-      if (el) el.textContent = message;
-      if (input) {
-        if (message) input.classList.add('field-invalid');
-        else input.classList.remove('field-invalid');
+        if (input.type === 'email') {
+          return 'Please enter your email address.';
+        }
+        if (input.id === 'field-name') {
+          return 'Please enter your name.';
+        }
+        if (input.tagName === 'TEXTAREA') {
+          return 'Please tell us a bit about your project.';
+        }
+        return 'This field is required.';
       }
+
+      // Email format check
+      if (input.type === 'email' && val) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(val)) {
+          return 'Enter a valid email address (e.g. name@company.com).';
+        }
+      }
+
+      return '';
     }
 
-    function validateAll() {
-      var valid = true;
-      Object.keys(rules).forEach(function (id) {
-        var input = document.getElementById(id);
-        var val = input ? (input).value : '';
-        var error = rules[id](val);
-        showError(id, error);
-        if (error) valid = false;
+    function setFieldError(input, message) {
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = message;
+      }
+      input.classList.add('is-invalid');
+      input.setAttribute('aria-invalid', 'true');
+    }
+
+    function clearFieldError(input) {
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = '';
+      }
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+    }
+
+    function attachCorrectionListener(input) {
+      if (correctionListeners.has(input)) return;
+
+      const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
+
+      function onCorrection() {
+        const error = validateField(input);
+        if (!error) {
+          clearFieldError(input);
+          input.removeEventListener(eventType, onCorrection);
+          correctionListeners.delete(input);
+        }
+      }
+
+      input.addEventListener(eventType, onCorrection);
+      correctionListeners.set(input, onCorrection);
+    }
+
+    // 1. Validation must ONLY initially trigger on the blur event of an input
+    fields.forEach((input) => {
+      input.addEventListener('blur', () => {
+        const error = validateField(input);
+        if (error) {
+          setFieldError(input, error);
+          // State toggle: once marked invalid, attach input listener to clear immediately as user types
+          attachCorrectionListener(input);
+        } else {
+          clearFieldError(input);
+        }
       });
-      return valid;
-    }
-
-    // Live validation on blur
-    Object.keys(rules).forEach(function (id) {
-      var input = document.getElementById(id);
-      if (input) {
-        input.addEventListener('blur', function () {
-          var error = rules[id]((input).value);
-          showError(id, error);
-        });
-      }
     });
 
-    form.addEventListener('submit', function (e) {
+    // Track select filled state for floating label fallback
+    form.querySelectorAll('select').forEach((sel) => {
+      function updateSelectState() {
+        if (sel.value) {
+          sel.classList.add('has-value');
+        } else {
+          sel.classList.remove('has-value');
+        }
+      }
+      sel.addEventListener('change', updateSelectState);
+      updateSelectState();
+    });
+
+    // Form submission validation
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!validateAll()) return;
+      let firstInvalid = null;
 
-      // Honeypot check
-      var honeypot = form.querySelector('input[name="_gotcha"]');
-      if (honeypot && honeypot.value) return;
+      fields.forEach((input) => {
+        const error = validateField(input);
+        if (error) {
+          setFieldError(input, error);
+          attachCorrectionListener(input);
+          if (!firstInvalid) firstInvalid = input;
+        } else {
+          clearFieldError(input);
+        }
+      });
 
-      if (!formspreeId || formspreeId === 'your_formspree_endpoint_id') {
-        // Dev fallback — show success without real submission
-        form.hidden = true;
-        successEl.hidden = false;
+      if (firstInvalid) {
+        firstInvalid.focus();
         return;
       }
 
-      submitBtn.disabled = true;
-      submitLabel.textContent = 'Sending…';
+      // Honeypot check
+      const honeypot = form.querySelector('input[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
 
-      var data = new FormData(form);
+      const successEl = document.getElementById('form-success');
+      const submitBtn = document.getElementById('form-submit-btn');
+      const submitLabel = document.getElementById('submit-label');
+      const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
 
+      if (!formspreeId || formspreeId === 'your_formspree_endpoint_id') {
+        form.hidden = true;
+        if (successEl) {
+          successEl.hidden = false;
+          successEl.focus();
+        }
+        return;
+      }
+
+      if (submitBtn && submitLabel) {
+        submitBtn.disabled = true;
+        submitLabel.textContent = 'Sending…';
+      }
+
+      const data = new FormData(form);
       fetch('https://formspree.io/f/' + formspreeId, {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
       })
-        .then(function (res) {
+        .then((res) => {
           if (res.ok) {
             form.hidden = true;
-            successEl.hidden = false;
-            successEl.focus();
+            if (successEl) {
+              successEl.hidden = false;
+              successEl.focus();
+            }
           } else {
-            submitBtn.disabled = false;
-            submitLabel.textContent = 'Send inquiry';
+            if (submitBtn && submitLabel) {
+              submitBtn.disabled = false;
+              submitLabel.textContent = 'Send inquiry';
+            }
             alert('Something went wrong. Please try again or email us directly at hello@webmondo.com.');
           }
         })
-        .catch(function () {
-          submitBtn.disabled = false;
-          submitLabel.textContent = 'Send inquiry';
+        .catch(() => {
+          if (submitBtn && submitLabel) {
+            submitBtn.disabled = false;
+            submitLabel.textContent = 'Send inquiry';
+          }
           alert('Network error. Please check your connection and try again.');
         });
     });
