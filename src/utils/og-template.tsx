@@ -53,12 +53,14 @@ export function getOgTemplate({ title, client }: OgTemplateProps) {
               fill="none"
               style={{ marginRight: '12px', display: 'flex' }}
             >
-              <circle cx="12" cy="12" r="9.5" stroke="#0E0E0D" strokeWidth="2" />
-              <line x1="5.25" y1="5.25" x2="8.5" y2="8.5" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
-              <line x1="15.5" y1="15.5" x2="18.75" y2="18.75" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
-              <line x1="18.75" y1="5.25" x2="15.5" y2="8.5" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
-              <line x1="8.5" y1="15.5" x2="5.25" y2="18.75" stroke="#0E0E0D" strokeWidth="2" strokeLinecap="round" />
-              <circle cx="12" cy="12" r="3.25" fill="#FF6B00" />
+              <path
+                d="M 18.8 5.8 A 9.2 9.2 0 1 0 18.8 18.2"
+                stroke="#0E0E0D"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <circle cx="18.8" cy="5.8" r="1.8" fill="#FF5500" />
+              <circle cx="18.8" cy="18.2" r="1.8" fill="#FF5500" />
             </svg>
             <div
               style={{
@@ -68,9 +70,12 @@ export function getOgTemplate({ title, client }: OgTemplateProps) {
                 fontFamily: 'Space Grotesk',
                 letterSpacing: '-0.02em',
                 display: 'flex',
+                alignItems: 'center',
               }}
             >
-              Web X Mondo
+              <span>Web</span>
+              <span style={{ color: '#FF5500', margin: '0 6px' }}>X</span>
+              <span>Mondo</span>
             </div>
           </div>
           <div
