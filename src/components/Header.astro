@@ -3,7 +3,7 @@
  * Header.astro — Sticky navigation header.
  * - Logotype + Dot brand device
  * - Main nav links
- * - "Start a project" primary button
+ * - "Let’s build" primary button
  * - Mobile hamburger menu (aria-expanded, keyboard accessible)
  * - Condenses slightly after 80px scroll (via JS + CSS)
  */
@@ -72,7 +72,7 @@ function isActive(href: string) {
         </svg>
       </button>
       <div class="header-cta">
-        <Button href="/contact" id="header-cta-btn">Start a project</Button>
+        <Button href="/contact" id="header-cta-btn">Let’s build</Button>
       </div>
     </div>
 
@@ -107,7 +107,7 @@ function isActive(href: string) {
           </li>
         ))}
         <li>
-          <a href="/contact" class="mobile-nav-link mobile-nav-link--cta">Start a project</a>
+          <a href="/contact" class="mobile-nav-link mobile-nav-link--cta">Let’s build</a>
         </li>
         <li>
           <button type="button" class="mobile-nav-link mobile-theme-btn" id="mobile-theme-toggle-btn">
