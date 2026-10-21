@@ -4,3 +4,4 @@
 - [ ] Run Lighthouse on the deployed URL (all five pages) and record the scores
 - [ ] Hero proof line: add only if the measured score supports it
 - [ ] Add real client names or testimonials only if permission has been given
+- [ ] public/robots.txt hardcodes the domain (Sitemap line): update with the real domain

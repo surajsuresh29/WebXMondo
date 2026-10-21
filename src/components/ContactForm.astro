@@ -1,176 +1,180 @@
 ---
+/**
+ * ContactForm.astro — Full contact form component.
+ * Features:
+ * 1. Floating Labels (CSS only using + sibling combinator & :not(:placeholder-shown))
+ * 2. Form Structure & Tokens (transparent background, 1px bottom border, focus-visible outline)
+ * 3. Non-Intrusive Validation (blur-first validation, subtle accent border, aria-live="polite",
+ *    and state-toggle input listener that clears immediately upon correction).
+ * 4. Progressive enhancement: ?service= preselection.
+ */
 import { contactEmail } from '../config/site';
 ---
 
-<section class="contact-form-section">
-  <form
-    id="contact-form"
-    class="contact-form"
-    novalidate
-    aria-label="Project inquiry form"
-    data-contact-email={contactEmail}
-  >
-    <!-- Honeypot -->
+<form
+  id="contact-form"
+  class="contact-form"
+  novalidate
+  aria-label="Project inquiry form"
+  data-contact-email={contactEmail}
+>
+  <!-- Honeypot -->
+  <input
+    type="text"
+    name="_gotcha"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="honeypot"
+  />
+
+  <!-- Name -->
+  <div class="field-group">
     <input
       type="text"
-      name="_gotcha"
-      tabindex="-1"
-      autocomplete="off"
-      aria-hidden="true"
-      class="honeypot"
+      id="field-name"
+      name="name"
+      autocomplete="name"
+      required
+      aria-required="true"
+      aria-describedby="field-name-error"
+      placeholder=" "
+      class="form-input"
     />
-
-    <!-- Name -->
-    <div class="field-group">
-      <input
-        type="text"
-        id="field-name"
-        name="name"
-        autocomplete="name"
-        required
-        aria-required="true"
-        aria-describedby="field-name-error"
-        placeholder=" "
-        class="form-input"
-      />
-      <label for="field-name" class="field-label">
-        Name <span class="required-star" aria-hidden="true">*</span>
-      </label>
-      <div class="field-error-wrap" aria-live="polite">
-        <p class="field-error-msg" id="field-name-error"></p>
-      </div>
-    </div>
-
-    <!-- Email -->
-    <div class="field-group">
-      <input
-        type="email"
-        id="field-email"
-        name="email"
-        autocomplete="email"
-        required
-        aria-required="true"
-        aria-describedby="field-email-error"
-        placeholder=" "
-        class="form-input"
-      />
-      <label for="field-email" class="field-label">
-        Email <span class="required-star" aria-hidden="true">*</span>
-      </label>
-      <div class="field-error-wrap" aria-live="polite">
-        <p class="field-error-msg" id="field-email-error"></p>
-      </div>
-    </div>
-
-    <!-- Company (optional) -->
-    <div class="field-group">
-      <input
-        type="text"
-        id="field-company"
-        name="company"
-        autocomplete="organization"
-        placeholder=" "
-        class="form-input"
-      />
-      <label for="field-company" class="field-label">
-        Company <span class="field-optional mono">optional</span>
-      </label>
-      <div class="field-error-wrap" aria-live="polite">
-        <p class="field-error-msg" id="field-company-error"></p>
-      </div>
-    </div>
-
-    <!-- Service interest -->
-    <div class="field-group">
-      <select
-        id="field-service"
-        name="service"
-        required
-        aria-required="true"
-        aria-describedby="field-service-error"
-        class="form-input form-select"
-      >
-        <option value="" disabled selected hidden></option>
-        <option value="branding-designing">Branding & Designing</option>
-        <option value="website-development">Website Development</option>
-        <option value="mobile-app-development">Mobile App Development</option>
-        <option value="digital-marketing">Digital Marketing</option>
-        <option value="software-solutions">Software Solutions</option>
-        <option value="multiple-services">Multiple Services / Not sure yet</option>
-      </select>
-      <label for="field-service" class="field-label field-label--select">
-        Service interest <span class="required-star" aria-hidden="true">*</span>
-      </label>
-      <span class="select-chevron" aria-hidden="true">
-        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <div class="field-error-wrap" aria-live="polite">
-        <p class="field-error-msg" id="field-service-error"></p>
-      </div>
-    </div>
-
-    <!-- Message -->
-    <div class="field-group field-group--full">
-      <textarea
-        id="field-message"
-        name="message"
-        rows="4"
-        required
-        aria-required="true"
-        aria-describedby="field-message-error"
-        placeholder=" "
-        class="form-input form-textarea"
-      ></textarea>
-      <label for="field-message" class="field-label">
-        Tell us about your project <span class="required-star" aria-hidden="true">*</span>
-      </label>
-      <div class="field-error-wrap" aria-live="polite">
-        <p class="field-error-msg" id="field-message-error"></p>
-      </div>
-    </div>
-
-    <!-- Submit -->
-    <div class="form-footer">
-      <button type="submit" id="form-submit-btn" class="btn btn--primary">
-        <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
-        <span id="submit-label">Send inquiry</span>
-      </button>
-      <p class="form-note">We reply within 1–2 business days.</p>
-    </div>
-  </form>
-
-  <!-- Success state -->
-  <div id="form-success" class="form-success" aria-live="polite" hidden tabindex="-1">
-    <div class="success-inner">
-      <span class="success-icon" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M9 16L13.5 20.5L23 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <h2 class="success-heading">Inquiry received.</h2>
-      <p>Thank you — we'll review your project brief and get back to you within <strong>1–2 business days</strong>. Check your inbox for a confirmation.</p>
+    <label for="field-name" class="field-label">
+      Name <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <div class="field-error-wrap" aria-live="polite">
+      <p class="field-error-msg" id="field-name-error"></p>
     </div>
   </div>
-</section>
+
+  <!-- Email -->
+  <div class="field-group">
+    <input
+      type="email"
+      id="field-email"
+      name="email"
+      autocomplete="email"
+      required
+      aria-required="true"
+      aria-describedby="field-email-error"
+      placeholder=" "
+      class="form-input"
+    />
+    <label for="field-email" class="field-label">
+      Email <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <div class="field-error-wrap" aria-live="polite">
+      <p class="field-error-msg" id="field-email-error"></p>
+    </div>
+  </div>
+
+  <!-- Company (optional) -->
+  <div class="field-group">
+    <input
+      type="text"
+      id="field-company"
+      name="company"
+      autocomplete="organization"
+      placeholder=" "
+      class="form-input"
+    />
+    <label for="field-company" class="field-label">
+      Company <span class="field-optional mono">optional</span>
+    </label>
+    <div class="field-error-wrap" aria-live="polite">
+      <p class="field-error-msg" id="field-company-error"></p>
+    </div>
+  </div>
+
+  <!-- Service interest -->
+  <div class="field-group">
+    <select
+      id="field-service"
+      name="service"
+      required
+      aria-required="true"
+      aria-describedby="field-service-error"
+      class="form-input form-select"
+    >
+      <option value="" disabled selected hidden></option>
+      <option value="branding-designing">Branding & Designing</option>
+      <option value="website-development">Website Development</option>
+      <option value="mobile-app-development">Mobile App Development</option>
+      <option value="digital-marketing">Digital Marketing</option>
+      <option value="software-solutions">Software Solutions</option>
+      <option value="multiple-services">Multiple Services / Not sure yet</option>
+    </select>
+    <label for="field-service" class="field-label field-label--select">
+      Service interest <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <span class="select-chevron" aria-hidden="true">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <div class="field-error-wrap" aria-live="polite">
+      <p class="field-error-msg" id="field-service-error"></p>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="field-group field-group--full">
+    <textarea
+      id="field-message"
+      name="message"
+      rows="4"
+      required
+      aria-required="true"
+      aria-describedby="field-message-error"
+      placeholder=" "
+      class="form-input form-textarea"
+    ></textarea>
+    <label for="field-message" class="field-label">
+      Tell us about your project <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <div class="field-error-wrap" aria-live="polite">
+      <p class="field-error-msg" id="field-message-error"></p>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="form-footer">
+    <button type="submit" id="form-submit-btn" class="btn btn--primary">
+      <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
+      <span id="submit-label">Send inquiry</span>
+    </button>
+    <p class="form-note">We reply within 1–2 business days.</p>
+  </div>
+</form>
+
+<!-- Success state -->
+<div id="form-success" class="form-success" aria-live="polite" hidden tabindex="-1">
+  <div class="success-inner">
+    <span class="success-icon" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M9 16L13.5 20.5L23 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <h2 class="success-heading">Inquiry received.</h2>
+    <p>Thank you — we'll review your project brief and get back to you within <strong>1–2 business days</strong>. Check your inbox for a confirmation.</p>
+  </div>
+</div>
 
 <style>
-  .contact-form-section {
-    width: 100%;
-  }
-
+  /* Form layout */
   .contact-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
+    gap: 1.5rem 1.25rem;
   }
 
   @media (max-width: 680px) {
     .contact-form {
       grid-template-columns: 1fr;
-      gap: var(--space-md);
+      gap: 1.25rem;
     }
   }
 
@@ -217,7 +221,8 @@ import { contactEmail } from '../config/site';
   }
 
   /* 4. Focus State */
-  .form-input:focus {
+  .form-input:focus,
+  .form-input.is-focused {
     border-color: var(--color-ink, #0E0E0D);
     box-shadow: 0 0 0 3px rgba(14, 14, 13, 0.1);
   }
@@ -229,8 +234,10 @@ import { contactEmail } from '../config/site';
   }
 
   :root[data-theme="dark"] .form-input:focus,
+  :root[data-theme="dark"] .form-input.is-focused,
   :root[data-theme="dark"] .form-input:focus-visible,
   [data-theme="dark"] .form-input:focus,
+  [data-theme="dark"] .form-input.is-focused,
   [data-theme="dark"] .form-input:focus-visible {
     border-color: var(--color-ink, #FAF8F5);
     box-shadow: 0 0 0 3px rgba(250, 248, 245, 0.12);
@@ -263,10 +270,13 @@ import { contactEmail } from '../config/site';
   input.form-input:not(:placeholder-shown) + .field-label,
   textarea.form-input:not(:placeholder-shown) + .field-label,
   input.form-input:focus + .field-label,
+  input.form-input.is-focused + .field-label,
   textarea.form-input:focus + .field-label,
+  textarea.form-input.is-focused + .field-label,
   input.form-input:-webkit-autofill + .field-label,
   input.form-input:autofill + .field-label,
   select.form-select:focus + .field-label,
+  select.form-select.is-focused + .field-label,
   select.form-select.has-value + .field-label,
   select.form-select:has(option:not([value=""]):checked) + .field-label {
     top: 0;
@@ -281,8 +291,11 @@ import { contactEmail } from '../config/site';
   }
 
   input.form-input:focus + .field-label,
+  input.form-input.is-focused + .field-label,
   textarea.form-input:focus + .field-label,
-  select.form-select:focus + .field-label {
+  textarea.form-input.is-focused + .field-label,
+  select.form-select:focus + .field-label,
+  select.form-select.is-focused + .field-label {
     color: var(--color-ink, #0E0E0D);
   }
 
@@ -477,13 +490,15 @@ import { contactEmail } from '../config/site';
 
 <script>
   (function () {
-    const form = document.getElementById('contact-form');
+    type FormField = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
     if (!form) return;
 
-    const fields = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
-    const correctionListeners = new WeakMap();
+    const fields = form.querySelectorAll<FormField>('input:not([type="hidden"]), textarea, select');
+    const correctionListeners = new WeakMap<FormField, EventListener>();
 
-    function validateField(input) {
+    function validateField(input: FormField): string {
       const val = input.value.trim();
 
       // Required check
@@ -514,7 +529,7 @@ import { contactEmail } from '../config/site';
       return '';
     }
 
-    function setFieldError(input, message) {
+    function setFieldError(input: FormField, message: string): void {
       const errorEl = document.getElementById(input.id + '-error');
       if (errorEl) {
         errorEl.textContent = message;
@@ -523,7 +538,7 @@ import { contactEmail } from '../config/site';
       input.setAttribute('aria-invalid', 'true');
     }
 
-    function clearFieldError(input) {
+    function clearFieldError(input: FormField): void {
       const errorEl = document.getElementById(input.id + '-error');
       if (errorEl) {
         errorEl.textContent = '';
@@ -532,7 +547,7 @@ import { contactEmail } from '../config/site';
       input.removeAttribute('aria-invalid');
     }
 
-    function attachCorrectionListener(input) {
+    function attachCorrectionListener(input: FormField): void {
       if (correctionListeners.has(input)) return;
 
       const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
@@ -580,7 +595,7 @@ import { contactEmail } from '../config/site';
     // Service select prefill from query parameter (progressive enhancement)
     const svcParam = new URLSearchParams(window.location.search).get('service');
     if (svcParam) {
-      const svcSelect = form.querySelector('#field-service');
+      const svcSelect = form.querySelector<HTMLSelectElement>('#field-service');
       if (svcSelect && svcSelect.querySelector(`option[value="${svcParam}"]`)) {
         svcSelect.value = svcParam;
         svcSelect.dispatchEvent(new Event('change'));
@@ -590,9 +605,9 @@ import { contactEmail } from '../config/site';
     // Form submission validation
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      let firstInvalid = null;
+      let firstInvalid: FormField | null = null;
 
-      fields.forEach((input) => {
+      for (const input of fields) {
         const error = validateField(input);
         if (error) {
           setFieldError(input, error);
@@ -601,21 +616,21 @@ import { contactEmail } from '../config/site';
         } else {
           clearFieldError(input);
         }
-      });
+      }
 
       if (firstInvalid) {
-        firstInvalid.focus();
+        (firstInvalid as FormField).focus();
         return;
       }
 
       // Honeypot check
-      const honeypot = form.querySelector('input[name="_gotcha"]');
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="_gotcha"]');
       if (honeypot && honeypot.value) return;
 
-      const successEl = document.getElementById('form-success');
-      const submitBtn = document.getElementById('form-submit-btn');
+      const successEl = document.getElementById('form-success') as HTMLElement | null;
+      const submitBtn = document.getElementById('form-submit-btn') as HTMLButtonElement | null;
       const submitLabel = document.getElementById('submit-label');
-      const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
+      const formspreeId = (window as any).__FORMSPREE_ID || import.meta.env.PUBLIC_FORMSPREE_ID;
 
       if (!formspreeId || formspreeId === 'your_formspree_endpoint_id') {
         form.hidden = true;
