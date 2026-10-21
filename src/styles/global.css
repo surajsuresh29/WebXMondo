@@ -23,6 +23,8 @@
   --color-deep:           #1A1918; /* rich obsidian for dark sections */
   --color-accent:         #FF5500; /* vibrant poppy orange — Pip dot motif */
   --color-accent-soft:    rgba(255, 85, 0, 0.08); /* soft warm ambient orange glow */
+  --color-on-deep:        #FAF8F5; /* high-contrast light text for dark panels in both themes */
+  --color-on-deep-muted:  #C2BFB6; /* refined secondary text for dark panels in both themes */
 
   /* Typography */
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
@@ -68,6 +70,8 @@
   --color-deep:           #0A0A09;
   --color-accent:         #FF5E24;
   --color-accent-soft:    rgba(255, 94, 36, 0.12);
+  --color-on-deep:        #FAF8F5;
+  --color-on-deep-muted:  #C2BFB6;
 }
 
 /* --- 4. RESET ----------------------------------------------- */

@@ -1,7 +1,8 @@
 ---
 /**
  * services.astro — /services
- * Four service sections: Brand Identity, Web Development, Digital Marketing, Content Strategy.
+ * Five service sections: Website Development, Digital Marketing, Branding & Designing,
+ * Mobile App Development, Software Solutions.
  * Each: ≤70 words, 3-5 item deliverables list.
  * JSON-LD: Service schemas.
  */
@@ -11,17 +12,17 @@ import Dot from '../components/Dot.astro';
 
 const services = [
   {
-    id: 'branding-designing',
+    id: 'website-development',
     label: '01',
-    name: 'Branding & Designing',
-    who: 'For businesses looking to launch a bold new identity, modernize an existing brand, or establish a visual presence that demands attention.',
-    what: 'We craft cohesive brand identities with stunning logos, distinctive color palettes, and typography to make your business stand out.',
+    name: 'Website Development',
+    who: 'For organizations that need a high-converting web presence built with clean code, lightning speed, and seamless responsiveness.',
+    what: 'We build fast, responsive, and user-friendly websites that enhance engagement and drive conversions.',
     deliverables: [
-      'Logo system (primary mark, wordmark, app icons)',
-      'Color palette, type hierarchies & design tokens',
-      'Brand style guide & visual identity standards',
-      'Marketing collateral & social media design kits',
-      'Vector icon sets and asset packages',
+      'Bespoke UX/UI architecture & responsive design',
+      'Static-first and headless CMS implementations',
+      'Sub-second load times & 95+ Core Web Vitals scores',
+      'Accessibility standards (WCAG AA compliant)',
+      'Post-launch training, documentation & technical warranty',
     ],
   },
   {
@@ -39,17 +40,17 @@ const services = [
     ],
   },
   {
-    id: 'website-development',
+    id: 'branding-designing',
     label: '03',
-    name: 'Website Development',
-    who: 'For organizations that need a high-converting web presence built with clean code, lightning speed, and seamless responsiveness.',
-    what: 'We build fast, responsive, and user-friendly websites that enhance engagement and drive conversions.',
+    name: 'Branding & Designing',
+    who: 'For businesses looking to launch a bold new identity, modernize an existing brand, or establish a visual presence that demands attention.',
+    what: 'We craft cohesive brand identities with stunning logos, distinctive color palettes, and typography to make your business stand out.',
     deliverables: [
-      'Bespoke UX/UI architecture & responsive design',
-      'Static-first and headless CMS implementations',
-      'Sub-second load times & 95+ Core Web Vitals scores',
-      'Accessibility standards (WCAG AA compliant)',
-      'Post-launch training, documentation & technical warranty',
+      'Logo system (primary mark, wordmark, app icons)',
+      'Color palette, type hierarchies & design tokens',
+      'Brand style guide & visual identity standards',
+      'Marketing collateral & social media design kits',
+      'Vector icon sets and asset packages',
     ],
   },
   {
@@ -96,6 +97,15 @@ const serviceSchemas = services.map((s) => ({
   description="At Web X Mondo, we provide digital solutions—from branding and web design to marketing, software, and app development—to help businesses grow."
   jsonLd={serviceSchemas}
 >
+  <noscript>
+    <style>
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
   <!-- Page header -->
   <section class="page-header">
     <div class="container page-header-inner">
@@ -127,11 +137,11 @@ const serviceSchemas = services.map((s) => ({
         </div>
 
         <div class="service-body" data-reveal-group>
-          <div class="service-col" data-reveal>
+          <div class="service-col service-col--covers" data-reveal>
             <p class="mono col-label">What it covers</p>
             <p class="service-desc">{service.what}</p>
           </div>
-          <div class="service-col" data-reveal>
+          <div class="service-col service-col--who" data-reveal>
             <p class="mono col-label">Who it's for</p>
             <p class="service-desc">{service.who}</p>
           </div>
@@ -147,6 +157,12 @@ const serviceSchemas = services.map((s) => ({
             </ul>
           </div>
         </div>
+
+        <div class="service-action" data-reveal>
+          <a href="/contact" class="text-link service-link">
+            Ask about {service.name} &rarr;
+          </a>
+        </div>
       </div>
     </section>
   ))}
@@ -154,14 +170,14 @@ const serviceSchemas = services.map((s) => ({
   <!-- Closing CTA -->
   <section class="services-cta section-dark" aria-labelledby="services-cta-heading">
     <div class="container cta-inner" data-reveal>
-      <div class="eyebrow" style="color: var(--color-bg);">
+      <div class="eyebrow">
         <Dot size={6} />
-        <span class="mono" style="color: var(--color-accent);">Get started</span>
+        <span class="mono eyebrow-text">Get started</span>
       </div>
-      <h2 id="services-cta-heading" class="cta-heading" style="color: var(--color-bg);">
+      <h2 id="services-cta-heading" class="cta-heading">
         Not sure which service fits?
       </h2>
-      <p style="color: var(--color-muted);">
+      <p class="cta-body">
         Tell us what you're trying to solve. We'll tell you which lever to pull first.
       </p>
       <Button href="/contact" id="services-cta-btn">Let’s build</Button>
@@ -197,10 +213,11 @@ const serviceSchemas = services.map((s) => ({
   .service-section {
     padding-block: var(--space-xl);
     border-bottom: 1px solid var(--color-line);
+    scroll-margin-top: calc(var(--nav-h) + 16px);
   }
 
   .service-section--alt {
-    background-color: var(--color-bg);
+    background-color: var(--color-surface-subtle);
   }
 
   .service-inner {
@@ -230,15 +247,15 @@ const serviceSchemas = services.map((s) => ({
   /* Body columns */
   .service-body {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-lg);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md) var(--space-lg);
   }
 
-  @media (max-width: 900px) {
-    .service-body { grid-template-columns: 1fr; }
+  .service-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
   }
-
-  .service-col { display: flex; flex-direction: column; gap: var(--space-sm); }
 
   .col-label {
     color: var(--color-muted);
@@ -253,6 +270,64 @@ const serviceSchemas = services.map((s) => ({
     color: var(--color-muted);
     max-width: none;
     line-height: 1.7;
+  }
+
+  /* >= 900px: column 1 stacks "What it covers" and "Who it's for", column 2 holds "What you get" */
+  @media (min-width: 900px) {
+    .service-col--covers {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .service-col--who {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .service-col--deliverables {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+
+  /* 641-899px: two columns with deliverables spanning full width under a hairline */
+  @media (min-width: 641px) and (max-width: 899px) {
+    .service-body {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .service-col--covers {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .service-col--who {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .service-col--deliverables {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      border-top: 1px solid var(--color-line);
+      padding-top: var(--space-md);
+    }
+  }
+
+  /* <= 640px: single column */
+  @media (max-width: 640px) {
+    .service-body {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .service-col--covers,
+    .service-col--who,
+    .service-col--deliverables {
+      grid-column: auto;
+      grid-row: auto;
+    }
   }
 
   /* Deliverables */
@@ -276,6 +351,26 @@ const serviceSchemas = services.map((s) => ({
     flex-shrink: 0;
   }
 
+  /* In-section action link */
+  .service-action {
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-sm);
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .service-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
   /* Closing CTA */
   .services-cta {
     padding-block: var(--space-xl);
@@ -288,8 +383,18 @@ const serviceSchemas = services.map((s) => ({
     max-width: 44ch;
   }
 
+  .services-cta .eyebrow-text {
+    color: var(--color-accent);
+  }
+
   .cta-heading {
     font-size: clamp(28px, 4vw, 44px);
     letter-spacing: -0.03em;
+    color: var(--color-on-deep);
+  }
+
+  .cta-body {
+    color: var(--color-on-deep-muted);
+    max-width: var(--body-col-max);
   }
 </style>
