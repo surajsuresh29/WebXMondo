@@ -756,6 +756,16 @@ import Dot from '../components/Dot.astro';
       updateSelectState();
     });
 
+    // Service select prefill from query parameter (progressive enhancement)
+    const svcParam = new URLSearchParams(window.location.search).get('service');
+    if (svcParam) {
+      const svcSelect = form.querySelector('#field-service');
+      if (svcSelect && svcSelect.querySelector(`option[value="${svcParam}"]`)) {
+        svcSelect.value = svcParam;
+        svcSelect.dispatchEvent(new Event('change'));
+      }
+    }
+
     // Form submission validation
     form.addEventListener('submit', (e) => {
       e.preventDefault();

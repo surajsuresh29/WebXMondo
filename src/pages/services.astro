@@ -93,8 +93,8 @@ const serviceSchemas = services.map((s) => ({
 ---
 
 <Base
-  title="Services — Web X Mondo | Digital Solutions to Grow Your Business"
-  description="At Web X Mondo, we provide digital solutions—from branding and web design to marketing, software, and app development—to help businesses grow."
+  title="Web Design & SEO Services | Web X Mondo"
+  description="Websites that load fast and get found on search, plus SEO, branding, mobile apps and custom software. See what each service covers and what you get."
   jsonLd={serviceSchemas}
 >
   <noscript>
@@ -114,7 +114,7 @@ const serviceSchemas = services.map((s) => ({
         <span>Our Services</span>
       </div>
       <h1 class="page-heading" data-reveal>
-        Simplifying tech.<br />Amplifying your brand.
+        Websites and search first. Everything else when you need it.
       </h1>
       <p class="page-intro" data-reveal>
         At Web X Mondo, we provide digital solutions—from branding and web design to marketing,
@@ -159,7 +159,7 @@ const serviceSchemas = services.map((s) => ({
         </div>
 
         <div class="service-action" data-reveal>
-          <a href="/contact" class="text-link service-link">
+          <a href={`/contact?service=${service.id}`} class="text-link service-link">
             Ask about {service.name} &rarr;
           </a>
         </div>
@@ -211,9 +211,17 @@ const serviceSchemas = services.map((s) => ({
 
   /* Service sections */
   .service-section {
-    padding-block: var(--space-xl);
+    --service-padding-top: var(--space-xl);
+    padding-top: var(--service-padding-top);
+    padding-bottom: var(--space-xl);
     border-bottom: 1px solid var(--color-line);
-    scroll-margin-top: calc(var(--nav-h) + 16px);
+    scroll-margin-top: calc(var(--nav-h) + 32px - var(--service-padding-top));
+  }
+
+  @media (max-width: 899px) {
+    .service-section {
+      scroll-margin-top: calc(var(--nav-h) + 16px);
+    }
   }
 
   .service-section--alt {
