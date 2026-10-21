@@ -331,7 +331,7 @@ const organizationSchema = {
       </p>
       <div class="closing-actions">
         <Button href="/contact" id="home-closing-cta-btn">Let’s build</Button>
-        <a href={`mailto:${SITE_EMAIL}`} class="closing-email-link mono">{SITE_EMAIL}</a>
+        <a href={`mailto:${SITE_EMAIL}`} class="closing-email-link">{SITE_EMAIL}</a>
       </div>
     </div>
   </section>
@@ -422,6 +422,25 @@ const organizationSchema = {
       padding-top: clamp(3rem, 6vh, 4.5rem);
       padding-bottom: calc(clamp(3rem, 6vh, 4.5rem) + 28px);
       margin-bottom: -28px;
+    }
+
+    @media (max-height: 899.98px) {
+      .work-section {
+        padding-block: clamp(1.5rem, 3vh, 2.5rem);
+        padding-bottom: calc(clamp(1.5rem, 3vh, 2.5rem) + 28px);
+        margin-bottom: -28px;
+      }
+
+      .work-section :global(.card-cover) {
+        aspect-ratio: 2 / 1;
+      }
+
+      .work-section[data-pinned] {
+        position: sticky;
+        top: var(--work-top, var(--nav-h));
+        padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
+        margin-bottom: 0;
+      }
     }
 
     @media (min-height: 900px) {
@@ -521,7 +540,7 @@ const organizationSchema = {
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
 
-        /* Work animation gated to min-height: 900px when it is sticky */
+        /* Work animation gated to min-height: 900px or when pinned */
         @media (min-height: 900px) {
           #card-work {
             transform-origin: top center;
@@ -534,6 +553,18 @@ const organizationSchema = {
             animation-timeline: --to-cta;
             animation-range: entry 0% entry calc(100vh - var(--nav-h));
           }
+        }
+
+        #card-work[data-pinned] {
+          transform-origin: top center;
+          animation: deck-scale linear both;
+          animation-timeline: --to-cta;
+          animation-range: entry 0% entry calc(100vh - var(--nav-h));
+        }
+        #card-work[data-pinned]::after {
+          animation: deck-dim linear both;
+          animation-timeline: --to-cta;
+          animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
       }
     }
@@ -1289,27 +1320,28 @@ const organizationSchema = {
   .closing-inner {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-md);
+    align-items: center;
+    text-align: center;
     width: 100%;
+    gap: 0;
   }
 
   .closing-inner .eyebrow {
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 900px) and (min-height: 680px) {
-    .closing-inner {
-      margin-top: -54px;
-    }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
   }
 
   .closing-heading {
-    margin-top: 0;
-    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
     line-height: 1.05;
     text-wrap: balance;
     max-width: 18ch;
+    margin-inline: auto;
+    margin-top: 16px;
+    margin-bottom: 0;
+    text-align: center;
   }
 
   .closing-body {
@@ -1317,30 +1349,40 @@ const organizationSchema = {
     line-height: 1.5;
     color: var(--color-muted);
     max-width: 44ch;
+    margin-inline: auto;
+    margin-top: 20px;
+    margin-bottom: 0;
+    text-align: center;
+    text-wrap: pretty;
   }
 
   .closing-actions {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
-    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 32px;
+    gap: 16px;
   }
 
   .closing-actions :global(#home-closing-cta-btn) {
-    align-self: flex-start;
+    align-self: center;
     width: fit-content;
   }
 
   .closing-email-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-height: 44px;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-transform: none;
     color: var(--color-ink);
-    font-family: var(--font-mono);
-    font-size: var(--text-mono);
-    letter-spacing: 0.12em;
     text-decoration: none;
-    padding-inline: 0.25rem;
+    padding-inline: 0.5rem;
     transition: color var(--transition-ui), text-decoration var(--transition-ui);
   }
 
@@ -1443,6 +1485,23 @@ const organizationSchema = {
         tile.style.removeProperty('--y');
       });
     });
+  })();
+</script>
+
+<script is:inline>
+  (() => {
+    const w = document.getElementById('card-work');
+    const update = () => {
+      const h = window.innerHeight, navH = 72, wh = w.offsetHeight - (w.dataset.pinned ? 0 : 28), diff = wh - (h - navH);
+      if (window.innerWidth >= 900 && h >= 680 && h < 900 && diff <= 56) {
+        w.dataset.pinned = diff > 0 ? 'bottom' : 'top';
+        w.style.setProperty('--work-top', (diff > 0 ? h - wh : navH) + 'px');
+      } else {
+        delete w.dataset.pinned;
+        w.style.removeProperty('--work-top');
+      }
+    };
+    if (w) { new ResizeObserver(update).observe(w); window.addEventListener('resize', update); update(); }
   })();
 </script>
 
