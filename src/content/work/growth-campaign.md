@@ -13,4 +13,5 @@ year: "2024"
 role: "Paid Media & Growth Analytics"
 metric: "-52% CPA ($340 → $163) · +217% Bookings"
 metricLabel: "Core Metric / ROI"
+sample: true
 ---

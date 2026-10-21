@@ -9,6 +9,7 @@
  */
 import Base from '../layouts/Base.astro';
 import Dot from '../components/Dot.astro';
+import { contactEmail } from '../config/site';
 ---
 
 <Base
@@ -36,19 +37,14 @@ import Dot from '../components/Dot.astro';
         <aside class="contact-details" aria-label="Contact details" data-reveal>
           <div class="detail-group">
             <p class="mono detail-label">Email</p>
-            <a href="mailto:hello@webmondo.com" class="detail-value text-link">
-              hello@webmondo.com
+            <a href={`mailto:${contactEmail}`} class="detail-value text-link">
+              {contactEmail}
             </a>
           </div>
 
           <div class="detail-group">
             <p class="mono detail-label">Mission</p>
             <p class="detail-value">Simplifying tech, amplifying brand.</p>
-          </div>
-
-          <div class="detail-group">
-            <p class="mono detail-label">Response time</p>
-            <p class="detail-value">We reply within 1 business day.</p>
           </div>
         </aside>
       </div>
@@ -60,6 +56,7 @@ import Dot from '../components/Dot.astro';
           class="contact-form"
           novalidate
           aria-label="Project inquiry form"
+          data-contact-email={contactEmail}
         >
           <!-- Honeypot -->
           <input
@@ -188,7 +185,7 @@ import Dot from '../components/Dot.astro';
               <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
               <span id="submit-label">Send inquiry</span>
             </button>
-            <p class="form-note mono">We reply within 1–2 business days.</p>
+            <p class="form-note">We reply within 1–2 business days.</p>
           </div>
         </form>
 
@@ -574,7 +571,7 @@ import Dot from '../components/Dot.astro';
 
   .form-note {
     color: var(--color-muted);
-    font-size: 13px;
+    font-size: 14px;
     max-width: none;
     margin: 0;
   }
@@ -828,7 +825,8 @@ import Dot from '../components/Dot.astro';
               submitBtn.disabled = false;
               submitLabel.textContent = 'Send inquiry';
             }
-            alert('Something went wrong. Please try again or email us directly at hello@webmondo.com.');
+            const fallbackEmail = form.getAttribute('data-contact-email') || '';
+            alert('Something went wrong. Please try again or email us directly at ' + fallbackEmail + '.');
           }
         })
         .catch(() => {

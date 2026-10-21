@@ -1,11 +1,5 @@
 ---
-/**
- * ContactForm.astro — Full contact form.
- * 1. Floating Labels (CSS only using + sibling combinator & :not(:placeholder-shown))
- * 2. Form Structure & Tokens (transparent background, 1px bottom border, focus-visible outline)
- * 3. Non-Intrusive Validation (blur-first validation, subtle accent border, aria-live="polite",
- *    and state-toggle input listener that clears immediately upon correction).
- */
+import { contactEmail } from '../config/site';
 ---
 
 <section class="contact-form-section">
@@ -14,6 +8,7 @@
     class="contact-form"
     novalidate
     aria-label="Project inquiry form"
+    data-contact-email={contactEmail}
   >
     <!-- Honeypot -->
     <input
@@ -142,7 +137,7 @@
         <span class="dot" aria-hidden="true" style="width:7px;height:7px;"></span>
         <span id="submit-label">Send inquiry</span>
       </button>
-      <p class="form-note mono">We reply within 1–2 business days.</p>
+      <p class="form-note">We reply within 1–2 business days.</p>
     </div>
   </form>
 
@@ -400,7 +395,7 @@
 
   .form-note {
     color: var(--color-muted);
-    font-size: 13px;
+    font-size: 14px;
     max-width: none;
     margin: 0;
   }
@@ -654,7 +649,8 @@
               submitBtn.disabled = false;
               submitLabel.textContent = 'Send inquiry';
             }
-            alert('Something went wrong. Please try again or email us directly at hello@webmondo.com.');
+            const fallbackEmail = form.getAttribute('data-contact-email') || '';
+            alert('Something went wrong. Please try again or email us directly at ' + fallbackEmail + '.');
           }
         })
         .catch(() => {

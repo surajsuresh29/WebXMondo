@@ -18,6 +18,7 @@ const work = defineCollection({
     role: z.string().optional(),
     metric: z.string().optional(),
     metricLabel: z.string().optional(),
+    sample: z.boolean().default(false),
   }),
 });
 

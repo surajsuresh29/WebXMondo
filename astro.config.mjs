@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { siteUrl } from './src/config/site';
 
 export default defineConfig({
-  site: 'https://webmondo.com',
+  site: siteUrl,
   output: 'static',
   integrations: [sitemap()],
   devToolbar: {

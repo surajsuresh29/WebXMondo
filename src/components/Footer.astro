@@ -3,7 +3,9 @@
  * Footer.astro — Site footer with nav, contact details, mono domain.
  */
 import Dot from './Dot.astro';
-import { SITE_EMAIL } from '../data/site';
+import { siteName, siteUrl, contactEmail } from '../config/site';
+
+const siteHostname = new URL(siteUrl).hostname;
 
 const footerLinks = [
   { label: 'Services', href: '/services' },
@@ -43,14 +45,14 @@ const footerLinks = [
     <div class="footer-bottom">
       <div class="footer-contact">
         <p class="mono">Simplifying tech, amplifying brand.</p>
-        <p class="mono">{SITE_EMAIL}</p>
+        <p class="mono">{contactEmail}</p>
       </div>
-      <p class="footer-domain mono">webmondo.com</p>
+      <p class="footer-domain mono">{siteHostname}</p>
     </div>
 
     <!-- Copyright -->
     <p class="footer-copy mono">
-      &copy; {new Date().getFullYear()} Web X Mondo. All rights reserved.
+      &copy; {new Date().getFullYear()} {siteName}. All rights reserved.
     </p>
   </div>
 </footer>

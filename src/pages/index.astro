@@ -14,7 +14,7 @@ import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import Dot from '../components/Dot.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { SITE_EMAIL } from '../data/site';
+import { siteName, siteUrl, contactEmail, foundingYear } from '../config/site';
 import { getCollection } from 'astro:content';
 
 const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -22,12 +22,13 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Web X Mondo',
-  url: 'https://webmondo.com',
+  name: siteName,
+  url: siteUrl,
+  foundingDate: String(foundingYear),
   description: 'Simplifying tech, amplifying brand. Digital solutions across branding, web design, mobile apps, software, and marketing.',
   contactPoint: {
     '@type': 'ContactPoint',
-    email: SITE_EMAIL,
+    email: contactEmail,
     contactType: 'customer support',
   },
 };
@@ -295,7 +296,7 @@ const organizationSchema = {
           <Dot size={6} />
           <span>Selected work</span>
         </div>
-        <h2 id="work-heading" class="section-title">Real clients.<br />Real numbers.</h2>
+        <h2 id="work-heading" class="section-title">Selected work.</h2>
       </div>
 
       <div class="work-grid" data-reveal-group>
@@ -331,7 +332,7 @@ const organizationSchema = {
       </p>
       <div class="closing-actions">
         <Button href="/contact" id="home-closing-cta-btn">Let’s build</Button>
-        <a href={`mailto:${SITE_EMAIL}`} class="closing-email-link">{SITE_EMAIL}</a>
+        <a href={`mailto:${contactEmail}`} class="closing-email-link">{contactEmail}</a>
       </div>
     </div>
   </section>

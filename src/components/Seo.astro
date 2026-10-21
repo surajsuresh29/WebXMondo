@@ -8,6 +8,8 @@
  *   jsonLd?: object — raw schema object, JSON-stringified
  *   canonicalUrl?: string
  */
+import { siteUrl, siteName } from '../config/site';
+
 interface Props {
   title: string;
   description: string;
@@ -19,12 +21,11 @@ interface Props {
 const {
   title,
   description,
-  ogImage = 'https://webmondo.com/og-default.jpg',
+  ogImage,
   jsonLd,
   canonicalUrl,
 } = Astro.props;
 
-const siteUrl = 'https://webmondo.com';
 const canonical = canonicalUrl ?? siteUrl + Astro.url.pathname;
 const image = ogImage
   ? ogImage.startsWith('http')
@@ -43,7 +44,7 @@ const image = ogImage
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
-<meta property="og:site_name" content="Web X Mondo" />
+<meta property="og:site_name" content={siteName} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />

@@ -13,4 +13,5 @@ year: "2024"
 role: "Brand Strategy & Visual Identity"
 metric: "+34% YoY Trade Inquiries"
 metricLabel: "Core Metric / ROI"
+sample: true
 ---

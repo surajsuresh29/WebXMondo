@@ -1,0 +1,6 @@
+- [ ] Replace the 3 sample case studies with real ones (src/content/work/), and remove `sample: true`
+- [ ] Set the real domain and email in src/config/site.ts (placeholders today: https://webmondo.com, hello@webmondo.com)
+- [ ] Re-check the OG image on a public URL with a link-preview tool
+- [ ] Run Lighthouse on the deployed URL (all five pages) and record the scores
+- [ ] Hero proof line: add only if the measured score supports it
+- [ ] Add real client names or testimonials only if permission has been given

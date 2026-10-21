@@ -13,4 +13,5 @@ year: "2024"
 role: "Full-Stack Web & Brand Launch"
 metric: "340 Units Sold in 7 Days (+12% to Plan)"
 metricLabel: "Core Metric / ROI"
+sample: true
 ---

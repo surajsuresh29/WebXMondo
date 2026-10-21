@@ -3,18 +3,20 @@
  * work/index.astro — /work
  * Grid of all project cards from content collection.
  */
-import Base from '../../layouts/Base.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import Dot from '../../components/Dot.astro';
-import Button from '../../components/Button.astro';
-import { getCollection } from 'astro:content';
+import Base from "../../layouts/Base.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Dot from "../../components/Dot.astro";
+import Button from "../../components/Button.astro";
+import { getCollection } from "astro:content";
 
-const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const works = (await getCollection("work")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <Base
   title="Work — Web X Mondo | Case Studies & Selected Projects"
-  description="Case studies in branding, web development, mobile apps, and digital marketing by Web X Mondo. Real clients, real numbers."
+  description="Case studies in branding, web development and digital marketing by Web X Mondo."
 >
   <!-- Page header -->
   <section class="page-header">
@@ -25,7 +27,8 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
       </div>
       <h1 class="page-heading" data-reveal>Projects that moved the needle.</h1>
       <p class="page-intro" data-reveal>
-        We pick clients we can genuinely help, then we do the work properly. Here's what that looks like.
+        We pick clients we can genuinely help, then we do the work properly.
+        Here's what that looks like.
       </p>
     </div>
   </section>
@@ -34,17 +37,19 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
   <section class="work-grid-section" aria-label="Case studies">
     <div class="container">
       <div class="work-grid" data-reveal-group>
-        {works.map((project) => (
-          <ProjectCard
-            title={project.data.title}
-            client={project.data.client}
-            tagline={project.data.tagline}
-            services={project.data.services}
-            slug={project.id}
-            coverSrc={project.data.coverSrc}
-            coverAlt={project.data.coverAlt}
-          />
-        ))}
+        {
+          works.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              client={project.data.client}
+              tagline={project.data.tagline}
+              services={project.data.services}
+              slug={project.id}
+              coverSrc={project.data.coverSrc}
+              coverAlt={project.data.coverAlt}
+            />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -59,7 +64,10 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
       <h2 id="work-cta-heading" class="work-cta-heading">
         Want your work here?
       </h2>
-      <p>We take on a small number of new clients each quarter. The earlier you get in touch, the more likely we can fit you in.</p>
+      <p>
+        We take on a small number of new clients each quarter. The earlier you
+        get in touch, the more likely we can fit you in.
+      </p>
       <Button href="/contact" id="work-cta-btn">Let’s build</Button>
     </div>
   </section>
@@ -77,7 +85,9 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
     gap: var(--space-md);
   }
 
-  .page-heading { margin-top: var(--space-xs); }
+  .page-heading {
+    margin-top: var(--space-xs);
+  }
 
   .page-intro {
     font-size: 18px;
@@ -119,6 +129,4 @@ const works = (await getCollection('work')).sort((a, b) => a.data.order - b.data
     color: var(--color-muted);
     max-width: none;
   }
-
-
 </style>

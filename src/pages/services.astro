@@ -9,6 +9,7 @@
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import Dot from '../components/Dot.astro';
+import { siteName, siteUrl } from '../config/site';
 
 const services = [
   {
@@ -87,7 +88,7 @@ const serviceSchemas = services.map((s) => ({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: s.name,
-  provider: { '@type': 'Organization', name: 'Web X Mondo', url: 'https://webmondo.com' },
+  provider: { '@type': 'Organization', name: siteName, url: siteUrl },
   description: s.what,
 }));
 ---

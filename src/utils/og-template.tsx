@@ -4,12 +4,15 @@
  * Headings use Space Grotesk; metadata uses IBM Plex Mono.
  */
 
+import { siteUrl } from '../config/site';
+
 export interface OgTemplateProps {
   title: string;
   client: string;
 }
 
 export function getOgTemplate({ title, client }: OgTemplateProps) {
+  const siteHostname = new URL(siteUrl).hostname;
   return (
     <div
       style={{
@@ -171,7 +174,7 @@ export function getOgTemplate({ title, client }: OgTemplateProps) {
               display: 'flex',
             }}
           >
-            webmondo.com/work
+            {`${siteHostname}/work`}
           </div>
           <div
             style={{
