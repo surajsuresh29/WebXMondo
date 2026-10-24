@@ -40,67 +40,166 @@ const organizationSchema = {
   jsonLd={organizationSchema}
 >
   <!-- ===== 1. HERO CARD ===== -->
+  <div class="hero-runway" id="hero-runway">
   <section class="sticky-card hero" id="card-hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
-      <div class="hero-eyebrow">
-        <Dot size={7} />
-        <span class="mono">WEB DESIGN · SEO</span>
-      </div>
+      <div class="hero-content-group">
+        <div class="hero-eyebrow">
+          <Dot size={7} />
+          <span class="mono">WEB DESIGN · SEO</span>
+        </div>
 
-      <h1 id="hero-heading" class="hero-headline">
-        <span class="headline-mask"><span class="headline-line headline-line--1">Simplifying tech,</span></span>
-        <span class="headline-mask"><span class="headline-line headline-line--2">amplifying brand.</span></span>
-      </h1>
+        <h1 id="hero-heading" class="hero-headline">
+          <span class="headline-mask"><span class="headline-line headline-line--1">Simplifying tech,</span></span>
+          <span class="headline-mask"><span class="headline-line headline-line--2">amplifying brand.</span></span>
+        </h1>
 
-      <div class="hero-row">
-        <div class="hero-text-col">
-          <p class="hero-body">
-            We design and build websites that load fast, read clearly and get found on search.
-          </p>
+        <div class="hero-row">
+          <div class="hero-text-col">
+            <p class="hero-body">
+              We design and build websites that load fast, read clearly and get found on search.
+            </p>
 
-          <div class="hero-actions">
-            <Button href="/contact" id="hero-cta-primary">Let’s build</Button>
-            <Button href="/work" variant="secondary" id="hero-cta-secondary">See our work</Button>
+            <div class="hero-actions">
+              <Button href="/contact" id="hero-cta-primary">Let's build</Button>
+              <Button href="/work" variant="secondary" id="hero-cta-secondary">See our work</Button>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true" focusable="false">
+            <div class="hero-visual-glow"></div>
+            <svg
+              class="hero-visual-svg"
+              viewBox="0 24 400 180"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <!-- Faint 4-line grid -->
+              <line class="hero-grid-line" x1="10" y1="48" x2="390" y2="48" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+              <line class="hero-grid-line" x1="10" y1="96" x2="390" y2="96" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+              <line class="hero-grid-line" x1="10" y1="144" x2="390" y2="144" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+              <line class="hero-grid-line" x1="10" y1="192" x2="390" y2="192" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+
+              <!-- Climbing stepped rise line -->
+              <path
+                class="hero-visual-line"
+                d="M 24 192 C 54 192, 64 192, 88 192 C 114 192, 122 144, 152 144 C 182 144, 194 144, 218 144 C 244 144, 252 96, 278 96 C 304 96, 314 96, 332 96 C 350 96, 356 48, 372 48"
+                stroke="var(--color-ink)"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                pathLength="100"
+              />
+
+              <!-- Dot and ring at end of line -->
+              <g class="hero-visual-marker">
+                <circle class="hero-visual-ring" cx="372" cy="48" r="12" fill="var(--color-accent)" opacity="0.2" />
+                <circle class="hero-visual-dot" cx="372" cy="48" r="6" fill="var(--color-accent)" />
+              </g>
+            </svg>
           </div>
         </div>
+      </div>
 
-        <div class="hero-visual" aria-hidden="true" focusable="false">
-          <div class="hero-visual-glow"></div>
-          <svg
-            class="hero-visual-svg"
-            viewBox="0 24 400 180"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <!-- Faint 4-line grid -->
-            <line class="hero-grid-line" x1="10" y1="48" x2="390" y2="48" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
-            <line class="hero-grid-line" x1="10" y1="96" x2="390" y2="96" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
-            <line class="hero-grid-line" x1="10" y1="144" x2="390" y2="144" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
-            <line class="hero-grid-line" x1="10" y1="192" x2="390" y2="192" stroke="var(--color-line)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+      <!-- Scene layers — visible only when scroll-driven gate is active -->
+      <div class="scene-layers" aria-hidden="true" focusable="false">
+        <!-- Centered accent dot -->
+        <div class="scene-dot"></div>
+        <!-- Expanding ring -->
+        <div class="scene-ring"></div>
+        <!-- Browser frame morph target -->
+        <div class="scene-frame">
+          <!-- Ink layer for pill and bar phase -->
+          <div class="scene-frame-ink"></div>
 
-            <!-- Climbing stepped rise line -->
-            <path
-              class="hero-visual-line"
-              d="M 24 192 C 54 192, 64 192, 88 192 C 114 192, 122 144, 152 144 C 182 144, 194 144, 218 144 C 244 144, 252 96, 278 96 C 304 96, 314 96, 332 96 C 350 96, 356 48, 372 48"
-              stroke="var(--color-ink)"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              pathLength="100"
-            />
+          <!-- Beat 1: Typing text inside the dark bar -->
+          <div class="scene-bar-typing" aria-hidden="true">
+            <div class="bar-text-wrapper">
+              <div class="bar-text-reveal">
+                <span class="bar-text-plain">I need a website that gets </span><span class="bar-text-accent">found</span><span class="bar-text-dot">.</span>
+              </div>
+              <div class="bar-typing-caret"></div>
+            </div>
+          </div>
 
-            <!-- Dot and ring at end of line -->
-            <g class="hero-visual-marker">
-              <circle class="hero-visual-ring" cx="372" cy="48" r="12" fill="var(--color-accent)" opacity="0.2" />
-              <circle class="hero-visual-dot" cx="372" cy="48" r="6" fill="var(--color-accent)" />
-            </g>
-          </svg>
+          <!-- Beat 2: Skeleton / Website page state -->
+          <div class="scene-frame-skeleton" aria-hidden="true">
+            <div class="skel-topbar">
+              <span class="skel-circle"></span>
+              <span class="skel-circle"></span>
+              <span class="skel-circle"></span>
+            </div>
+            <div class="skel-heading-text">Your business, easy to find.</div>
+            <div class="skel-line skel-line--1"></div>
+            <div class="skel-line skel-line--2"></div>
+            <div class="skel-image"></div>
+            <div class="skel-button-block">
+              <div class="skel-button-label">Get in touch</div>
+            </div>
+          </div>
+
+          <!-- Beat 3: Search results state: 6 rows filling the card -->
+          <div class="scene-frame-search" aria-hidden="true">
+            <div class="search-row search-row--top">
+              <span class="search-avatar"></span>
+              <div class="search-text-group">
+                <span class="search-title">Your business</span>
+                <span class="search-url mono">yourbusiness.com</span>
+              </div>
+            </div>
+            <div class="search-row">
+              <span class="search-avatar"></span>
+              <div class="search-lines"><span></span><span></span></div>
+            </div>
+            <div class="search-row">
+              <span class="search-avatar"></span>
+              <div class="search-lines"><span></span><span></span></div>
+            </div>
+            <div class="search-row">
+              <span class="search-avatar"></span>
+              <div class="search-lines"><span></span><span></span></div>
+            </div>
+            <div class="search-row">
+              <span class="search-avatar"></span>
+              <div class="search-lines"><span></span><span></span></div>
+            </div>
+            <div class="search-row">
+              <span class="search-avatar"></span>
+              <div class="search-lines"><span></span><span></span></div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Scene captions -->
+      <ol class="scene-captions">
+        <li class="scene-caption scene-caption--1">
+          <div class="scene-caption-block">
+            <span class="mono scene-caption-label">01 / 03 · BRIEF</span>
+            <p class="scene-caption-statement">Tell us what you need.</p>
+          </div>
+          <span class="mono scene-caption-counter">01 / 03</span>
+        </li>
+        <li class="scene-caption scene-caption--2">
+          <div class="scene-caption-block">
+            <span class="mono scene-caption-label">02 / 03 · BUILD</span>
+            <p class="scene-caption-statement">We design and build it to load fast on every screen.</p>
+          </div>
+          <span class="mono scene-caption-counter">02 / 03</span>
+        </li>
+        <li class="scene-caption scene-caption--3">
+          <div class="scene-caption-block">
+            <span class="mono scene-caption-label">03 / 03 · GET FOUND</span>
+            <p class="scene-caption-statement">Then we structure it for search, so the right people find it.</p>
+          </div>
+          <span class="mono scene-caption-counter">03 / 03</span>
+        </li>
+      </ol>
     </div>
   </section>
+  </div>
 
   <!-- ===== 2. SERVICES CARD ===== -->
   <section class="sticky-card services-card" id="card-services" aria-labelledby="services-heading">
@@ -339,6 +438,20 @@ const organizationSchema = {
 </Base>
 
 <style>
+  /* Base state: runway neutral wrapper, scene hidden */
+  .hero-runway {
+    display: contents;
+  }
+
+  .scene-layers,
+  .scene-captions {
+    display: none;
+  }
+
+  .hero-content-group {
+    display: contents;
+  }
+
   /* ===== STICKY STACKING DECK (ONLY WHEN USABLE) ===== */
   @media (min-width: 900px) and (min-height: 680px) {
     .sticky-card {
@@ -366,7 +479,7 @@ const organizationSchema = {
       scroll-margin-top: calc(var(--nav-h) + 2rem);
     }
 
-    /* Section 1: Hero — sits flush below nav at base */
+    /* Section 1: Hero — first card, sits at top */
     .hero {
       position: sticky;
       top: var(--nav-h);
@@ -485,7 +598,7 @@ const organizationSchema = {
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
         :global(#main-content) {
-          timeline-scope: --to-services, --to-positioning, --to-work, --to-cta;
+          timeline-scope: --hero-scene, --to-services, --to-positioning, --to-work, --to-cta;
         }
 
         #card-services {
@@ -505,38 +618,76 @@ const organizationSchema = {
           view-timeline-axis: block;
         }
 
-        #card-hero {
+        /* Depth effect applies to the runway wrapper so Services slides over it */
+        .hero-runway {
+          display: block;
+          --scene-runway: 380vh;
+          height: var(--scene-runway);
+          position: relative;
+          z-index: 1;
+          view-timeline-name: --hero-scene;
+          view-timeline-axis: block;
+          view-timeline-inset: var(--nav-h) 0px 0px 0px;
+        }
+
+        /* Section 1: Hero — sticky stage inside the runway */
+        .hero {
+          position: sticky;
+          top: var(--nav-h);
+          height: calc(100dvh - var(--nav-h));
+          min-height: 0;
+          overflow: hidden;
           transform-origin: top center;
-          animation: deck-scale linear both;
+          animation-name: deck-scale;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-services;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
-        #card-hero::after {
-          animation: deck-dim linear both;
+        .hero::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-color: var(--color-deep);
+          opacity: 0;
+          pointer-events: none;
+          z-index: 10;
+          animation-name: deck-dim;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-services;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
 
         #card-services {
+          margin-top: calc(-1 * (100dvh - var(--nav-h)));
           transform-origin: top center;
-          animation: deck-scale linear both;
+          animation-name: deck-scale;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-positioning;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
         #card-services::after {
-          animation: deck-dim linear both;
+          animation-name: deck-dim;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-positioning;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
 
         #card-positioning {
           transform-origin: top center;
-          animation: deck-scale linear both;
+          animation-name: deck-scale;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-work;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
         #card-positioning::after {
-          animation: deck-dim linear both;
+          animation-name: deck-dim;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-work;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
@@ -545,12 +696,16 @@ const organizationSchema = {
         @media (min-height: 900px) {
           #card-work {
             transform-origin: top center;
-            animation: deck-scale linear both;
+            animation-name: deck-scale;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --to-cta;
             animation-range: entry 0% entry calc(100vh - var(--nav-h));
           }
           #card-work::after {
-            animation: deck-dim linear both;
+            animation-name: deck-dim;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --to-cta;
             animation-range: entry 0% entry calc(100vh - var(--nav-h));
           }
@@ -558,14 +713,161 @@ const organizationSchema = {
 
         #card-work[data-pinned] {
           transform-origin: top center;
-          animation: deck-scale linear both;
+          animation-name: deck-scale;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-cta;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
         }
         #card-work[data-pinned]::after {
-          animation: deck-dim linear both;
+          animation-name: deck-dim;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
           animation-timeline: --to-cta;
           animation-range: entry 0% entry calc(100vh - var(--nav-h));
+        }
+
+        /* ===== HERO SCENE: scroll-driven morphing animation ===== */
+        .hero-content-group {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-md);
+          animation-name: scene-content-out;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .hero .hero-visual-glow {
+          animation-name: scene-glow-out;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-layers {
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          inset: 0;
+          bottom: clamp(100px, 15vh, 130px);
+          z-index: 5;
+          pointer-events: none;
+        }
+
+        .scene-dot {
+          display: block !important;
+          animation-name: scene-dot-lifecycle;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-ring {
+          display: block !important;
+          animation-name: scene-ring-lifecycle;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-frame {
+          display: flex !important;
+          contain: layout paint;
+          animation-name: scene-frame-lifecycle;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-frame-ink {
+          animation-name: scene-frame-ink-fade;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-frame::before {
+          animation-name: scene-pill-dot;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .bar-text-reveal {
+          animation-name: bar-typing-reveal;
+          animation-timing-function: steps(33, end);
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .bar-typing-caret {
+          animation-name: bar-typing-caret;
+          animation-timing-function: steps(33, end);
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-frame-skeleton {
+          display: flex !important;
+          animation-name: scene-skeleton-lifecycle;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-frame-search {
+          display: flex !important;
+          animation-name: scene-search-lifecycle;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .hero-inner {
+          position: relative;
+          height: 100%;
+          justify-content: center;
+        }
+
+        .scene-captions {
+          display: block !important;
+        }
+
+        .scene-caption--1 {
+          animation-name: scene-caption-1;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-caption--2 {
+          animation-name: scene-caption-2;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
+        }
+
+        .scene-caption--3 {
+          animation-name: scene-caption-3;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --hero-scene;
+          animation-range: contain 0% contain calc(100% - (100dvh - var(--nav-h)));
         }
       }
     }
@@ -587,6 +889,576 @@ const organizationSchema = {
     to {
       opacity: 0.3;
     }
+  }
+
+  /* ===== HERO SCENE KEYFRAMES ===== */
+
+  /* Content fade out with opacity + scale(0.98) (10% - 34%) */
+  @keyframes scene-content-out {
+    0%, 10% {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    34% {
+      opacity: 0;
+      visibility: visible;
+      transform: translateY(-24px) scale(0.98);
+    }
+    34.1%, 100% {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-24px) scale(0.98);
+    }
+  }
+
+  /* Glow fade */
+  @keyframes scene-glow-out {
+    0%, 10% {
+      opacity: 1;
+    }
+    30%, 100% {
+      opacity: 0;
+    }
+  }
+
+  /* Scene dot lifecycle: scales in (10%-34%), holds (34%-46%), fades out (46%-48%) */
+  @keyframes scene-dot-lifecycle {
+    0%, 10% {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    34%, 46% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    48%, 100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+
+  /* Ring expand and fade (38% - 50%) */
+  @keyframes scene-ring-lifecycle {
+    0%, 37.9% {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    38% {
+      opacity: 0.6;
+      transform: scale(0.4);
+    }
+    50%, 100% {
+      opacity: 0;
+      transform: scale(3.2);
+    }
+  }
+
+  /* Frame morph: pill (46%-50%) -> dark bar (50%-62%) -> browser frame (62%-100%) */
+  @keyframes scene-frame-lifecycle {
+    0%, 45.9% {
+      opacity: 0;
+      width: 64px;
+      height: 28px;
+      border-radius: 28px;
+      transform: scale(0.8);
+    }
+    46% {
+      opacity: 1;
+      width: 64px;
+      height: 28px;
+      border-radius: 28px;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      width: min(560px, 56vw);
+      height: 64px;
+      border-radius: 9999px;
+      transform: scale(1);
+    }
+    62% {
+      opacity: 1;
+      width: min(560px, 56vw);
+      height: 64px;
+      border-radius: 9999px;
+      transform: scale(1);
+    }
+    68%, 100% {
+      opacity: 1;
+      width: min(640px, 60vw);
+      height: 320px;
+      border-radius: 20px;
+      transform: scale(1);
+    }
+  }
+
+  /* Ink layer for pill and bar phase that fades in 2.0% window (62.0% - 64.0%) */
+  @keyframes scene-frame-ink-fade {
+    0%, 62% {
+      opacity: 1;
+    }
+    64%, 100% {
+      opacity: 0;
+    }
+  }
+
+  /* Pill orange dot */
+  @keyframes scene-pill-dot {
+    0%, 45.9% {
+      opacity: 0;
+    }
+    46%, 49.9% {
+      opacity: 1;
+    }
+    50%, 100% {
+      opacity: 0;
+    }
+  }
+
+  /* Typing reveal and caret animations (50% - 62%, 33 steps) */
+  @keyframes bar-typing-reveal {
+    0%, 49.9% {
+      clip-path: inset(0 100% 0 0);
+      opacity: 0;
+    }
+    50% {
+      clip-path: inset(0 100% 0 0);
+      opacity: 1;
+    }
+    62% {
+      clip-path: inset(0 0% 0 0);
+      opacity: 1;
+    }
+    62.1%, 100% {
+      clip-path: inset(0 0% 0 0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes bar-typing-caret {
+    0%, 49.9% {
+      opacity: 0;
+      left: 0%;
+    }
+    50% {
+      opacity: 1;
+      left: 0%;
+    }
+    61.9% {
+      opacity: 1;
+      left: 100%;
+    }
+    62%, 100% {
+      opacity: 0;
+      left: 100%;
+    }
+  }
+
+  /* Skeleton content lifecycle: in 62%-70%, hold 70%-74%, out 74%-78% */
+  @keyframes scene-skeleton-lifecycle {
+    0%, 62% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    70%, 74% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    78%, 100% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Search results lifecycle: in 78%-84%, hold through 100% */
+  @keyframes scene-search-lifecycle {
+    0%, 78% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    84%, 100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Caption 1 (visible 40% - 61%, >0.5 between 43% and 58.5%) */
+  @keyframes scene-caption-1 {
+    0%, 40% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    46%, 56% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    61%, 100% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Caption 2 (visible 60% - 80%, >0.5 between 62% and 78%) */
+  @keyframes scene-caption-2 {
+    0%, 60% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    64%, 76% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    80%, 100% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Caption 3 (visible 79% - 100%, >0.5 between 81.5% and 100%, holds at 1.0 through 100%) */
+  @keyframes scene-caption-3 {
+    0%, 79% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    84%, 100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Scene Layers Base Styles */
+  .scene-layers {
+    position: absolute;
+    inset: 0;
+    bottom: clamp(100px, 15vh, 130px);
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Centered accent dot (r 6 = 12px diameter) */
+  .scene-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    opacity: 0;
+  }
+
+  /* Thin expanding ring (1px border, accent at 60% opacity) */
+  .scene-ring {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent);
+    opacity: 0;
+  }
+
+  /* Browser frame / pill morph */
+  .scene-frame {
+    position: relative;
+    contain: layout paint;
+    opacity: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    box-shadow:
+      0 12px 32px -8px rgba(14, 14, 13, 0.10),
+      0 4px 12px -2px rgba(14, 14, 13, 0.05);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Inner dot for pill phase */
+  .scene-frame::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    opacity: 0;
+    z-index: 2;
+  }
+
+  /* Ink background layer that stays ink until 1.6% blend swap */
+  .scene-frame-ink {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-ink);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+  }
+
+  /* Beat 1: Typing text inside dark bar */
+  .scene-bar-typing {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+    padding-inline: 24px;
+    box-sizing: border-box;
+  }
+
+  .bar-text-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .bar-text-reveal {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-bg); /* light text token: 17.5:1 against ink */
+    white-space: nowrap;
+    contain: layout paint;
+  }
+
+  .bar-text-accent {
+    color: var(--color-accent);
+  }
+
+  .bar-typing-caret {
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    width: 2px;
+    background-color: var(--color-accent);
+    pointer-events: none;
+  }
+
+  /* Skeleton layout */
+  .scene-frame-skeleton {
+    position: absolute;
+    inset: 0;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-sizing: border-box;
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .skel-topbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 0.2rem;
+  }
+
+  .skel-circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-line);
+  }
+
+  .skel-heading-text {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  @media (min-width: 1100px) {
+    .skel-heading-text {
+      font-size: 28px;
+    }
+  }
+
+  .skel-line {
+    height: 8px;
+    border-radius: 3px;
+    background-color: var(--color-line);
+  }
+
+  .skel-line--1 {
+    width: 85%;
+  }
+
+  .skel-line--2 {
+    width: 65%;
+  }
+
+  .skel-image {
+    width: 100%;
+    flex: 1;
+    min-height: 50px;
+    border-radius: 6px;
+    background-color: var(--color-bg);
+    border: 1px dashed var(--color-line);
+    margin-block: 0.2rem;
+  }
+
+  .skel-button-block {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    border-radius: 4px;
+    padding: 6px 14px;
+    align-self: flex-start;
+  }
+
+  .skel-button-label {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-ink); /* 5.84:1 contrast on accent */
+    line-height: 1.2;
+  }
+
+  /* Search results layout: 6 rows distributed with equal vertical padding */
+  .scene-frame-search {
+    position: absolute;
+    inset: 0;
+    padding-inline: clamp(1rem, 2.5vw, 1.5rem);
+    padding-block: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    opacity: 0;
+    z-index: 3;
+  }
+
+  .search-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 6px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-line);
+  }
+
+  .search-row--top {
+    border: 2px solid var(--color-accent);
+    background-color: var(--color-surface);
+  }
+
+  .search-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--color-line);
+    flex-shrink: 0;
+  }
+
+  .search-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .search-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.2;
+  }
+
+  .search-url {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-muted);
+    line-height: 1.2;
+  }
+
+  .search-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+  }
+
+  .search-lines span:first-child {
+    display: block;
+    height: 8px;
+    width: 60%;
+    border-radius: 2px;
+    background-color: var(--color-ink);
+    opacity: 0.8;
+  }
+
+  .search-lines span:last-child {
+    display: block;
+    height: 6px;
+    width: 80%;
+    border-radius: 2px;
+    background-color: var(--color-line);
+  }
+
+  /* Captions */
+  .scene-captions {
+    position: absolute;
+    bottom: clamp(1.5rem, 3vh, 2.75rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  .scene-caption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    opacity: 0;
+  }
+
+  .scene-caption-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .scene-caption-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .scene-caption-statement {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 24ch;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .scene-caption-counter {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    align-self: flex-end;
   }
 
   /* Fallback / Below 900px width or below 680px height: standard document flow with no sticky & no overlap */
